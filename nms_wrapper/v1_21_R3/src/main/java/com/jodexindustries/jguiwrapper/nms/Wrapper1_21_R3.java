@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 
-public class Wrapper1_21_R4 implements NMSWrapper {
+public class Wrapper1_21_R3 implements NMSWrapper {
 
     @Override
     public void updateTitle(HumanEntity player, Component title) {

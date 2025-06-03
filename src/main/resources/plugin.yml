@@ -1,9 +1,0 @@
-name: JGuiWrapper
-version: '1.0.0'
-main: com.jodexindustries.jguiwrapper.plugin.JGuiPlugin
-api-version: '1.21'
-authors: [ _Jodex__ ]
-website: https://www.jodex.xyz
-commands:
-  jguiwrapper:
-    permission: jguiwrapper.admin
