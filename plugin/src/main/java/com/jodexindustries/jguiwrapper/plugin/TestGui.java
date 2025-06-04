@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class TestGui extends AbstractGui {
 
+    private final SizeLooper looper = new SizeLooper();
+
     private int clicks;
 
     public TestGui() {
@@ -25,13 +27,35 @@ public class TestGui extends AbstractGui {
 
     @Override
     public void onClick(@NotNull InventoryClickEvent event) {
-//        clicks++;
-//        title(String.valueOf(clicks));
-//        updateTitle(title());
-        updateTitle(LEGACY_AMPERSAND.deserialize(String.valueOf(clicks++)));
+        title(String.valueOf(clicks++));
+        updateMenu(event.getWhoClicked(), holder().getInventory().getType(), looper.nextSize(), title());
     }
 
     @Override
     public void onDrag(@NotNull InventoryDragEvent event) {
     }
+
+    private static class SizeLooper {
+        private int currentSize = 54;
+        private boolean increasing = true;
+
+        public int nextSize() {
+            if (increasing) {
+                currentSize += 9;
+                if (currentSize > 54) {
+                    currentSize = 45;
+                    increasing = false;
+                }
+            } else {
+                currentSize -= 9;
+                if (currentSize < 9) {
+                    currentSize = 18;
+                    increasing = true;
+                }
+            }
+            return currentSize;
+        }
+
+    }
+
 }

@@ -1,15 +1,14 @@
 package com.jodexindustries.jguiwrapper.gui;
 
 import com.jodexindustries.jguiwrapper.JGuiInitializer;
+import com.jodexindustries.jguiwrapper.api.GuiHolder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,7 @@ public abstract class AbstractGui {
     public AbstractGui(int size, @NotNull Component title) {
         this.size = adaptSize(size);
         this.title = title;
-        this.holder = new GuiHolder(this);
+        this.holder = new GuiHolderImpl(this);
     }
 
     public final int size() {
@@ -96,8 +95,12 @@ public abstract class AbstractGui {
         updateTitle(player, this.title);
     }
 
-    public final void updateTitle(@NotNull HumanEntity player, @NotNull Component title) {
-        JGuiInitializer.getNmsWrapper().updateTitle(player, title);
+    public final void updateTitle(@NotNull HumanEntity player, Component title) {
+        updateMenu(player, null, -1, title);
+    }
+
+    public final void updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
+        JGuiInitializer.getNmsWrapper().updateMenu(player, type, size, title);
     }
 
     @ApiStatus.Experimental
@@ -106,7 +109,7 @@ public abstract class AbstractGui {
 
         this.holder.getInventory().close();
 
-        this.holder = new GuiHolder(this);
+        this.holder = new GuiHolderImpl(this);
 
         for (HumanEntity entity : viewers) {
             entity.openInventory(this.holder.getInventory());
@@ -141,7 +144,7 @@ public abstract class AbstractGui {
         this.holder.getInventory().close();
     }
 
-    private static int adaptSize(int size) {
+    protected static int adaptSize(int size) {
         return ((Math.min(Math.max(size, 1), 54) + 8) / 9) * 9;
     }
 }

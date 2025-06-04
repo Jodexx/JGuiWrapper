@@ -5,41 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22db3c4e-3bbc-442d-a7dd-8035ee3b068b" name="Changes" comment="1.0.0">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/NMSMatcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/exception/JGuiWrapperVersionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R1/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R1/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R2/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R2/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R3/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R3/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R4/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_20_R4/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R1/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R1/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R2/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R2/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R3/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R3/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/plugin.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/api/GuiHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/nms/NMSWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_20_R1/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_20_R2/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_20_R3/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_20_R4/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_21_R1/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_21_R2/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_21_R3/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nms/v1_21_R4/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R4.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/JGuiInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/JGuiInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/NMSMatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/nms/NMSMatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/AbstractGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/AbstractGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiHolderImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nms_wrapper/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms_wrapper/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R4/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R4/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R4/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R4.java" beforeDir="false" afterPath="$PROJECT_DIR$/nms_wrapper/v1_21_R4/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/src/main/java/com/jodexindustries/jguiwrapper/nms/NMSWrapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R1/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_20_R1/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R1/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R2/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_20_R2/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R2/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R3/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_20_R3/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R3/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R4/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_20_R4/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_20_R4/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_20_R4.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R1/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_21_R1/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R1/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R2/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_21_R2/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R2/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R3/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_21_R3/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R3/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R4/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/nms/v1_21_R4/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nms_wrapper/v1_21_R4/src/main/java/com/jodexindustries/jguiwrapper/nms/Wrapper1_21_R4.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/com/jodexindustries/jguiwrapper/plugin/TestGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/jodexindustries/jguiwrapper/plugin/TestGui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/JGuiInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/JGuiInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/NMSMatcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/gui/AbstractGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/AbstractGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/jodexindustries/jguiwrapper/gui/GuiUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/plugin/JGuiPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/jodexindustries/jguiwrapper/plugin/JGuiPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jodexindustries/jguiwrapper/plugin/TestGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/jodexindustries/jguiwrapper/plugin/TestGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +71,15 @@
         <task path="$PROJECT_DIR$/nms_wrapper/v1_20_R1">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/api">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/nms">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/plugin">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -84,6 +101,18 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="JGuiWrapper" type="f1a62948:ProjectNode" />
+                <item name="plugin" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="JGuiWrapper" type="f1a62948:ProjectNode" />
+                <item name="plugin" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="JGuiWrapper" type="f1a62948:ProjectNode" />
+                <item name="plugin" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="run paper" type="c8890929:TasksNode$1" />
               </path>
@@ -98,6 +127,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -135,6 +165,7 @@
     "Gradle.JGuiWrapper [runServer].executor": "Run",
     "Gradle.JGuiWrapper:nms_wrapper:v1_20_R1 [build].executor": "Run",
     "Gradle.JGuiWrapper:nms_wrapper:v1_20_R1 [reobfJar].executor": "Run",
+    "Gradle.JGuiWrapper:plugin [runServer].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -162,7 +193,7 @@
       <recent name="D:\JodexIndustries\JGuiWrapper\nms_wrapper" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.JGuiWrapper [runServer]">
+  <component name="RunManager" selected="Gradle.JGuiWrapper:plugin [runServer]">
     <configuration name="JGuiWrapper [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -251,10 +282,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="JGuiWrapper:nms_wrapper:v1_20_R1 [reobfJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="JGuiWrapper:plugin [runServer]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/nms_wrapper/v1_20_R1" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/plugin" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -262,7 +293,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="reobfJar" />
+            <option value="runServer" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -286,11 +317,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.JGuiWrapper [runServer]" />
+        <item itemvalue="Gradle.JGuiWrapper:plugin [runServer]" />
         <item itemvalue="Gradle.JGuiWrapper [build]" />
+        <item itemvalue="Gradle.JGuiWrapper [runServer]" />
         <item itemvalue="Gradle.JGuiWrapper [clean]" />
         <item itemvalue="Gradle.JGuiWrapper:nms_wrapper:v1_20_R1 [build]" />
-        <item itemvalue="Gradle.JGuiWrapper:nms_wrapper:v1_20_R1 [reobfJar]" />
       </list>
     </recent_temporary>
   </component>
@@ -310,7 +341,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748812335168</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1.0.0">
+      <option name="closed" value="true" />
+      <created>1748976845246</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748976845246</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

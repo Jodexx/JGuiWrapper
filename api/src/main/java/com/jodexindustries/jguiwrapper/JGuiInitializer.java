@@ -2,6 +2,7 @@ package com.jodexindustries.jguiwrapper;
 
 import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
 import com.jodexindustries.jguiwrapper.gui.GuiListener;
+import com.jodexindustries.jguiwrapper.nms.NMSMatcher;
 import com.jodexindustries.jguiwrapper.nms.NMSWrapper;
 import org.bukkit.plugin.Plugin;
 

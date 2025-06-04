@@ -24,6 +24,8 @@ allprojects {
     }
 }
 
-project(":nms_wrapper").subprojects {
-    apply(plugin = "io.papermc.paperweight.userdev")
+subprojects {
+    if (path.startsWith(":nms:")) {
+        apply(plugin = "io.papermc.paperweight.userdev")
+    }
 }
