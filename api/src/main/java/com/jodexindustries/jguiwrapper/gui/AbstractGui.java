@@ -1,19 +1,23 @@
 package com.jodexindustries.jguiwrapper.gui;
 
 import com.jodexindustries.jguiwrapper.JGuiInitializer;
+import com.jodexindustries.jguiwrapper.api.Gui;
 import com.jodexindustries.jguiwrapper.api.GuiHolder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.inventory.*;
-import org.jetbrains.annotations.ApiStatus;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractGui {
+public abstract class AbstractGui implements Gui {
 
     protected static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
 
@@ -59,51 +63,44 @@ public abstract class AbstractGui {
         this.title = LEGACY_AMPERSAND.deserialize(title);
     }
 
+    @Override
     public final @NotNull GuiHolder holder() {
         return holder;
     }
 
-    /**
-     * @deprecated changing the title is not supported. This method has poorly defined and broken behaviors. It should not be used.
-     * @since 1.20
-     * @param title The new title.
-     */
-    @Deprecated(since = "1.21.1")
-    public final void setTitle(@NotNull HumanEntity player, @NotNull String title) {
-        player.getOpenInventory().setTitle(title);
+    public final void updateMenu(Component title) {
+        updateMenu(null, this.size, title);
     }
 
-    /**
-     * @deprecated changing the title is not supported. This method has poorly defined and broken behaviors. It should not be used.
-     * @since 1.20
-     * @param title The new title.
-     */
-    @Deprecated(since = "1.21.1")
-    public final void setTitle(@NotNull String title) {
-        this.holder.getInventory().getViewers().forEach(humanEntity -> setTitle(humanEntity, title));
+    public final void updateMenu(InventoryType type) {
+        updateMenu(type, this.size);
     }
 
-    public final void updateTitle() {
-        updateTitle(this.title);
+    public final void updateMenu(InventoryType type, int size) {
+        updateMenu(type, size, null);
     }
 
-    public final void updateTitle(@NotNull Component title) {
-        this.holder.getInventory().getViewers().forEach(humanEntity -> updateTitle(humanEntity, title));
+    public final void updateMenu(InventoryType type, int size, Component title) {
+        this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title));
     }
 
-    public final void updateTitle(@NotNull HumanEntity player) {
-        updateTitle(player, this.title);
+    public final void updateMenu(@NotNull HumanEntity player, Component title) {
+        updateMenu(player, null, this.size, title);
     }
 
-    public final void updateTitle(@NotNull HumanEntity player, Component title) {
-        updateMenu(player, null, -1, title);
+    public final void updateMenu(@NotNull HumanEntity player, InventoryType type) {
+        updateMenu(player, type, this.size, null);
+    }
+
+    public final void updateMenu(@NotNull HumanEntity player, InventoryType type, int size) {
+        updateMenu(player, type, size, null);
     }
 
     public final void updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
         JGuiInitializer.getNmsWrapper().updateMenu(player, type, size, title);
     }
 
-    @ApiStatus.Experimental
+    @Override
     public final void updateHolder() {
         List<HumanEntity> viewers = new ArrayList<>(this.holder.getInventory().getViewers());
 
@@ -116,32 +113,24 @@ public abstract class AbstractGui {
         }
     }
 
+    @Override
     public void onOpen(@NotNull InventoryOpenEvent event) {
 
     }
 
+    @Override
     public void onClose(@NotNull InventoryCloseEvent event) {
 
     }
 
+    @Override
     public void onClick(@NotNull InventoryClickEvent event) {
 
     }
 
+    @Override
     public void onDrag(@NotNull InventoryDragEvent event) {
 
-    }
-
-    public final void open(@NotNull HumanEntity player) {
-        player.openInventory(this.holder.getInventory());
-    }
-
-    public final void close(@NotNull HumanEntity player) {
-        player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
-    }
-
-    public final void close() {
-        this.holder.getInventory().close();
     }
 
     protected static int adaptSize(int size) {

@@ -16,14 +16,14 @@ public class Wrapper1_21_R2 implements NMSWrapper {
     public void updateMenu(HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
         ServerPlayer sp = ((CraftPlayer) player).getHandle();
 
-        MenuType<?> menuType = type != null && size != -1 ? getNotchInventoryType(type, size) : sp.containerMenu.getType();
+        MenuType<?> menuType = type != null ? getNotchInventoryType(type, size) : sp.containerMenu.getType();
         net.minecraft.network.chat.Component menuTitle = title != null ? PaperAdventure.asVanilla(title) : sp.containerMenu.getTitle();
 
         ClientboundOpenScreenPacket packet = new ClientboundOpenScreenPacket(sp.containerMenu.containerId, menuType, menuTitle);
         sp.connection.send(packet);
     }
 
-    public static MenuType<?> getNotchInventoryType(InventoryType type, int size) {
+    public static net.minecraft.world.inventory.MenuType<?> getNotchInventoryType(InventoryType type, int size) {
         return switch (type) {
             case PLAYER, CHEST, ENDER_CHEST, BARREL -> switch (size) {
                 case 9 -> MenuType.GENERIC_9x1;
@@ -31,8 +31,7 @@ public class Wrapper1_21_R2 implements NMSWrapper {
                 case 27 -> MenuType.GENERIC_9x3;
                 case 36, 41 -> MenuType.GENERIC_9x4;
                 case 45 -> MenuType.GENERIC_9x5;
-                case 54 -> MenuType.GENERIC_9x6;
-                default -> throw new IllegalArgumentException("Unsupported custom inventory size " + size);
+                default -> MenuType.GENERIC_9x6;
             };
             case WORKBENCH -> MenuType.CRAFTING;
             case FURNACE -> MenuType.FURNACE;
