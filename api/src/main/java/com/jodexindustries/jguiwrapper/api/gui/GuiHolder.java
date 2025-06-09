@@ -1,16 +1,17 @@
-package com.jodexindustries.jguiwrapper.gui;
+package com.jodexindustries.jguiwrapper.api.gui;
 
-import com.jodexindustries.jguiwrapper.api.GuiHolder;
+import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-public class GuiHolderImpl implements GuiHolder {
+public class GuiHolder implements InventoryHolder {
 
     private final AbstractGui gui;
     private final Inventory inventory;
 
-    public GuiHolderImpl(AbstractGui gui) {
+    public GuiHolder(AbstractGui gui) {
         this.gui = gui;
         this.inventory = Bukkit.createInventory(this, gui.size(), gui.title());
     }
@@ -20,7 +21,6 @@ public class GuiHolderImpl implements GuiHolder {
         return this.inventory;
     }
 
-    @Override
     public @NotNull AbstractGui getGui() {
         return gui;
     }

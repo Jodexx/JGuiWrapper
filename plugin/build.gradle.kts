@@ -1,7 +1,6 @@
-apply(plugin = "com.gradleup.shadow")
-
 plugins {
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("com.gradleup.shadow")
 }
 
 dependencies {

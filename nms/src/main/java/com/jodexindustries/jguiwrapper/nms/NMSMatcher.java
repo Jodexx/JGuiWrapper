@@ -1,6 +1,7 @@
 package com.jodexindustries.jguiwrapper.nms;
 
-import com.jodexindustries.jguiwrapper.JGuiInitializer;
+import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -27,7 +28,7 @@ public class NMSMatcher {
 
     public static final NMSWrapper EMPTY_WRAPPER = (player, type, size, title) -> {
         if (!warned) {
-            JGuiInitializer.getPlugin().getLogger().warning(
+            GuiApi.get().getPlugin().getLogger().warning(
                     "NMSWrapper not loaded! Inventory view can't be updated."
             );
             warned = true;
@@ -58,7 +59,7 @@ public class NMSMatcher {
                 ? craftBukkitPackage.split("\\.")[3].substring(1)
                 : VERSIONS.getOrDefault(Bukkit.getBukkitVersion().split("-")[0], NEWEST_VERSION);
 
-        String className = NMSWrapper.class.getPackage().getName() + ".Wrapper" + version;
+        String className = NMSMatcher.class.getPackage().getName() + ".Wrapper" + version;
 
         plugin.getLogger().info("Using " + version + " NMS");
 

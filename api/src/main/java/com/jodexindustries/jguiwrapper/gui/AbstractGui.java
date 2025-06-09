@@ -1,8 +1,8 @@
 package com.jodexindustries.jguiwrapper.gui;
 
-import com.jodexindustries.jguiwrapper.JGuiInitializer;
-import com.jodexindustries.jguiwrapper.api.Gui;
-import com.jodexindustries.jguiwrapper.api.GuiHolder;
+import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.gui.Gui;
+import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.HumanEntity;
@@ -40,7 +40,7 @@ public abstract class AbstractGui implements Gui {
     public AbstractGui(int size, @NotNull Component title) {
         this.size = adaptSize(size);
         this.title = title;
-        this.holder = new GuiHolderImpl(this);
+        this.holder = new GuiHolder(this);
     }
 
     public final int size() {
@@ -97,7 +97,7 @@ public abstract class AbstractGui implements Gui {
     }
 
     public final void updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
-        JGuiInitializer.getNmsWrapper().updateMenu(player, type, size, title);
+        GuiApi.get().getNMSWrapper().updateMenu(player, type, size, title);
     }
 
     @Override
@@ -106,7 +106,7 @@ public abstract class AbstractGui implements Gui {
 
         this.holder.getInventory().close();
 
-        this.holder = new GuiHolderImpl(this);
+        this.holder = new GuiHolder(this);
 
         for (HumanEntity entity : viewers) {
             entity.openInventory(this.holder.getInventory());

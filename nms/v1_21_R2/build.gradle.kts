@@ -5,7 +5,3 @@ dependencies {
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
-
-tasks.assemble {
-    dependsOn(tasks.reobfJar)
-}

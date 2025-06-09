@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.api;
+package com.jodexindustries.jguiwrapper.api.gui;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;

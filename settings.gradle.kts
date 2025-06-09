@@ -13,8 +13,9 @@ plugins {
 include(":api", ":plugin", ":nms", ":common")
 
 file("nms").listFiles()
-    ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
+    ?.filter { it.isDirectory && File(it, "build.gradle.kts").isFile }
     ?.sortedBy { it.name }
-    ?.forEach { file ->
-        include(":nms:${file.name}")
+    ?.forEach { dir ->
+        include(":nms:${dir.name}")
+        project(":nms:${dir.name}").projectDir = dir
     }

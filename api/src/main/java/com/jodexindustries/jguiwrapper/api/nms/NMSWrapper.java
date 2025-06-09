@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.nms;
+package com.jodexindustries.jguiwrapper.api.nms;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;

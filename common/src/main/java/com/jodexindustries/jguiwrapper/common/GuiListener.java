@@ -1,6 +1,6 @@
-package com.jodexindustries.jguiwrapper.gui;
+package com.jodexindustries.jguiwrapper.common;
 
-import com.jodexindustries.jguiwrapper.api.GuiHolder;
+import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;

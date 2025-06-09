@@ -15,17 +15,10 @@ allprojects {
     version = "1.0.0"
 
     apply(plugin = "java-library")
-    apply(plugin = "com.gradleup.shadow")
 
     repositories {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
-    }
-}
-
-subprojects {
-    if (path.startsWith(":nms:")) {
-        apply(plugin = "io.papermc.paperweight.userdev")
     }
 }

@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
-import com.jodexindustries.jguiwrapper.JGuiInitializer;
+import com.jodexindustries.jguiwrapper.common.JGuiInitializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
