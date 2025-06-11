@@ -5,12 +5,9 @@ import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,7 +20,18 @@ public abstract class AbstractGui implements Gui {
 
     private int size;
     private Component title;
+    private InventoryType type;
+
     private GuiHolder holder;
+
+    /**
+     * If true, the GUI will automatically update when opened by a player,
+     * but only if the menu has already been updated for all viewers {@link #updateMenu()}.
+     * Default is false.
+     */
+    public boolean updateOnOpen;
+
+    private transient boolean updated;
 
     public AbstractGui(@NotNull String title) {
         this(54, title);
@@ -34,13 +42,21 @@ public abstract class AbstractGui implements Gui {
     }
 
     public AbstractGui(@NotNull Component title) {
-        this(54, title);
+        this(InventoryType.CHEST, title);
+    }
+
+    public AbstractGui(InventoryType type, @NotNull Component title) {
+        this.size = type.getDefaultSize();
+        this.title = title;
+        this.holder = new GuiHolder(this, true);
+        this.type = type;
     }
 
     public AbstractGui(int size, @NotNull Component title) {
         this.size = adaptSize(size);
         this.title = title;
         this.holder = new GuiHolder(this);
+        this.type = holder.getInventory().getType();
     }
 
     public final int size() {
@@ -63,9 +79,38 @@ public abstract class AbstractGui implements Gui {
         this.title = LEGACY_AMPERSAND.deserialize(title);
     }
 
+    public final void type(@NotNull InventoryType type) {
+        this.type = type;
+    }
+
+    @NotNull
+    public final InventoryType type() {
+        return type;
+    }
+
     @Override
     public final @NotNull GuiHolder holder() {
         return holder;
+    }
+
+    void onOpen(@NotNull InventoryOpenEvent event) {
+        if (updateOnOpen && updated)
+            Bukkit.getScheduler().runTask(GuiApi.get().getPlugin(), () -> updateMenu(event.getPlayer()));
+    }
+
+    abstract void onClose(@NotNull InventoryCloseEvent event);
+
+    abstract void onClick(@NotNull InventoryClickEvent event);
+
+    abstract void onDrag(@NotNull InventoryDragEvent event);
+
+    public final void updateMenu() {
+        updateMenu(this.type, this.size, this.title);
+        updated = true;
+    }
+
+    public final void updateMenu(HumanEntity player) {
+        updateMenu(player, this.type, this.size, this.title);
     }
 
     public final void updateMenu(Component title) {
@@ -113,27 +158,8 @@ public abstract class AbstractGui implements Gui {
         }
     }
 
-    @Override
-    public void onOpen(@NotNull InventoryOpenEvent event) {
-
-    }
-
-    @Override
-    public void onClose(@NotNull InventoryCloseEvent event) {
-
-    }
-
-    @Override
-    public void onClick(@NotNull InventoryClickEvent event) {
-
-    }
-
-    @Override
-    public void onDrag(@NotNull InventoryDragEvent event) {
-
-    }
-
     protected static int adaptSize(int size) {
         return ((Math.min(Math.max(size, 1), 54) + 8) / 9) * 9;
     }
+
 }

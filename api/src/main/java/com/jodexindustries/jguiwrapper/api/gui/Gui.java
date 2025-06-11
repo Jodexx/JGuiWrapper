@@ -1,24 +1,13 @@
 package com.jodexindustries.jguiwrapper.api.gui;
 
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public interface Gui {
 
     @NotNull GuiHolder holder();
-
-    void onOpen(@NotNull InventoryOpenEvent event);
-
-    void onClose(@NotNull InventoryCloseEvent event);
-
-    void onClick(@NotNull InventoryClickEvent event);
-
-    void onDrag(@NotNull InventoryDragEvent event);
 
     @ApiStatus.Experimental
     void updateHolder();
