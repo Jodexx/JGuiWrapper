@@ -11,6 +11,8 @@ import java.util.Objects;
 
 public final class JGuiPlugin extends JavaPlugin {
 
+    private static final TestGui GUI = new TestGui();
+
     @Override
     public void onEnable() {
         JGuiInitializer.init(this);
@@ -21,9 +23,7 @@ public final class JGuiPlugin extends JavaPlugin {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (!(sender instanceof Player player)) return false;
 
-        TestGui gui = new TestGui();
-
-        gui.open(player);
+        GUI.open(player);
 
         return true;
     }

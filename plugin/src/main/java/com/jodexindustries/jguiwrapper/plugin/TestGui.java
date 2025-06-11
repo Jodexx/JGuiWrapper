@@ -1,10 +1,9 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
-import com.jodexindustries.jguiwrapper.gui.AbstractGui;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.jetbrains.annotations.NotNull;
+import com.jodexindustries.jguiwrapper.api.gui.handler.CancellableHandler;
+import com.jodexindustries.jguiwrapper.gui.SimpleGui;
 
-public class TestGui extends AbstractGui {
+public class TestGui extends SimpleGui {
 
     private final SizeLooper looper = new SizeLooper();
 
@@ -12,12 +11,22 @@ public class TestGui extends AbstractGui {
 
     public TestGui() {
         super(3123, "&cExample");
-    }
 
-    @Override
-    public void onClick(@NotNull InventoryClickEvent event) {
-        title(String.valueOf(clicks++));
-        updateMenu(event.getWhoClicked(), holder().getInventory().getType(), looper.nextSize(), title());
+        this.updateOnOpen = true;
+
+        setClickHandlers(
+                CancellableHandler.wrap(event -> {
+                    title(String.valueOf(clicks++));
+                    size(looper.nextSize());
+                    updateMenu();
+                }, true)
+        );
+
+        onOpen(event -> event.getPlayer().sendMessage(event.getInventory().getType().defaultTitle()));
+
+        onClose(event -> event.getPlayer().sendMessage(event.getReason().name()));
+
+        onDrag(event -> event.getWhoClicked().sendMessage(event.getType().name()));
     }
 
     private static class SizeLooper {
