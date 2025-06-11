@@ -1,0 +1,145 @@
+package com.jodexindustries.jguiwrapper.api.item;
+
+import com.google.common.base.Preconditions;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+public class ItemWrapper {
+
+    private final ItemStack itemStack;
+
+    private Material material;
+    private Component displayName;
+    private List<Component> lore;
+    private Integer customModelData;
+
+    private boolean autoFlushUpdate;
+
+    public ItemWrapper(@NotNull final ItemStack itemStack) {
+        this.itemStack = itemStack;
+        this.material = itemStack.getType();
+    }
+
+    public ItemWrapper(@NotNull final Material material, final int amount) {
+        this(new ItemStack(material, amount));
+    }
+
+    public ItemWrapper(@NotNull final Material material) {
+        this(material, 1);
+    }
+
+    public void update() {
+        ItemMeta meta = this.itemStack.getItemMeta();
+        updateMeta(meta);
+        this.itemStack.setItemMeta(meta);
+        this.itemStack.setType(material);
+    }
+
+    protected void updateMeta(ItemMeta meta) {
+        if (meta == null) return;
+
+        meta.displayName(displayName);
+        meta.lore(lore);
+        meta.setCustomModelData(customModelData);
+    }
+
+    protected void flushUpdate() {
+        if (autoFlushUpdate) update();
+    }
+
+    @NotNull
+    public final ItemStack itemStack() {
+        return itemStack;
+    }
+
+    @NotNull
+    public final Material material() {
+        return material;
+    }
+
+    public final void material(@NotNull Material material) {
+        Preconditions.checkArgument(material != null, "Material cannot be null");
+        this.material = material;
+        flushUpdate();
+    }
+
+    public final void displayName(@Nullable Component displayName) {
+        this.displayName = displayName;
+        flushUpdate();
+    }
+
+    public final void lore(@Nullable List<Component> lore) {
+        this.lore = lore;
+        flushUpdate();
+    }
+
+    public final void customModelData(@Nullable Integer data) {
+        this.customModelData = data;
+        flushUpdate();
+    }
+
+    public void autoFlushUpdate(boolean autoFlushUpdate) {
+        this.autoFlushUpdate = autoFlushUpdate;
+    }
+
+    public static Builder builder(@NotNull Material material) {
+        Preconditions.checkArgument(material != null, "Material cannot be null");
+        return new Builder(material);
+    }
+
+    public static class Builder {
+        private final Material material;
+        private int amount = 1;
+        private Component displayName;
+        private List<Component> lore;
+        private Integer customModelData;
+        private boolean autoFlushUpdate;
+
+        private Builder(@NotNull Material material) {
+            this.material = material;
+        }
+
+        public Builder amount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public Builder displayName(@Nullable Component displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+
+        public Builder lore(@Nullable List<Component> lore) {
+            this.lore = lore;
+            return this;
+        }
+
+        public Builder customModelData(@Nullable Integer customModelData) {
+            this.customModelData = customModelData;
+            return this;
+        }
+
+        public Builder autoFlushUpdate(boolean autoFlushUpdate) {
+            this.autoFlushUpdate = autoFlushUpdate;
+            return this;
+        }
+
+        public ItemWrapper build() {
+            ItemWrapper wrapper = new ItemWrapper(material, amount);
+
+            wrapper.displayName = displayName;
+            wrapper.lore = lore;
+            wrapper.customModelData = customModelData;
+            wrapper.autoFlushUpdate = autoFlushUpdate;
+
+            return wrapper;
+        }
+    }
+
+}
