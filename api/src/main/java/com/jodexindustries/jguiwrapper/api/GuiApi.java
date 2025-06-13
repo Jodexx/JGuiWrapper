@@ -1,7 +1,11 @@
 package com.jodexindustries.jguiwrapper.api;
 
+import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class GuiApi {
 
@@ -20,4 +24,7 @@ public abstract class GuiApi {
     public abstract Plugin getPlugin();
 
     public abstract NMSWrapper getNMSWrapper();
+
+    @Nullable
+    public abstract GuiHolder getOpenedGui(@NotNull Player player);
 }
