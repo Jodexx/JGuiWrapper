@@ -2,10 +2,7 @@ package com.jodexindustries.jguiwrapper.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.handler.InventoryHandler;
 import net.kyori.adventure.text.Component;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -21,6 +18,8 @@ public abstract class SimpleGui extends AbstractGui {
     private Consumer<InventoryCloseEvent> closeEventConsumer;
     private Consumer<InventoryDragEvent> dragEventConsumer;
 
+    private boolean cancelEmptySlots = true;
+
     public SimpleGui(@NotNull String title) {
         super(title);
     }
@@ -31,6 +30,10 @@ public abstract class SimpleGui extends AbstractGui {
 
     public SimpleGui(@NotNull Component title) {
         super(title);
+    }
+
+    public SimpleGui(InventoryType type, @NotNull Component title) {
+        super(type, title);
     }
 
     public SimpleGui(int size, @NotNull Component title) {
@@ -62,6 +65,8 @@ public abstract class SimpleGui extends AbstractGui {
 
         if (handler != null) {
             handler.handle(event);
+        } else if (cancelEmptySlots){
+            event.setCancelled(true);
         }
     }
 
@@ -107,4 +112,7 @@ public abstract class SimpleGui extends AbstractGui {
         }
     }
 
+    public void setCancelEmptySlots(boolean cancelEmptySlots) {
+        this.cancelEmptySlots = cancelEmptySlots;
+    }
 }
