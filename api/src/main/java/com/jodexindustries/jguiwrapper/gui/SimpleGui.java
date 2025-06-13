@@ -62,7 +62,6 @@ public abstract class SimpleGui extends AbstractGui {
 
         if (handler != null) {
             handler.handle(event);
-            event.setCancelled(true);
         }
     }
 

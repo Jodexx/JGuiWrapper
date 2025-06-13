@@ -3,7 +3,9 @@ package com.jodexindustries.jguiwrapper.api.gui.handler;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 
+@TestOnly
 public final class CancellableHandler <T extends InventoryEvent> implements InventoryHandler<T> {
 
     private final InventoryHandler<T> handler;
