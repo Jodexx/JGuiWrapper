@@ -9,8 +9,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AdvancedGui extends SimpleGui {
 
@@ -36,11 +35,17 @@ public class AdvancedGui extends SimpleGui {
         super(size, title);
     }
 
-    public void registerItem(@NotNull String key, @NotNull ItemWrapper itemWrapper, int slot, @Nullable InventoryHandler<InventoryClickEvent> clickHandler) {
-        registerItem(key, new GuiItemController(this, itemWrapper, slot, clickHandler));
+    public void registerItem(@NotNull String key, @NotNull ItemWrapper itemWrapper, @Nullable InventoryHandler<InventoryClickEvent> clickHandler, @NotNull Collection<Integer> slots) {
+        registerItem(key, new GuiItemController(this, itemWrapper, clickHandler, slots));
+    }
+
+    public void registerItem(@NotNull String key, @NotNull ItemWrapper itemWrapper, @Nullable InventoryHandler<InventoryClickEvent> clickHandler, int @NotNull ... slots) {
+        registerItem(key, new GuiItemController(this, itemWrapper, clickHandler, slots));
     }
 
     public void registerItem(@NotNull String key, @NotNull GuiItemController controller) {
+        if (keyMap.containsKey(key)) return;
+
         keyMap.put(key, controller);
         controller.redraw();
     }
@@ -50,7 +55,14 @@ public class AdvancedGui extends SimpleGui {
     }
 
     public GuiItemController getController(int slot) {
-        return keyMap.values().stream().filter(guiItemController -> guiItemController.getSlot() == slot).findFirst().orElse(null);
+        return keyMap.values().stream()
+                .filter(controller -> controller.getSlots().contains(slot))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Collection<GuiItemController> getControllers() {
+        return Collections.unmodifiableCollection(keyMap.values());
     }
 
     public void swapControllers(@NotNull GuiItemController a, @NotNull GuiItemController b) {
