@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.gui;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.jetbrains.annotations.ApiStatus;
@@ -33,6 +34,8 @@ public interface Gui {
     }
 
     void open(@NotNull HumanEntity player);
+
+    void open(@NotNull HumanEntity player, Component title);
 
     default void close(@NotNull HumanEntity player) {
         player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);

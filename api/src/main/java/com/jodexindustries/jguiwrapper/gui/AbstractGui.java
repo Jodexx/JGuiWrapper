@@ -85,6 +85,11 @@ public abstract class AbstractGui implements Gui {
 
     @Override
     public final void open(@NotNull HumanEntity player) {
+        open(player, title);
+    }
+
+    @Override
+    public final void open(@NotNull HumanEntity player, Component title) {
         if (!GuiApi.get().getNMSWrapper().openInventory(player, holder.getInventory(), type, size, title)) {
             player.openInventory(holder.getInventory());
         }
