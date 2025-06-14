@@ -107,6 +107,9 @@ public class GuiItemController {
 
     public void updateItem(@NotNull Consumer<ItemWrapper> updater) {
         updater.accept(itemWrapper);
+
+        if (!itemWrapper.isUpdated()) itemWrapper.update();
+
         redraw();
     }
 

@@ -21,6 +21,8 @@ public class ItemWrapper {
 
     private boolean autoFlushUpdate;
 
+    private boolean updated = true;
+
     public ItemWrapper(@NotNull final ItemStack itemStack) {
         this.itemStack = itemStack;
         this.material = itemStack.getType();
@@ -39,6 +41,7 @@ public class ItemWrapper {
         updateMeta(meta);
         this.itemStack.setItemMeta(meta);
         this.itemStack.setType(material);
+        updated = true;
     }
 
     protected void updateMeta(ItemMeta meta) {
@@ -50,7 +53,11 @@ public class ItemWrapper {
     }
 
     protected void flushUpdate() {
-        if (autoFlushUpdate) update();
+        if (autoFlushUpdate) {
+            update();
+        } else {
+            updated = false;
+        }
     }
 
     @NotNull
@@ -91,6 +98,10 @@ public class ItemWrapper {
     public static Builder builder(@NotNull Material material) {
         Preconditions.checkArgument(material != null, "Material cannot be null");
         return new Builder(material);
+    }
+
+    public boolean isUpdated() {
+        return updated;
     }
 
     public static class Builder {
