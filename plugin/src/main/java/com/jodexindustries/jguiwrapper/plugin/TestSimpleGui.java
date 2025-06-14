@@ -3,16 +3,14 @@ package com.jodexindustries.jguiwrapper.plugin;
 import com.jodexindustries.jguiwrapper.api.gui.handler.CancellableHandler;
 import com.jodexindustries.jguiwrapper.gui.SimpleGui;
 
-public class TestGui extends SimpleGui {
+public class TestSimpleGui extends SimpleGui {
 
     private final SizeLooper looper = new SizeLooper();
 
     private int clicks;
 
-    public TestGui() {
+    public TestSimpleGui() {
         super(3123, "&cExample");
-
-        this.updateOnOpen = true;
 
         setClickHandlers(
                 CancellableHandler.wrap(event -> {
