@@ -1,10 +1,15 @@
 package com.jodexindustries.jguiwrapper.nms;
 
-import com.jodexindustries.jguiwrapper.api.GuiApi;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -22,16 +27,18 @@ public class NMSMatcher {
 
     private static final String NEWEST_VERSION = "1_21_R4";
 
-    private static boolean warned = false;
     private static boolean initialized = false;
     private static NMSWrapper wrapper;
 
-    public static final NMSWrapper EMPTY_WRAPPER = (player, type, size, title) -> {
-        if (!warned) {
-            GuiApi.get().getPlugin().getLogger().warning(
-                    "NMSWrapper not loaded! Inventory view can't be updated."
-            );
-            warned = true;
+    public static final NMSWrapper EMPTY_WRAPPER = new NMSWrapper() {
+        @Override
+        public boolean updateMenu(HumanEntity player, @Nullable InventoryType type, int size, Component title) {
+            return false;
+        }
+
+        @Override
+        public boolean openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
+            return false;
         }
     };
 

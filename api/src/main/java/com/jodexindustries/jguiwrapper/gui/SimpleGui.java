@@ -42,8 +42,6 @@ public abstract class SimpleGui extends AbstractGui {
 
     @Override
     final void onOpen(@NotNull InventoryOpenEvent event) {
-        super.onOpen(event);
-
         if (openEventConsumer != null) openEventConsumer.accept(event);
     }
 

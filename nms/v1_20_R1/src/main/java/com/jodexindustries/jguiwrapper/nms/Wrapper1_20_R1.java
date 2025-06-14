@@ -5,16 +5,21 @@ import io.papermc.paper.adventure.PaperAdventure;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftContainer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Wrapper1_20_R1 implements NMSWrapper {
 
     @Override
-    public void updateMenu(HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
+    public boolean updateMenu(HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
         ServerPlayer sp = ((CraftPlayer) player).getHandle();
 
         MenuType<?> menuType = type != null ? getNotchInventoryType(type, size) : sp.containerMenu.getType();
@@ -22,6 +27,30 @@ public class Wrapper1_20_R1 implements NMSWrapper {
 
         ClientboundOpenScreenPacket packet = new ClientboundOpenScreenPacket(sp.containerMenu.containerId, menuType, menuTitle);
         sp.connection.send(packet);
+        return true;
+    }
+
+    @Override
+    public boolean openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
+        ServerPlayer sp = ((CraftPlayer) player).getHandle();
+        MenuType<?> menuType = getNotchInventoryType(type, size);
+
+        openCustomInventory(inventory, sp, menuType, title);
+        return true;
+    }
+
+    private static void openCustomInventory(Inventory inventory, ServerPlayer player, MenuType<?> windowType, Component title) {
+        AbstractContainerMenu container = new CraftContainer(inventory, player, player.nextContainerCounter());
+        AbstractContainerMenu result = CraftEventFactory.callInventoryOpenEvent(player, container);
+        if (result != null) {
+
+            if (!player.isImmobile()) {
+                player.connection.send(new ClientboundOpenScreenPacket(result.containerId, windowType, PaperAdventure.asVanilla(title)));
+            }
+
+            player.containerMenu = result;
+            player.initMenu(result);
+        }
     }
 
     public static MenuType<?> getNotchInventoryType(InventoryType type, int size) {

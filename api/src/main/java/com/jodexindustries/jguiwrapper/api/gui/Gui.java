@@ -32,9 +32,7 @@ public interface Gui {
         holder().getInventory().getViewers().forEach(humanEntity -> setTitle(humanEntity, title));
     }
 
-    default void open(@NotNull HumanEntity player) {
-        player.openInventory(holder().getInventory());
-    }
+    void open(@NotNull HumanEntity player);
 
     default void close(@NotNull HumanEntity player) {
         player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);

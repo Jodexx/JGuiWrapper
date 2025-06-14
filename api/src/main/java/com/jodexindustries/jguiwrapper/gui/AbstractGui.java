@@ -5,7 +5,6 @@ import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.*;
 import org.jetbrains.annotations.NotNull;
@@ -23,15 +22,6 @@ public abstract class AbstractGui implements Gui {
     private InventoryType type;
 
     private GuiHolder holder;
-
-    /**
-     * If true, the GUI will automatically update when opened by a player,
-     * but only if the menu has already been updated for all viewers {@link #updateMenu()}.
-     * Default is false.
-     */
-    public boolean updateOnOpen;
-
-    private transient boolean updated;
 
     public AbstractGui(@NotNull String title) {
         this(54, title);
@@ -93,10 +83,14 @@ public abstract class AbstractGui implements Gui {
         return holder;
     }
 
-    void onOpen(@NotNull InventoryOpenEvent event) {
-        if (updateOnOpen && updated)
-            Bukkit.getScheduler().runTask(GuiApi.get().getPlugin(), () -> updateMenu(event.getPlayer()));
+    @Override
+    public final void open(@NotNull HumanEntity player) {
+        if (!GuiApi.get().getNMSWrapper().openInventory(player, holder.getInventory(), type, size, title)) {
+            player.openInventory(holder.getInventory());
+        }
     }
+
+    abstract void onOpen(@NotNull InventoryOpenEvent event);
 
     abstract void onClose(@NotNull InventoryCloseEvent event);
 
@@ -106,7 +100,6 @@ public abstract class AbstractGui implements Gui {
 
     public final void updateMenu() {
         updateMenu(this.type, this.size, this.title);
-        updated = true;
     }
 
     public final void updateMenu(HumanEntity player) {
