@@ -13,10 +13,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Level;
 
-public class JGuiInitializer extends GuiApi {
+public final class JGuiInitializer extends GuiApi {
 
     private static NMSWrapper NMS_WRAPPER = NMSMatcher.EMPTY_WRAPPER;
     private static Plugin PLUGIN;
+
+    private JGuiInitializer() {
+
+    }
 
     public static void init(Plugin plugin) {
         if (JGuiInitializer.PLUGIN != null) return;
