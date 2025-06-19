@@ -41,29 +41,40 @@ public abstract class SimpleGui extends AbstractGui {
     }
 
     @Override
-    final void onOpen(@NotNull InventoryOpenEvent event) {
+    void onOpen(@NotNull InventoryOpenEvent event) {
         if (openEventConsumer != null) openEventConsumer.accept(event);
     }
 
     @Override
-    final void onClose(@NotNull InventoryCloseEvent event) {
+    void onClose(@NotNull InventoryCloseEvent event) {
         if (closeEventConsumer != null) closeEventConsumer.accept(event);
     }
 
     @Override
-    final void onDrag(@NotNull InventoryDragEvent event) {
-        if (dragEventConsumer != null) dragEventConsumer.accept(event);
+    void onDrag(@NotNull InventoryDragEvent event) {
+        if (dragEventConsumer != null) {
+            dragEventConsumer.accept(event);
+        } else {
+            event.setCancelled(true);
+        }
     }
 
     @Override
-    final void onClick(@NotNull InventoryClickEvent event) {
+    void onClick(@NotNull InventoryClickEvent event) {
+        if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+            event.setCancelled(true);
+            return;
+        }
+
         int slot = event.getRawSlot();
+
+        if (slot >= size()) return;
 
         InventoryHandler<InventoryClickEvent> handler = slotClickHandlers.get(slot);
 
         if (handler != null) {
-            handler.handle(event);
-        } else if (cancelEmptySlots){
+            handler.handle(event, this);
+        } else if (cancelEmptySlots) {
             event.setCancelled(true);
         }
     }
