@@ -19,6 +19,8 @@ public class ItemWrapper {
     private List<Component> lore;
     private Integer customModelData;
 
+    private boolean canUpdate = true;
+
     private boolean autoFlushUpdate;
 
     private boolean updated = true;
@@ -37,6 +39,8 @@ public class ItemWrapper {
     }
 
     public void update() {
+        if (!canUpdate) return;
+
         ItemMeta meta = this.itemStack.getItemMeta();
         updateMeta(meta);
         this.itemStack.setItemMeta(meta);
@@ -103,8 +107,24 @@ public class ItemWrapper {
         flushUpdate();
     }
 
+    public Integer customModelData() {
+        return customModelData;
+    }
+
     public void autoFlushUpdate(boolean autoFlushUpdate) {
         this.autoFlushUpdate = autoFlushUpdate;
+    }
+
+    public boolean autoFlushUpdate() {
+        return autoFlushUpdate;
+    }
+
+    public void canUpdate(boolean canUpdate) {
+        this.canUpdate = canUpdate;
+    }
+
+    public boolean canUpdate() {
+        return canUpdate;
     }
 
     public static Builder builder(@NotNull Material material) {
