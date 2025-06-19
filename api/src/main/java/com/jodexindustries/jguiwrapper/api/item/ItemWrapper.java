@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ItemWrapper {
 
-    private final ItemStack itemStack;
+    private ItemStack itemStack;
 
     private Material material;
     private Component displayName;
@@ -65,6 +65,10 @@ public class ItemWrapper {
         return itemStack;
     }
 
+    public final void itemStack(ItemStack itemStack) {
+        this.itemStack = itemStack;
+    }
+
     @NotNull
     public final Material material() {
         return material;
@@ -81,9 +85,17 @@ public class ItemWrapper {
         flushUpdate();
     }
 
+    public final Component displayName() {
+        return this.displayName;
+    }
+
     public final void lore(@Nullable List<Component> lore) {
         this.lore = lore;
         flushUpdate();
+    }
+
+    public final List<Component> lore() {
+        return this.lore;
     }
 
     public final void customModelData(@Nullable Integer data) {

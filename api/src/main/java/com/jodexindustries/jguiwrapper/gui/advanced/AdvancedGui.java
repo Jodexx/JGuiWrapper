@@ -1,15 +1,15 @@
 package com.jodexindustries.jguiwrapper.gui.advanced;
 
-import com.jodexindustries.jguiwrapper.api.gui.handler.InventoryHandler;
-import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.gui.SimpleGui;
 import net.kyori.adventure.text.Component;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class AdvancedGui extends SimpleGui {
 
@@ -35,12 +35,12 @@ public class AdvancedGui extends SimpleGui {
         super(size, title);
     }
 
-    public void registerItem(@NotNull String key, @NotNull ItemWrapper itemWrapper, @Nullable InventoryHandler<InventoryClickEvent> clickHandler, @NotNull Collection<Integer> slots) {
-        registerItem(key, new GuiItemController(this, itemWrapper, clickHandler, slots));
-    }
+    public void registerItem(@NotNull String key, @NotNull Consumer<GuiItemController.Builder> builderConsumer) {
+        GuiItemController.Builder builder = new GuiItemController.Builder(this);
 
-    public void registerItem(@NotNull String key, @NotNull ItemWrapper itemWrapper, @Nullable InventoryHandler<InventoryClickEvent> clickHandler, int @NotNull ... slots) {
-        registerItem(key, new GuiItemController(this, itemWrapper, clickHandler, slots));
+        builderConsumer.accept(builder);
+
+        registerItem(key, builder.build());
     }
 
     public void registerItem(@NotNull String key, @NotNull GuiItemController controller) {
@@ -56,17 +56,13 @@ public class AdvancedGui extends SimpleGui {
 
     public GuiItemController getController(int slot) {
         return keyMap.values().stream()
-                .filter(controller -> controller.getSlots().contains(slot))
+                .filter(controller -> controller.slots().contains(slot))
                 .findFirst()
                 .orElse(null);
     }
 
     public Collection<GuiItemController> getControllers() {
         return Collections.unmodifiableCollection(keyMap.values());
-    }
-
-    public void swapControllers(@NotNull GuiItemController a, @NotNull GuiItemController b) {
-        GuiItemController.swap(a, b);
     }
 
 }

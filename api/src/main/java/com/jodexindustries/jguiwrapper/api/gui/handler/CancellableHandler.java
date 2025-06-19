@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.gui.handler;
 
+import com.jodexindustries.jguiwrapper.gui.SimpleGui;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.jetbrains.annotations.NotNull;
@@ -17,12 +18,12 @@ public final class CancellableHandler <T extends InventoryEvent> implements Inve
     }
 
     @Override
-    public void handle(T event) {
+    public void handle(T event, SimpleGui gui) {
         if(event instanceof Cancellable cancellable) {
             cancellable.setCancelled(cancel);
         }
 
-        handler.handle(event);
+        handler.handle(event, gui);
     }
 
     public static <T extends InventoryEvent> InventoryHandler<T> wrap(@NotNull InventoryHandler<T> handler, boolean cancel) {
