@@ -10,12 +10,13 @@ import org.bukkit.event.inventory.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractGui implements Gui {
 
-    protected static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
+    public static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
 
     private int size;
     private Component title;
@@ -40,6 +41,7 @@ public abstract class AbstractGui implements Gui {
         this.title = title;
         this.holder = new GuiHolder(this, true);
         this.type = type;
+        INSTANCES.add(new WeakReference<>(this));
     }
 
     public AbstractGui(int size, @NotNull Component title) {
@@ -47,6 +49,7 @@ public abstract class AbstractGui implements Gui {
         this.title = title;
         this.holder = new GuiHolder(this);
         this.type = holder.getInventory().getType();
+        INSTANCES.add(new WeakReference<>(this));
     }
 
     public final int size() {

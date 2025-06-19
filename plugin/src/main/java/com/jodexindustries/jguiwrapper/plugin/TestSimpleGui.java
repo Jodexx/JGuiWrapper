@@ -13,7 +13,7 @@ public class TestSimpleGui extends SimpleGui {
         super(3123, "&cExample");
 
         setClickHandlers(
-                CancellableHandler.wrap(event -> {
+                CancellableHandler.wrap((event, gui) -> {
                     title(String.valueOf(clicks++));
                     size(looper.nextSize());
                     updateMenu();

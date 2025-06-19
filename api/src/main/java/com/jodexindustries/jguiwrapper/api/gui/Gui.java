@@ -6,7 +6,15 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 public interface Gui {
+
+    Set<WeakReference<Gui>> INSTANCES = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     @NotNull GuiHolder holder();
 
@@ -43,5 +51,16 @@ public interface Gui {
 
     default void close() {
         this.holder().getInventory().close();
+    }
+
+    static Set<Gui> getActiveInstances() {
+        Set<Gui> active = new HashSet<>();
+        for (WeakReference<Gui> ref : INSTANCES) {
+            Gui instance = ref.get();
+            if (instance != null) {
+                active.add(instance);
+            }
+        }
+        return active;
     }
 }
