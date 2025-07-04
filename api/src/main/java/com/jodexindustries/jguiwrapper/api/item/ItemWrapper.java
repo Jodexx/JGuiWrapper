@@ -181,6 +181,8 @@ public class ItemWrapper {
             wrapper.customModelData = customModelData;
             wrapper.autoFlushUpdate = autoFlushUpdate;
 
+            wrapper.update();
+
             return wrapper;
         }
     }
