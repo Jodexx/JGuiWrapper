@@ -1,6 +1,7 @@
 plugins {
     java
     `java-library`
+    `maven-publish`
     id("com.gradleup.shadow") version "9.0.0-beta15" apply false
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.17" apply false
 
@@ -10,11 +11,32 @@ tasks.jar {
     enabled = false;
 }
 
+var publishProjects = listOf("common", "api", "nms")
+
+subprojects {
+    apply(plugin = "java-library")
+    apply(plugin = "maven-publish")
+
+    if (name in publishProjects) {
+        afterEvaluate {
+            publishing {
+                repositories {
+                    maven {
+                        url = uri("https://repo.jodex.xyz/releases")
+                        credentials {
+                            username = findProperty("jodexRepoUser") as String? ?: System.getenv("JODEX_REPO_USER")
+                            password = findProperty("jodexRepoPassword") as String? ?: System.getenv("JODEX_REPO_PASSWORD")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 allprojects {
     group = "com.jodexindustries.jguiwrapper"
     version = "1.0.0"
-
-    apply(plugin = "java-library")
 
     repositories {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")

@@ -4,6 +4,22 @@ dependencies {
     api(project(":api"))
 }
 
+tasks.jar {
+    childProjects.values.forEach { subproject ->
+        if (subproject.parent == project) {
+            evaluationDependsOn(subproject.path)
+
+            if (useReobfJar) {
+                from(zipTree(subproject.tasks.named("reobfJar").get().outputs.files.singleFile))
+            } else {
+                from(zipTree(subproject.tasks.named("jar").get().outputs.files.singleFile))
+            }
+        }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 subprojects {
     apply(plugin = "io.papermc.paperweight.userdev")
 
@@ -18,27 +34,15 @@ subprojects {
     }
 }
 
-val nmsProjects = childProjects.keys.map { ":nms:$it" }
-
-nmsProjects.forEach { path ->
-    evaluationDependsOn(path)
-    val nmsProject = project(path)
-
-    if (useReobfJar) {
-        val reobfJarTask = nmsProject.tasks.named("reobfJar")
-
-        val jarFileProvider = reobfJarTask.map { task -> task.outputs.files }
-
-        dependencies {
-            api(nmsProject.files(jarFileProvider).builtBy(reobfJarTask))
-        }
-    } else {
-        dependencies {
-            api(nmsProject)
-        }
-    }
-}
-
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            artifactId = "nms"
+        }
+    }
 }
