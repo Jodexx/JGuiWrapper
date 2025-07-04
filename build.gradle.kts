@@ -36,7 +36,7 @@ subprojects {
 
 allprojects {
     group = "com.jodexindustries.jguiwrapper"
-    version = "1.0.0"
+    version = "1.0.1"
 
     repositories {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
