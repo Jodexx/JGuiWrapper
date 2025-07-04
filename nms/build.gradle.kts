@@ -9,11 +9,15 @@ tasks.jar {
         if (subproject.parent == project) {
             evaluationDependsOn(subproject.path)
 
-            if (useReobfJar) {
-                from(zipTree(subproject.tasks.named("reobfJar").get().outputs.files.singleFile))
+            val task = if (useReobfJar) {
+                subproject.tasks.named("reobfJar")
             } else {
-                from(zipTree(subproject.tasks.named("jar").get().outputs.files.singleFile))
+                subproject.tasks.named("jar")
             }
+
+            dependsOn(task)
+
+            from(zipTree(task.get().outputs.files.singleFile))
         }
     }
 
