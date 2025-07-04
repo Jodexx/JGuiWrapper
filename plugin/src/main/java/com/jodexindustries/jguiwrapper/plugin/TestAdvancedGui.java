@@ -14,6 +14,13 @@ public class TestAdvancedGui extends AdvancedGui {
     public TestAdvancedGui() {
         super("&cAdvanced gui");
 
+        onClose(event -> {
+            event.getPlayer().sendMessage("Closed");
+        });
+
+        onOpen(event -> {
+            event.getPlayer().sendMessage("Opened");
+        });
 
         registerItem("test", builder -> {
             builder.withSlots(IntStream.range(0, size() / 2).toArray())
@@ -32,8 +39,16 @@ public class TestAdvancedGui extends AdvancedGui {
                     });
         });
 
+        registerItem("close", builder -> {
+            builder.withSlots(size() - 1)
+                    .withDefaultItem(ItemWrapper.builder(Material.BARRIER)
+                            .displayName(LEGACY_AMPERSAND.deserialize("&cClose")).build())
+                    .withDefaultClickHandler((event, controller) -> {
+                        event.setCancelled(true);
+
+                        close(event.getWhoClicked());
+                    });
+        });
 
     }
-
-
-}
+    }

@@ -14,6 +14,7 @@ import org.bukkit.craftbukkit.inventory.CraftContainer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,15 +33,14 @@ public class Wrapper1_21_R4 implements NMSWrapper {
     }
 
     @Override
-    public boolean openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
+    public InventoryView openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
         ServerPlayer sp = ((CraftPlayer) player).getHandle();
         MenuType<?> menuType = getNotchInventoryType(type, size);
 
-        openCustomInventory(inventory, sp, menuType, title);
-        return true;
+        return openCustomInventory(inventory, sp, menuType, title);
     }
 
-    private static void openCustomInventory(Inventory inventory, ServerPlayer player, MenuType<?> windowType, Component title) {
+    private static InventoryView openCustomInventory(Inventory inventory, ServerPlayer player, MenuType<?> windowType, Component title) {
         AbstractContainerMenu container = new CraftContainer(inventory, player, player.nextContainerCounter());
         Pair<Component, AbstractContainerMenu> result = CraftEventFactory.callInventoryOpenEventWithTitle(player, container);
         AbstractContainerMenu containerMenu = result.getSecond();
@@ -52,7 +52,11 @@ public class Wrapper1_21_R4 implements NMSWrapper {
 
             player.containerMenu = containerMenu;
             player.initMenu(containerMenu);
+
+            return containerMenu.getBukkitView();
         }
+
+        return null;
     }
 
     public static net.minecraft.world.inventory.MenuType<?> getNotchInventoryType(InventoryType type, int size) {

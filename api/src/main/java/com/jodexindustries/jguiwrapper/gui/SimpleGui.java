@@ -41,17 +41,17 @@ public abstract class SimpleGui extends AbstractGui {
     }
 
     @Override
-    void onOpen(@NotNull InventoryOpenEvent event) {
+    public final void onOpen(@NotNull InventoryOpenEvent event) {
         if (openEventConsumer != null) openEventConsumer.accept(event);
     }
 
     @Override
-    void onClose(@NotNull InventoryCloseEvent event) {
+    public final void onClose(@NotNull InventoryCloseEvent event) {
         if (closeEventConsumer != null) closeEventConsumer.accept(event);
     }
 
     @Override
-    void onDrag(@NotNull InventoryDragEvent event) {
+    public final void onDrag(@NotNull InventoryDragEvent event) {
         if (dragEventConsumer != null) {
             dragEventConsumer.accept(event);
         } else {
@@ -60,7 +60,7 @@ public abstract class SimpleGui extends AbstractGui {
     }
 
     @Override
-    void onClick(@NotNull InventoryClickEvent event) {
+    public final void onClick(@NotNull InventoryClickEvent event) {
         if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
             event.setCancelled(true);
             return;

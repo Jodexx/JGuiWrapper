@@ -13,6 +13,7 @@ import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftContainer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,26 +32,29 @@ public class Wrapper1_20_R1 implements NMSWrapper {
     }
 
     @Override
-    public boolean openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
+    public InventoryView openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
         ServerPlayer sp = ((CraftPlayer) player).getHandle();
         MenuType<?> menuType = getNotchInventoryType(type, size);
 
-        openCustomInventory(inventory, sp, menuType, title);
-        return true;
+        return openCustomInventory(inventory, sp, menuType, title);
     }
 
-    private static void openCustomInventory(Inventory inventory, ServerPlayer player, MenuType<?> windowType, Component title) {
+    private static InventoryView openCustomInventory(Inventory inventory, ServerPlayer player, MenuType<?> windowType, Component title) {
         AbstractContainerMenu container = new CraftContainer(inventory, player, player.nextContainerCounter());
-        AbstractContainerMenu result = CraftEventFactory.callInventoryOpenEvent(player, container);
-        if (result != null) {
+        AbstractContainerMenu containerMenu = CraftEventFactory.callInventoryOpenEvent(player, container);
+        if (containerMenu != null) {
 
             if (!player.isImmobile()) {
-                player.connection.send(new ClientboundOpenScreenPacket(result.containerId, windowType, PaperAdventure.asVanilla(title)));
+                player.connection.send(new ClientboundOpenScreenPacket(containerMenu.containerId, windowType, PaperAdventure.asVanilla(title)));
             }
 
-            player.containerMenu = result;
-            player.initMenu(result);
+            player.containerMenu = containerMenu;
+            player.initMenu(containerMenu);
+
+            return containerMenu.getBukkitView();
         }
+
+        return null;
     }
 
     public static MenuType<?> getNotchInventoryType(InventoryType type, int size) {

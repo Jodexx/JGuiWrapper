@@ -3,10 +3,12 @@ package com.jodexindustries.jguiwrapper.gui;
 import com.jodexindustries.jguiwrapper.api.GuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
+import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public abstract class AbstractGui implements Gui {
 
     public static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
+    private static final NMSWrapper NMS_WRAPPER = GuiApi.get().getNMSWrapper();
 
     private int size;
     private Component title;
@@ -36,19 +39,20 @@ public abstract class AbstractGui implements Gui {
         this(InventoryType.CHEST, title);
     }
 
-    public AbstractGui(InventoryType type, @NotNull Component title) {
-        this.size = type.getDefaultSize();
-        this.title = title;
-        this.holder = new GuiHolder(this, true);
-        this.type = type;
-        INSTANCES.add(new WeakReference<>(this));
+    public AbstractGui(@NotNull InventoryType type, @NotNull Component title) {
+        this(type.getDefaultSize(), type, title);
     }
 
     public AbstractGui(int size, @NotNull Component title) {
-        this.size = adaptSize(size);
+        this(size, null, title);
+    }
+
+    private AbstractGui(int size, @Nullable InventoryType type, @NotNull Component title) {
+        this.size =  adaptSize(size);
         this.title = title;
-        this.holder = new GuiHolder(this);
+        this.holder = new GuiHolder(this, type);
         this.type = holder.getInventory().getType();
+
         INSTANCES.add(new WeakReference<>(this));
     }
 
@@ -93,18 +97,29 @@ public abstract class AbstractGui implements Gui {
 
     @Override
     public final void open(@NotNull HumanEntity player, Component title) {
-        if (!GuiApi.get().getNMSWrapper().openInventory(player, holder.getInventory(), type, size, title)) {
+        InventoryView view = NMS_WRAPPER.openInventory(player, holder.getInventory(), type, size, title);
+
+        if (view == null) {
             player.openInventory(holder.getInventory());
+        } else {
+            onOpen(new InventoryOpenEvent(view));
         }
     }
 
-    abstract void onOpen(@NotNull InventoryOpenEvent event);
+    @Override
+    public final void close(@NotNull HumanEntity player) {
+        InventoryCloseEvent.Reason reason = InventoryCloseEvent.Reason.PLUGIN;
+        onClose(new InventoryCloseEvent(player.getOpenInventory(), reason));
+        player.closeInventory(reason);
+    }
 
-    abstract void onClose(@NotNull InventoryCloseEvent event);
+    public void onOpen(@NotNull InventoryOpenEvent event) {}
 
-    abstract void onClick(@NotNull InventoryClickEvent event);
+    public void onClose(@NotNull InventoryCloseEvent event) {}
 
-    abstract void onDrag(@NotNull InventoryDragEvent event);
+    public void onClick(@NotNull InventoryClickEvent event) {}
+
+    public void onDrag(@NotNull InventoryDragEvent event) {}
 
     public final void updateMenu() {
         updateMenu(this.type, this.size, this.title);
@@ -143,20 +158,18 @@ public abstract class AbstractGui implements Gui {
     }
 
     public final void updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
-        GuiApi.get().getNMSWrapper().updateMenu(player, type, size, title);
+        NMS_WRAPPER.updateMenu(player, type, size, title);
     }
 
     @Override
     public final void updateHolder() {
         List<HumanEntity> viewers = new ArrayList<>(this.holder.getInventory().getViewers());
 
-        this.holder.getInventory().close();
+        close();
 
-        this.holder = new GuiHolder(this);
+        this.holder = new GuiHolder(this, type);
 
-        for (HumanEntity entity : viewers) {
-            entity.openInventory(this.holder.getInventory());
-        }
+        viewers.forEach(this::open);
     }
 
     protected static int adaptSize(int size) {

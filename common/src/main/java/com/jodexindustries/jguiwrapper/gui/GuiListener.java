@@ -18,18 +18,12 @@ public class GuiListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent e) {
+        if (e.getReason() == InventoryCloseEvent.Reason.PLUGIN) return;
+
         GuiHolder holder = GuiUtils.getHolder(e.getInventory());
         if (holder == null) return;
 
         holder.getGui().onClose(e);
-    }
-
-    @EventHandler
-    public void onInventoryOpen(InventoryOpenEvent e) {
-        GuiHolder holder = GuiUtils.getHolder(e.getInventory());
-        if (holder == null) return;
-
-        holder.getGui().onOpen(e);
     }
 
     @EventHandler
