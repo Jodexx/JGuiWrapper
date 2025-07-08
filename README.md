@@ -4,7 +4,105 @@
 
 ---
 
-## Общая инициализация
+## Установка и использование
+
+Сниппеты доступны для Maven, Gradle Groovy и Gradle Kotlin DSL
+
+Существует **два способа** использования библиотеки в зависимости от структуры вашего проекта:
+
+### 1. Использование как отдельного плагина (модуль `api`)
+
+- JGuiWrapper устанавливается как отдельный плагин на сервер.
+- Ваш плагин просто подключается к его API **без затенения**.
+
+##### Maven
+
+```xml
+<repository>
+  <id>Jodexindustries-releases</id>
+  <name>JodexIndustries Repo</name>
+  <url>https://repo.jodex.xyz/releases</url>
+</repository>
+
+<dependency>
+  <groupId>com.jodexindustries.jguiwrapper</groupId>
+  <artifactId>api</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+##### Gradle (Groovy DSL)
+
+```groovy
+repositories {
+    maven { url = 'https://repo.jodex.xyz/releases' }
+}
+
+dependencies {
+    implementation 'com.jodexindustries.jguiwrapper:api:1.0.0'
+}
+```
+
+##### Gradle (Kotlin DSL)
+
+```kotlin
+repositories {
+    maven("https://repo.jodex.xyz/releases")
+}
+
+dependencies {
+    implementation("com.jodexindustries.jguiwrapper:api:1.0.0")
+}
+```
+
+### 2. Встраивание в проект (модуль `common`)
+
+- Подключаете библиотеку напрямую и **затеняете** в итоговый jar через `shade` (или `shadowjar`).
+- Нет необходимости устанавливать JGuiWrapper как отдельный плагин.
+
+##### Maven
+
+```xml
+<repository>
+  <id>Jodexindustries-releases</id>
+  <name>JodexIndustries Repo</name>
+  <url>https://repo.jodex.xyz/releases</url>
+</repository>
+
+<dependency>
+  <groupId>com.jodexindustries.jguiwrapper</groupId>
+  <artifactId>common</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+##### Gradle (Groovy DSL)
+
+```groovy
+repositories {
+    maven { url = 'https://repo.jodex.xyz/releases' }
+}
+
+dependencies {
+    implementation 'com.jodexindustries.jguiwrapper:common:1.0.0'
+}
+```
+
+##### Gradle (Kotlin DSL)
+
+```kotlin
+repositories {
+    maven("https://repo.jodex.xyz/releases")
+}
+
+dependencies {
+    implementation("com.jodexindustries.jguiwrapper:common:1.0.0")
+}
+```
+
+#### Общая инициализация
+
+Использование библиотеки без отдельного плагина JGuiWrapper требует инициализацию слушателей в главном классе вашего проекта
 
 ```java
 @Override
@@ -17,7 +115,7 @@ public void onEnable() {
 
 ---
 
-## 1|`AbstractGui`
+## AbstractGui
 
 Базовый абстрактный класс, реализующий интерфейс `Gui` и обеспечивающий:
 
@@ -55,9 +153,7 @@ void updateHolder();                          // пересоздать внут
 
 ---
 
-## 2|`SimpleGui`
-
-**Расположение:** `com.jodexindustries.jguiwrapper.gui`
+## SimpleGui
 
 Наследуется от `AbstractGui` и добавляет простую систему **слотовых обработчиков**.
 
@@ -77,12 +173,12 @@ void updateHolder();                          // пересоздать внут
 ```java
 void setClickHandlers(InventoryHandler handler, int... slots);   // назначить
 void removeClickHandlers(int... slots);                          // снять
-void setCancelEmptySlots(boolean flag);                          // включить/выключить автокэнсел
+void setCancelEmptySlots(boolean flag);                          // включить/выключить автокэнсел пустых слотов
 ```
 
 ---
 
-## 3|`AdvancedGui`
+## AdvancedGui
 
 Расширяет `SimpleGui`, внедряя **контроллеры предметов** (`GuiItemController`)— гибкий инструмент для динамического содержимого.
 
@@ -95,17 +191,17 @@ void setCancelEmptySlots(boolean flag);                          // включи
 ### Мини‑пример
 
 ```java
-AdvancedGui gui = new AdvancedGui("&6Меню")
-    .registerItem("clock", b -> b
+AdvancedGui gui = new AdvancedGui("&6Меню");
+gui.registerItem("clock", b -> b
         .withSlots(11)
-        .withDefaultItem(new ItemWrapper(() -> new ItemStack(Material.CLOCK)))
-        .withDefaultClickHandler((e, c) -> e.getWhoClicked().sendMessage("Тик‑так"))
-    );
+        .withDefaultItem(ItemWrapper.builder(Material.CLOCK).build())
+        .withDefaultClickHandler((e, c) -> e.getWhoClicked().sendMessage("Тик‑так")));
+
 ```
 
 ---
 
-## 4|`GuiItemController`
+## GuiItemController
 
 Контролирует **набор слотов** и управляет:
 
@@ -145,7 +241,7 @@ controller = new GuiItemController.Builder(gui)
 
 ---
 
-## 5|`AdvancedGuiClickHandler`
+## AdvancedGuiClickHandler
 
 Функциональный интерфейс = `InventoryHandler<InventoryClickEvent>` с удобным аксессом к `GuiItemController`:
 
