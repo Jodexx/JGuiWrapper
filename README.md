@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.jodexindustries.jguiwrapper:api:1.0.0'
+    compileOnly 'com.jodexindustries.jguiwrapper:api:1.0.0'
 }
 ```
 
@@ -51,7 +51,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.jodexindustries.jguiwrapper:api:1.0.0")
+    compileOnly("com.jodexindustries.jguiwrapper:api:1.0.0")
 }
 ```
 
