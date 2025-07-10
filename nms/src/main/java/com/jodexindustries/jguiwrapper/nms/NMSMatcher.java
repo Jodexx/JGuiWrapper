@@ -20,6 +20,7 @@ public class NMSMatcher {
     private static final Map<String, String> VERSIONS = Map.of(
             "1.20.5", "1_20_R4",
             "1.20.6", "1_20_R4",
+            "1.21", "1_21_R1",
             "1.21.1", "1_21_R1",
             "1.21.3", "1_21_R2",
             "1.21.4", "1_21_R3",
