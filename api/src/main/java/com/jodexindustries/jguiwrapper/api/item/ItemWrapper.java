@@ -1,6 +1,7 @@
 package com.jodexindustries.jguiwrapper.api.item;
 
 import com.google.common.base.Preconditions;
+import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -89,6 +90,11 @@ public class ItemWrapper {
         flushUpdate();
     }
 
+    public final void displayName(@Nullable String displayName) {
+        Component component = displayName == null ? null : AbstractGui.LEGACY_AMPERSAND.deserialize(displayName);
+        displayName(component);
+    }
+
     public final Component displayName() {
         return this.displayName;
     }
@@ -156,6 +162,11 @@ public class ItemWrapper {
         public Builder displayName(@Nullable Component displayName) {
             this.displayName = displayName;
             return this;
+        }
+
+        public Builder displayName(@Nullable String displayName) {
+            Component component = displayName == null ? null : AbstractGui.LEGACY_AMPERSAND.deserialize(displayName);
+            return displayName(component);
         }
 
         public Builder lore(@Nullable List<Component> lore) {
