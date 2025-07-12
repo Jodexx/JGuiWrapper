@@ -16,10 +16,25 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract base class for all GUI implementations.
+ * <p>
+ * Provides common logic for inventory size, title, type, and holder management.
+ * Handles registration of GUI instances and provides utility for legacy component serialization.
+ */
 public abstract class AbstractGui implements Gui {
-
+    /**
+     * LegacyComponentSerializer using ampersand (&amp;) as the color code character.
+     */
     public static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
-    private static final NMSWrapper NMS_WRAPPER = GuiApi.get().getNMSWrapper();
+    /**
+     * Main API instance for GUI operations.
+     */
+    protected static final GuiApi API = GuiApi.get();
+    /**
+     * NMS wrapper for version-dependent operations.
+     */
+    protected static final NMSWrapper NMS_WRAPPER = API.getNMSWrapper();
 
     private int size;
     private Component title;
@@ -27,22 +42,45 @@ public abstract class AbstractGui implements Gui {
 
     private GuiHolder holder;
 
+    /**
+     * Constructs a GUI with the default size (54) and a string title.
+     * @param title The GUI title as a string (legacy color codes supported)
+     */
     public AbstractGui(@NotNull String title) {
         this(54, title);
     }
 
+    /**
+     * Constructs a GUI with a specific size and string title.
+     * @param size  The inventory size
+     * @param title The GUI title as a string (legacy color codes supported)
+     */
     public AbstractGui(int size, @NotNull String title) {
         this(size, LEGACY_AMPERSAND.deserialize(title));
     }
 
+    /**
+     * Constructs a GUI with the default CHEST type and a component title.
+     * @param title The GUI title as a Component
+     */
     public AbstractGui(@NotNull Component title) {
         this(InventoryType.CHEST, title);
     }
 
+    /**
+     * Constructs a GUI with a specific inventory type and component title.
+     * @param type  The inventory type
+     * @param title The GUI title as a Component
+     */
     public AbstractGui(@NotNull InventoryType type, @NotNull Component title) {
         this(type.getDefaultSize(), type, title);
     }
 
+    /**
+     * Constructs a GUI with a specific size, optional type, and component title.
+     * @param size  The inventory size
+     * @param title The GUI title as a Component
+     */
     public AbstractGui(int size, @NotNull Component title) {
         this(size, null, title);
     }
@@ -56,45 +94,86 @@ public abstract class AbstractGui implements Gui {
         INSTANCES.add(new WeakReference<>(this));
     }
 
+    /**
+     * Gets the inventory size (number of slots).
+     * @return the inventory size
+     */
     public final int size() {
         return size;
     }
 
+    /**
+     * Sets the inventory size (number of slots).
+     * @param size the new inventory size
+     */
     public final void size(int size) {
         this.size = adaptSize(size);
     }
 
+    /**
+     * Gets the GUI title as a Component.
+     * @return the GUI title
+     */
     public final @NotNull Component title() {
         return title;
     }
 
+    /**
+     * Sets the GUI title as a Component.
+     * @param title the new GUI title
+     */
     public final void title(@NotNull Component title) {
         this.title = title;
     }
 
+    /**
+     * Sets the GUI title from a legacy string.
+     * @param title the new GUI title as a string (legacy color codes supported)
+     */
     public final void title(@NotNull String title) {
         this.title = LEGACY_AMPERSAND.deserialize(title);
     }
 
+    /**
+     * Sets the inventory type (e.g., CHEST, HOPPER).
+     * @param type the new inventory type
+     */
     public final void type(@NotNull InventoryType type) {
         this.type = type;
     }
 
+    /**
+     * Gets the inventory type (e.g., CHEST, HOPPER).
+     * @return the inventory type
+     */
     @NotNull
     public final InventoryType type() {
         return type;
     }
 
+    /**
+     * Gets the holder for this GUI instance.
+     * @return the GuiHolder for this GUI
+     */
     @Override
     public final @NotNull GuiHolder holder() {
         return holder;
     }
 
+    /**
+     * Opens this GUI for the specified player.
+     * @param player the player to open the GUI for
+     */
     @Override
     public final void open(@NotNull HumanEntity player) {
         open(player, title);
     }
 
+    /**
+     * Opens this GUI for the specified player with a custom title.
+     * @param player the player to open the GUI for
+     * @param title the custom title to use
+     */
     @Override
     public final void open(@NotNull HumanEntity player, Component title) {
         InventoryView view = NMS_WRAPPER.openInventory(player, holder.getInventory(), type, size, title);
@@ -106,6 +185,10 @@ public abstract class AbstractGui implements Gui {
         }
     }
 
+    /**
+     * Closes this GUI for the specified player.
+     * @param player the player to close the GUI for
+     */
     @Override
     public final void close(@NotNull HumanEntity player) {
         InventoryCloseEvent.Reason reason = InventoryCloseEvent.Reason.PLUGIN;
@@ -113,54 +196,122 @@ public abstract class AbstractGui implements Gui {
         player.closeInventory(reason);
     }
 
+    /**
+     * Called when the GUI is opened for a player. Can be overridden by subclasses.
+     * @param event the InventoryOpenEvent
+     */
     public void onOpen(@NotNull InventoryOpenEvent event) {}
 
+    /**
+     * Called when the GUI is closed for a player. Can be overridden by subclasses.
+     * @param event the InventoryCloseEvent
+     */
     public void onClose(@NotNull InventoryCloseEvent event) {}
 
+    /**
+     * Called when a player clicks in the GUI. Can be overridden by subclasses.
+     * @param event the InventoryClickEvent
+     */
     public void onClick(@NotNull InventoryClickEvent event) {}
 
+    /**
+     * Called when a player drags items in the GUI. Can be overridden by subclasses.
+     * @param event the InventoryDragEvent
+     */
     public void onDrag(@NotNull InventoryDragEvent event) {}
 
+    /**
+     * Updates the menu for all viewers with the current type, size, and title.
+     */
     public final void updateMenu() {
         updateMenu(this.type, this.size, this.title);
     }
 
+    /**
+     * Updates the menu for a specific player with the current type, size, and title.
+     * @param player the player to update the menu for
+     */
     public final void updateMenu(HumanEntity player) {
         updateMenu(player, this.type, this.size, this.title);
     }
 
+    /**
+     * Updates the menu for all viewers with a new title, keeping the current type and size.
+     * @param title the new title for the menu
+     */
     public final void updateMenu(Component title) {
         updateMenu(null, this.size, title);
     }
 
+    /**
+     * Updates the menu for all viewers with a new type, keeping the current size and title.
+     * @param type the new inventory type
+     */
     public final void updateMenu(InventoryType type) {
         updateMenu(type, this.size);
     }
 
+    /**
+     * Updates the menu for all viewers with a new type and size, keeping the current title.
+     * @param type the new inventory type
+     * @param size the new inventory size
+     */
     public final void updateMenu(InventoryType type, int size) {
         updateMenu(type, size, null);
     }
 
+    /**
+     * Updates the menu for all viewers with new type, size, and title.
+     * @param type the new inventory type
+     * @param size the new inventory size
+     * @param title the new title for the menu
+     */
     public final void updateMenu(InventoryType type, int size, Component title) {
         this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title));
     }
 
+    /**
+     * Updates the menu for a specific player with a new title, keeping the current type and size.
+     * @param player the player to update the menu for
+     * @param title the new title for the menu
+     */
     public final void updateMenu(@NotNull HumanEntity player, Component title) {
         updateMenu(player, null, this.size, title);
     }
 
+    /**
+     * Updates the menu for a specific player with a new type, keeping the current size and title.
+     * @param player the player to update the menu for
+     * @param type the new inventory type
+     */
     public final void updateMenu(@NotNull HumanEntity player, InventoryType type) {
         updateMenu(player, type, this.size, null);
     }
 
+    /**
+     * Updates the menu for a specific player with a new type and size, keeping the current title.
+     * @param player the player to update the menu for
+     * @param type the new inventory type
+     * @param size the new inventory size
+     */
     public final void updateMenu(@NotNull HumanEntity player, InventoryType type, int size) {
         updateMenu(player, type, size, null);
     }
 
+    /**
+     * Updates the menu for a specific player with new type, size, and title.
+     * @param player the player to update the menu for
+     * @param type the new inventory type
+     * @param size the new inventory size
+     * @param title the new title for the menu
+     */
     public final void updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
         NMS_WRAPPER.updateMenu(player, type, size, title);
     }
 
+    /**
+     * Updates the holder for this GUI instance and reopens the GUI for all viewers.
+     */
     @Override
     public final void updateHolder() {
         List<HumanEntity> viewers = new ArrayList<>(this.holder.getInventory().getViewers());
@@ -172,6 +323,11 @@ public abstract class AbstractGui implements Gui {
         viewers.forEach(this::open);
     }
 
+    /**
+     * Adapts the given size to the nearest valid inventory size (multiple of 9, between 1 and 54).
+     * @param size the requested inventory size
+     * @return the adapted inventory size
+     */
     protected static int adaptSize(int size) {
         return ((Math.min(Math.max(size, 1), 54) + 8) / 9) * 9;
     }

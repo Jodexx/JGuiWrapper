@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.registry;
 
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -10,7 +11,11 @@ public interface GlobalRegistry {
     @NotNull
     DataRegistry register(@NotNull String namespace);
 
+    void registerLoader(@NotNull Key key, GuiDataLoader loader);
+
     void unregister(@NotNull String namespace);
+
+    Optional<GuiDataLoader> getLoader(@NotNull Key key);
 
     Optional<DataRegistry> getRegistry(@NotNull String namespace);
 

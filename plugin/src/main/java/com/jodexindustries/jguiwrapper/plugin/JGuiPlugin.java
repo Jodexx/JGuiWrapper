@@ -1,10 +1,13 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
+import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.common.JGuiInitializer;
 import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
+import net.kyori.adventure.key.Key;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,9 +20,15 @@ import java.util.Set;
 
 public final class JGuiPlugin extends JavaPlugin {
 
+    public static final Key TEST_LOADER_KEY = Key.key("jguiwrapper", "test");
+
     @Override
     public void onEnable() {
         JGuiInitializer.init(this);
+
+        GlobalRegistry registry = JGuiInitializer.get().getRegistry();
+        registry.registerLoader(TEST_LOADER_KEY, new TestGuiLoader());
+
         Objects.requireNonNull(getCommand("jguiwrapper")).setExecutor(this);
     }
 
@@ -39,7 +48,7 @@ public final class JGuiPlugin extends JavaPlugin {
                         return false;
                     }
 
-                    if(args.length >= 2) {
+                    if (args.length >= 2) {
                         String gui = args[1];
 
                         switch (gui) {
@@ -58,8 +67,11 @@ public final class JGuiPlugin extends JavaPlugin {
                         return true;
                     }
 
+                    int index = 0;
+
                     for (Gui gui : activeInstances) {
                         AbstractGui abstractGui = (AbstractGui) gui;
+                        send(sender, "Index: &6" + index);
                         send(sender, "Class: &6" + abstractGui.getClass().getName());
                         send(sender, "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName());
                         send(sender, "Title: " + AbstractGui.LEGACY_AMPERSAND.serialize(abstractGui.title()));
@@ -77,8 +89,21 @@ public final class JGuiPlugin extends JavaPlugin {
                                     send(sender, "--- Is empty: &6" + controller.isEmpty());
                                 }
                             }
+
+                            Collection<GuiDataLoader> loaders = advancedGui.getLoaders();
+                            if (!loaders.isEmpty()) {
+                                send(sender, "- Loaders:");
+                                int i = 0;
+                                for (GuiDataLoader loader : loaders) {
+                                    i++;
+                                    send(sender, "-- #&a" + i);
+                                    send(sender, "--- Class: &6" + loader.getClass().getSimpleName());
+                                }
+                            }
                         }
                         send(sender, "-----------");
+
+                        index++;
                     }
                 }
             }

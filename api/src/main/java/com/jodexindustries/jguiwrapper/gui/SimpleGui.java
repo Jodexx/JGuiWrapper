@@ -10,6 +10,12 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
+/**
+ * Represents a simple GUI implementation with slot-based click handlers and event consumers.
+ * <p>
+ * Provides methods to register handlers for slot clicks, open/close/drag events, and control slot cancellation behavior.
+ * Designed for easy extension and use in plugin GUI development.
+ */
 public abstract class SimpleGui extends AbstractGui {
 
     private final Map<Integer, InventoryHandler<InventoryClickEvent>> slotClickHandlers = new HashMap<>();
@@ -79,14 +85,26 @@ public abstract class SimpleGui extends AbstractGui {
         }
     }
 
+    /**
+     * Registers a consumer to be called when the GUI is opened.
+     * @param consumer the consumer to handle InventoryOpenEvent
+     */
     public final void onOpen(Consumer<InventoryOpenEvent> consumer) {
         this.openEventConsumer = consumer;
     }
 
+    /**
+     * Registers a consumer to be called when the GUI is closed.
+     * @param consumer the consumer to handle InventoryCloseEvent
+     */
     public final void onClose(Consumer<InventoryCloseEvent> consumer) {
         this.closeEventConsumer = consumer;
     }
 
+    /**
+     * Registers a consumer to be called when the GUI is dragged in.
+     * @param consumer the consumer to handle InventoryDragEvent
+     */
     public final void onDrag(Consumer<InventoryDragEvent> consumer) {
         this.dragEventConsumer = consumer;
     }

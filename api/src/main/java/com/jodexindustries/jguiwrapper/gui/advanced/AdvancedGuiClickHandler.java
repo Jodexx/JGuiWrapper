@@ -9,11 +9,13 @@ public interface AdvancedGuiClickHandler extends InventoryHandler<InventoryClick
 
     @Override
     default void handle(InventoryClickEvent event, SimpleGui gui) {
-        GuiItemController controller = null;
-
-        if (gui instanceof AdvancedGui advancedGui) controller = advancedGui.getController(event.getRawSlot());
-
-        this.handle(event, controller);
+        if (gui instanceof AdvancedGui advancedGui) {
+            advancedGui.getController(event.getRawSlot()).ifPresent(controller -> {
+                this.handle(event, controller);
+            });
+        } else {
+            this.handle(event, (GuiItemController) null);
+        }
     }
 
     void handle(@NotNull InventoryClickEvent event, GuiItemController controller);

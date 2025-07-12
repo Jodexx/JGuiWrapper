@@ -1,10 +1,12 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
+import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class TestAdvancedGui extends AdvancedGui {
@@ -14,12 +16,23 @@ public class TestAdvancedGui extends AdvancedGui {
     public TestAdvancedGui() {
         super("&cAdvanced gui");
 
+        registerLoader(JGuiPlugin.TEST_LOADER_KEY);
+
         onClose(event -> {
             event.getPlayer().sendMessage("Closed");
         });
 
         onOpen(event -> {
             event.getPlayer().sendMessage("Opened");
+
+            loadData(event.getPlayer());
+
+            Optional<GuiDataLoader> guiDataLoader = getLoader(JGuiPlugin.TEST_LOADER_KEY);
+            guiDataLoader.ifPresent(loader -> {
+                TestGuiLoader testGuiLoader = (TestGuiLoader) loader;
+
+                event.getPlayer().sendMessage("Count: " + testGuiLoader.getOpenCount());
+            });
         });
 
         registerItem("test", builder -> {
