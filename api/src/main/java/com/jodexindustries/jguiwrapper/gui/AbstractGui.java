@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Abstract base class for all GUI implementations.
@@ -176,12 +177,16 @@ public abstract class AbstractGui implements Gui {
      */
     @Override
     public final void open(@NotNull HumanEntity player, Component title) {
-        InventoryView view = NMS_WRAPPER.openInventory(player, holder.getInventory(), type, size, title);
+        try {
+            InventoryView view = NMS_WRAPPER.openInventory(player, holder.getInventory(), type, size, title);
 
-        if (view == null) {
-            player.openInventory(holder.getInventory());
-        } else {
-            onOpen(new InventoryOpenEvent(view));
+            if (view == null) {
+                player.openInventory(holder.getInventory());
+            } else {
+                onOpen(new InventoryOpenEvent(view));
+            }
+        } catch (Exception e) {
+            API.getPlugin().getLogger().log(Level.WARNING, "Error with opening menu for player: " + player.getName(), e);
         }
     }
 
@@ -306,7 +311,11 @@ public abstract class AbstractGui implements Gui {
      * @param title the new title for the menu
      */
     public final void updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
-        NMS_WRAPPER.updateMenu(player, type, size, title);
+        try {
+            NMS_WRAPPER.updateMenu(player, type, size, title);
+        } catch (Exception e) {
+            API.getPlugin().getLogger().log(Level.WARNING, "Error with updating menu for player: " + player.getName(), e);
+        }
     }
 
     /**
