@@ -37,7 +37,7 @@ subprojects {
                 dependsOn(tasks.named("reobfJar"))
             }
         } else {
-            plugins.apply("me.kcra.takenaka.accessor")
+//            plugins.apply("me.kcra.takenaka.accessor")
         }
 }
 
