@@ -56,12 +56,16 @@ public final class JGuiPlugin extends JavaPlugin {
                         switch (gui) {
                             case "simple":
                                 new TestSimpleGui().open(player);
+                                break;
                             case "advanced":
                                 new TestAdvancedGui().open(player);
+                                break;
                             default:
                                 sender.sendMessage("Unknown gui");
+                                break;
                         }
                     }
+                    break;
                 }
 
                 case "list": {
@@ -111,6 +115,7 @@ public final class JGuiPlugin extends JavaPlugin {
 
                         index++;
                     }
+                    break;
                 }
             }
         }
