@@ -4,6 +4,9 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://repo.screamingsandals.org/public/")
+        maven("https://repo.screamingsandals.org/releases")
+        maven("https://repo.screamingsandals.org/snapshots/")
     }
 }
 plugins {

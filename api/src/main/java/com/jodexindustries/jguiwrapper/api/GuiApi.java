@@ -1,6 +1,7 @@
 package com.jodexindustries.jguiwrapper.api;
 
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
+import com.jodexindustries.jguiwrapper.api.nms.NMSUtils;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
 import org.bukkit.entity.Player;
@@ -59,6 +60,8 @@ public abstract class GuiApi {
      */
     @NotNull
     public abstract NMSWrapper getNMSWrapper();
+
+    public abstract NMSUtils getNMSUtils();
 
     /**
      * Gets the currently opened GUI holder for the specified player, or null if none is open.

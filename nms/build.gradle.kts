@@ -1,7 +1,8 @@
-val useReobfJar = project.properties["useReobfJar"]?.toString()?.toBoolean() ?: true
+val excludedProjects = listOf(":nms:v1_16_R3")
 
 dependencies {
     api(project(":api"))
+    compileOnlyApi("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
 }
 
 tasks.jar {
@@ -9,7 +10,7 @@ tasks.jar {
         if (subproject.parent == project) {
             evaluationDependsOn(subproject.path)
 
-            val task = if (useReobfJar) {
+            val task = if (!excludedProjects.contains(subproject.path)) {
                 subproject.tasks.named("reobfJar")
             } else {
                 subproject.tasks.named("jar")
@@ -25,21 +26,23 @@ tasks.jar {
 }
 
 subprojects {
-    apply(plugin = "io.papermc.paperweight.userdev")
-
-    dependencies {
-        compileOnly(project(":api"))
-    }
-
-    if (useReobfJar) {
-        tasks.named("assemble") {
-            dependsOn(tasks.named("reobfJar"))
+        dependencies {
+            compileOnly(project(":api"))
         }
-    }
+
+        if (!excludedProjects.contains(path)) {
+            plugins.apply("io.papermc.paperweight.userdev")
+
+            tasks.named("assemble") {
+                dependsOn(tasks.named("reobfJar"))
+            }
+        } else {
+            plugins.apply("me.kcra.takenaka.accessor")
+        }
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
 publishing {

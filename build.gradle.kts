@@ -4,6 +4,7 @@ plugins {
     `maven-publish`
     id("com.gradleup.shadow") version "9.0.0-beta15" apply false
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.17" apply false
+    id("me.kcra.takenaka.accessor") version "2.0.0-SNAPSHOT" apply false
 
 }
 
@@ -42,5 +43,8 @@ allprojects {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
+        maven("https://repo.screamingsandals.org/public")
+        maven("https://repo.screamingsandals.org/releases")
+        maven("https://repo.screamingsandals.org/snapshots/")
     }
 }
