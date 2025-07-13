@@ -34,14 +34,14 @@ public final class JGuiInitializer extends GuiApi {
         plugin.getServer().getPluginManager().registerEvents(new GuiListener(), plugin);
         JGuiInitializer.PLUGIN = plugin;
 
+        setInstance(new JGuiInitializer());
+
         try {
             NMS_UTILS = new NMSUtilsImpl();
             NMS_WRAPPER = NMSMatcher.getWrapper(plugin);
         } catch (JGuiWrapperVersionException e) {
             plugin.getLogger().log(Level.WARNING, "NMSWrapper loading error: ", e);
         }
-
-        setInstance(new JGuiInitializer());
     }
 
     @Override
