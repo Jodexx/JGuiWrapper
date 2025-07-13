@@ -42,24 +42,29 @@ public final class JGuiPlugin extends JavaPlugin {
             String sub = args[0].toLowerCase();
 
             switch (sub) {
-                case "test" -> {
-                    if (!(sender instanceof Player player)) {
+                case "test": {
+                    if (!(sender instanceof Player)) {
                         sender.sendMessage("It is impossible to test from the console!");
                         return false;
                     }
+
+                    Player player = ((Player) sender);
 
                     if (args.length >= 2) {
                         String gui = args[1];
 
                         switch (gui) {
-                            case "simple" -> new TestSimpleGui().open(player);
-                            case "advanced" -> new TestAdvancedGui().open(player);
-                            default -> sender.sendMessage("Unknown gui");
+                            case "simple":
+                                new TestSimpleGui().open(player);
+                            case "advanced":
+                                new TestAdvancedGui().open(player);
+                            default:
+                                sender.sendMessage("Unknown gui");
                         }
                     }
                 }
 
-                case "list" -> {
+                case "list": {
                     Set<Gui> activeInstances = Gui.getActiveInstances();
 
                     if (activeInstances.isEmpty()) {
@@ -77,7 +82,8 @@ public final class JGuiPlugin extends JavaPlugin {
                         send(sender, "Title: " + AbstractGui.LEGACY_AMPERSAND.serialize(abstractGui.title()));
                         send(sender, "Size: &6" + abstractGui.size());
                         send(sender, "Type: &6" + abstractGui.type());
-                        if (abstractGui instanceof AdvancedGui advancedGui) {
+                        if (abstractGui instanceof AdvancedGui) {
+                            AdvancedGui advancedGui = (AdvancedGui) abstractGui;
                             Collection<GuiItemController> controllers = advancedGui.getControllers();
                             if (!controllers.isEmpty()) {
                                 send(sender, "- Controllers:");

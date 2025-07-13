@@ -21,7 +21,7 @@ tasks.build {
 }
 
 tasks.runServer {
-    minecraftVersion("1.20")
+    minecraftVersion("1.16")
 }
 
 tasks.processResources {
@@ -34,5 +34,5 @@ tasks.processResources {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
