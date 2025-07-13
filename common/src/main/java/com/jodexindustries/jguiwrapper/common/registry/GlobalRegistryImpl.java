@@ -26,12 +26,13 @@ public class GlobalRegistryImpl implements GlobalRegistry {
 
     @Override
     public void registerLoader(@NotNull Key key, GuiDataLoader loader) {
-        getRegistry(key.namespace()).ifPresentOrElse(dataRegistry -> {
-            dataRegistry.registerLoader(key.value(), loader);
-        }, () -> {
+        Optional<DataRegistry> optionalRegistry = getRegistry(key.namespace());
+        if (optionalRegistry.isPresent()) {
+            optionalRegistry.get().registerLoader(key.value(), loader);
+        } else {
             DataRegistry dataRegistry = register(key.namespace());
             dataRegistry.registerLoader(key.value(), loader);
-        });
+        }
     }
 
     @Override

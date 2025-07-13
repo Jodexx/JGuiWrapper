@@ -3,7 +3,6 @@ package com.jodexindustries.jguiwrapper.gui.advanced;
 import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.gui.SimpleGui;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
@@ -51,7 +50,7 @@ public class AdvancedGui extends SimpleGui {
         API.getRegistry().getLoader(key).ifPresent(loader -> loaderMap.put(key, loader));
     }
 
-    public void registerLoader(@KeyPattern.Namespace String namespace, @KeyPattern.Value String id) {
+    public void registerLoader(final @NotNull String namespace, final @NotNull String id) {
         Key key = Key.key(namespace, id);
         registerLoader(key);
     }

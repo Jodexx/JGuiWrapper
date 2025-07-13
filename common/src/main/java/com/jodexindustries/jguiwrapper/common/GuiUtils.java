@@ -14,6 +14,6 @@ public class GuiUtils {
         InventoryHolder holder = inventory.getHolder();
         if (holder == null) return null;
 
-        return holder instanceof GuiHolder guiHolder ? guiHolder : null;
+        return holder instanceof GuiHolder ? ((GuiHolder) holder) : null;
     }
 }

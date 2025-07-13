@@ -13,19 +13,21 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class NMSMatcher {
 
-    private static final Map<String, String> VERSIONS = Map.of(
-            "1.20.5", "1_20_R4",
-            "1.20.6", "1_20_R4",
-            "1.21", "1_21_R1",
-            "1.21.1", "1_21_R1",
-            "1.21.3", "1_21_R2",
-            "1.21.4", "1_21_R3",
-            "1.21.5", "1_21_R4"
-    );
+    private static final Map<String, String> VERSIONS = new HashMap<>();
+    static {
+        VERSIONS.put("1.20.5", "1_20_R4");
+        VERSIONS.put("1.20.6", "1_20_R4");
+        VERSIONS.put("1.21", "1_21_R1");
+        VERSIONS.put("1.21.1", "1_21_R1");
+        VERSIONS.put("1.21.3", "1_21_R2");
+        VERSIONS.put("1.21.4", "1_21_R3");
+        VERSIONS.put("1.21.5", "1_21_R4");
+    }
 
     private static final String NEWEST_VERSION = "1_21_R4";
 
