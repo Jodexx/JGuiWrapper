@@ -18,7 +18,11 @@ import java.util.Map;
 
 public class NMSMatcher {
 
+    /**
+     * A map that stores NMS version names for newer Minecraft versions starting from 1.20.5.
+     */
     private static final Map<String, String> VERSIONS = new HashMap<>();
+
     static {
         VERSIONS.put("1.20.5", "1_20_R4");
         VERSIONS.put("1.20.6", "1_20_R4");
@@ -27,9 +31,11 @@ public class NMSMatcher {
         VERSIONS.put("1.21.3", "1_21_R2");
         VERSIONS.put("1.21.4", "1_21_R3");
         VERSIONS.put("1.21.5", "1_21_R4");
+        VERSIONS.put("1.21.6", "1_21_R5");
+        VERSIONS.put("1.21.7", "1_21_R5");
     }
 
-    private static final String NEWEST_VERSION = "1_21_R4";
+    private static final String NEWEST_VERSION = "1_21_R5";
 
     private static boolean initialized = false;
     private static NMSWrapper wrapper;
