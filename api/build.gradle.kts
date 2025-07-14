@@ -10,13 +10,22 @@ java {
 }
 
 tasks.withType<Javadoc> {
-    options.encoding = "UTF-8"
-    (options as StandardJavadocDocletOptions).apply {
-        links(
-            "https://docs.oracle.com/en/java/javase/8/docs/api/",
-            "https://jd.papermc.io/paper/1.16.5/",
-            "https://jd.advntr.dev/api/4.14.0/"
-        )
+    javadocTool.set(javaToolchains.javadocToolFor {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    })
+
+    options {
+        encoding = "UTF-8"
+        (this as StandardJavadocDocletOptions).apply {
+            source = "8"
+            addBooleanOption("html5", true)
+            addBooleanOption("Xdoclint:none", true)
+            links = listOf(
+                "https://docs.oracle.com/en/java/javase/17/docs/api/",
+                "https://jd.papermc.io/paper/1.16.5/",
+                "https://jd.advntr.dev/api/4.7.0/"
+            )
+        }
     }
 }
 
