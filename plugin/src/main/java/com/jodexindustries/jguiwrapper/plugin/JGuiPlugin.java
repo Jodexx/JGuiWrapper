@@ -7,6 +7,11 @@ import com.jodexindustries.jguiwrapper.common.JGuiInitializer;
 import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.plugin.gui.TestAbstractGui;
+import com.jodexindustries.jguiwrapper.plugin.gui.TestAdvancedGui;
+import com.jodexindustries.jguiwrapper.plugin.gui.TestSimpleGui;
+import com.jodexindustries.jguiwrapper.plugin.gui.item.TestGuiLoader;
+import com.jodexindustries.jguiwrapper.plugin.gui.item.TestItemHandler;
 import net.kyori.adventure.key.Key;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,9 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public final class JGuiPlugin extends JavaPlugin {
 
@@ -56,6 +59,9 @@ public final class JGuiPlugin extends JavaPlugin {
                         String gui = args[1];
 
                         switch (gui) {
+                            case "abstract":
+                                new TestAbstractGui().open(player);
+                                break;
                             case "simple":
                                 new TestSimpleGui().open(player);
                                 break;
@@ -124,6 +130,19 @@ public final class JGuiPlugin extends JavaPlugin {
 
 
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        if (args.length == 1) {
+            return Arrays.asList("test", "list");
+        }
+
+        if (args.length == 2 && args[0].equals("test")) {
+            return Arrays.asList("abstract", "simple", "advanced");
+        }
+
+        return Collections.emptyList();
     }
 
     private void send(CommandSender sender, String text) {

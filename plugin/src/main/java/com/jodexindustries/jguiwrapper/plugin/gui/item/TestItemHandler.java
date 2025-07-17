@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.plugin;
+package com.jodexindustries.jguiwrapper.plugin.gui.item;
 
 import com.jodexindustries.jguiwrapper.api.registry.ItemHandler;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;

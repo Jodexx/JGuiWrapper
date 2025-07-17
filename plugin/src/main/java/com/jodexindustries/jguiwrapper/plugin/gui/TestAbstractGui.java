@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.plugin;
+package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import org.bukkit.entity.HumanEntity;
