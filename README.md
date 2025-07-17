@@ -2,6 +2,8 @@
 
 > Библиотека для создания настраиваемых GUI на серверах **PaperMC 1.16.5-1.21.7**
 
+[![Java CI with Gradle](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle.yml/badge.svg)](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle.yml)
+[![JGuiWrapper API version](https://repo.jodex.xyz/api/badge/latest/releases/com/jodexindustries/jguiwrapper/api?color=C72EFF&name=API&prefix=v)](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper/api)
 ---
 
 | [MavenRepo](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper)   | [JavaDocs](https://repo.jodex.xyz/javadoc/releases/com/jodexindustries/jguiwrapper/api/latest)  |
