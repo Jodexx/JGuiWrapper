@@ -1,12 +1,11 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
-import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
+import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class TestAdvancedGui extends AdvancedGui {
@@ -27,12 +26,8 @@ public class TestAdvancedGui extends AdvancedGui {
 
             loadData(event.getPlayer());
 
-            Optional<GuiDataLoader> guiDataLoader = getLoader(JGuiPlugin.TEST_LOADER_KEY);
-            guiDataLoader.ifPresent(loader -> {
-                TestGuiLoader testGuiLoader = (TestGuiLoader) loader;
-
-                event.getPlayer().sendMessage("Count: " + testGuiLoader.getOpenCount());
-            });
+            // refresh item handlers
+            getControllers().forEach(GuiItemController::loadItemHandler);
         });
 
         registerItem("test", builder -> {
@@ -50,6 +45,13 @@ public class TestAdvancedGui extends AdvancedGui {
                         title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
                         updateMenu();
                     });
+        });
+
+        registerItem("handled", builder -> {
+            builder.withSlots(size() - 2)
+                    .withDefaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
+                    .withItemHandler(JGuiPlugin.TEST_HANDLER_KEY)
+                    .build();
         });
 
         registerItem("close", builder -> {

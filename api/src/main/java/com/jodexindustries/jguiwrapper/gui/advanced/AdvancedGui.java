@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 public class AdvancedGui extends SimpleGui {
 
     private final Map<String, GuiItemController> keyMap = new HashMap<>();
-    private final Map<Key, GuiDataLoader> loaderMap = new HashMap<>();
+    private final Map<Class<? extends GuiDataLoader>, GuiDataLoader> loaderMap = new HashMap<>();
 
     public AdvancedGui(@NotNull String title) {
         super(title);
@@ -42,12 +42,24 @@ public class AdvancedGui extends SimpleGui {
         }
     }
 
-    public Optional<GuiDataLoader> getLoader(Key key) {
-        return Optional.ofNullable(loaderMap.get(key));
+    public <T extends GuiDataLoader> Optional<T> getTypedLoader(Class<T> clazz) {
+        return Optional.of(clazz.cast(getLoader0(clazz)));
+    }
+
+    public Optional<GuiDataLoader> getLoader(Class<?> clazz) {
+        return Optional.of(getLoader0(clazz));
+    }
+
+    private GuiDataLoader getLoader0(Class<?> clazz) {
+        return loaderMap.get(clazz);
     }
 
     public void registerLoader(@NotNull Key key) {
-        API.getRegistry().getLoader(key).ifPresent(loader -> loaderMap.put(key, loader));
+        API.getRegistry().getLoader(key).ifPresent(loader -> loaderMap.put(loader.getClass(), loader));
+    }
+
+    public void registerLoader(GuiDataLoader loader) {
+        loaderMap.put(loader.getClass(), loader);
     }
 
     public void registerLoader(final @NotNull String namespace, final @NotNull String id) {

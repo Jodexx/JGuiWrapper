@@ -3,6 +3,7 @@ package com.jodexindustries.jguiwrapper.common.registry;
 import com.jodexindustries.jguiwrapper.api.registry.DataRegistry;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.registry.ItemHandler;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +33,17 @@ public class GlobalRegistryImpl implements GlobalRegistry {
         } else {
             DataRegistry dataRegistry = register(key.namespace());
             dataRegistry.registerLoader(key.value(), loader);
+        }
+    }
+
+    @Override
+    public void registerHandler(@NotNull Key key, ItemHandler<?> handler) {
+        Optional<DataRegistry> optionalRegistry = getRegistry(key.namespace());
+        if (optionalRegistry.isPresent()) {
+            optionalRegistry.get().registerHandler(key.value(), handler);
+        } else {
+            DataRegistry dataRegistry = register(key.namespace());
+            dataRegistry.registerHandler(key.value(), handler);
         }
     }
 

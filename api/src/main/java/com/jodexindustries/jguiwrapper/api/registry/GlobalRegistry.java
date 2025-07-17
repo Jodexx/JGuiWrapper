@@ -13,6 +13,8 @@ public interface GlobalRegistry {
 
     void registerLoader(@NotNull Key key, GuiDataLoader loader);
 
+    void registerHandler(@NotNull Key key, ItemHandler<?> handler);
+
     void unregister(@NotNull String namespace);
 
     Optional<GuiDataLoader> getLoader(@NotNull Key key);

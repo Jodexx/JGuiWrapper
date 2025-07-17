@@ -1,18 +1,16 @@
 package com.jodexindustries.jguiwrapper.gui.advanced;
 
+import com.jodexindustries.jguiwrapper.api.GuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.handler.InventoryHandler;
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
+import com.jodexindustries.jguiwrapper.api.registry.ItemHandler;
+import com.jodexindustries.jguiwrapper.api.tools.Pair;
+import net.kyori.adventure.key.Key;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -33,6 +31,7 @@ public class GuiItemController {
     private final Set<Integer> slots = new LinkedHashSet<>();
     private final Set<Integer> oldSlots = new LinkedHashSet<>();
 
+    private Pair<ItemHandler<?>, Class<?>> itemHandler;
 
     /**
      * Creates a new controller with specified slots
@@ -59,6 +58,10 @@ public class GuiItemController {
     public GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
                              AdvancedGuiClickHandler defaultClickHandler, int @NotNull ... slots) {
         this(gui, defaultItemWrapper, defaultClickHandler, Arrays.stream(slots).boxed().collect(Collectors.toList()));
+    }
+
+    public GuiItemController(@NotNull AdvancedGui gui, Key itemHandlerKey) {
+        this(gui);
     }
 
     /**
@@ -334,6 +337,24 @@ public class GuiItemController {
         }
     }
 
+    public void itemHandler(Key itemHandlerKey) {
+        if (itemHandlerKey == null) return;
+
+        GuiApi.get().getRegistry().getRegistry(itemHandlerKey.namespace())
+                .flatMap(dataRegistry -> dataRegistry.getHandler(itemHandlerKey.value()))
+                .ifPresent(pair -> this.itemHandler = pair);
+    }
+
+    public void loadItemHandler() {
+        if (this.itemHandler == null) return;
+
+        Class<?> b = this.itemHandler.b();
+
+        gui.getLoader(b).ifPresent(loader -> {
+            if (b.isInstance(loader)) this.itemHandler.a().load(loader, this);
+        });
+    }
+
     public static class Builder {
         private final AdvancedGui gui;
         private ItemWrapper defaultItemWrapper;
@@ -341,6 +362,7 @@ public class GuiItemController {
         private final Set<Integer> slots = new LinkedHashSet<>();
         private final Map<Integer, ItemWrapper> slotSpecificItems = new HashMap<>();
         private final Map<Integer, AdvancedGuiClickHandler> slotClickHandlers = new HashMap<>();
+        private Key itemHandlerKey;
 
         /**
          * Creates a new builder for specified GUI.
@@ -414,6 +436,11 @@ public class GuiItemController {
             return this;
         }
 
+        public Builder withItemHandler(Key itemHandlerKey) {
+            this.itemHandlerKey = itemHandlerKey;
+            return this;
+        }
+
         /**
          * Builds and returns configured {@link GuiItemController}.
          * @return Configured controller instance
@@ -422,6 +449,8 @@ public class GuiItemController {
             GuiItemController controller = new GuiItemController(gui, defaultItemWrapper, defaultClickHandler, slots);
             slotSpecificItems.forEach(controller::setItemWrapperForSlot);
             slotClickHandlers.forEach(controller::setClickHandlerBySlot);
+
+            controller.itemHandler(itemHandlerKey);
 
             return controller;
         }

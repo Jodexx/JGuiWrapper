@@ -21,6 +21,7 @@ import java.util.Set;
 public final class JGuiPlugin extends JavaPlugin {
 
     public static final Key TEST_LOADER_KEY = Key.key("jguiwrapper", "test");
+    public static final Key TEST_HANDLER_KEY = Key.key("jguiwrapper", "test");
 
     @Override
     public void onEnable() {
@@ -28,6 +29,7 @@ public final class JGuiPlugin extends JavaPlugin {
 
         GlobalRegistry registry = JGuiInitializer.get().getRegistry();
         registry.registerLoader(TEST_LOADER_KEY, new TestGuiLoader());
+        registry.registerHandler(TEST_HANDLER_KEY, new TestItemHandler());
 
         Objects.requireNonNull(getCommand("jguiwrapper")).setExecutor(this);
     }
