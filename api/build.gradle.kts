@@ -23,7 +23,10 @@ tasks.withType<Javadoc> {
             links = listOf(
                 "https://docs.oracle.com/en/java/javase/17/docs/api/",
                 "https://jd.papermc.io/paper/1.16.5/",
-                "https://jd.advntr.dev/api/4.7.0/"
+                "https://jd.advntr.dev/api/4.7.0/",
+                "https://jd.advntr.dev/text-serializer-legacy/4.7.0/",
+                "https://jd.advntr.dev/key/4.7.0/",
+                "https://javadoc.io/doc/org.jetbrains/annotations/20.1.0/"
             )
         }
     }
