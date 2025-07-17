@@ -33,7 +33,7 @@ public class GuiHolder implements InventoryHolder {
         return this.inventory;
     }
 
-    public @NotNull AbstractGui getGui() {
+    public @NotNull AbstractGui gui() {
         return gui;
     }
 

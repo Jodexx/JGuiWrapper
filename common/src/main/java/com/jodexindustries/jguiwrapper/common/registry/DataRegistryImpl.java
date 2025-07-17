@@ -3,8 +3,8 @@ package com.jodexindustries.jguiwrapper.common.registry;
 import com.jodexindustries.jguiwrapper.api.registry.DataRegistry;
 import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.api.registry.ItemHandler;
-import com.jodexindustries.jguiwrapper.common.GuiUtils;
 import com.jodexindustries.jguiwrapper.api.tools.Pair;
+import com.jodexindustries.jguiwrapper.common.utils.ReflectionUtils;
 
 import java.util.*;
 
@@ -39,7 +39,7 @@ public class DataRegistryImpl implements DataRegistry {
             throw new IllegalStateException("ItemHandler already registered by id: " + id);
         }
 
-        Pair<ItemHandler<?>, Class<?>> pair = new Pair<>(handler, GuiUtils.getGenericClass(handler.getClass(), 0));
+        Pair<ItemHandler<?>, Class<?>> pair = new Pair<>(handler, ReflectionUtils.getGenericClass(handler.getClass(), 0));
 
         HANDLERS.put(id, pair);
     }

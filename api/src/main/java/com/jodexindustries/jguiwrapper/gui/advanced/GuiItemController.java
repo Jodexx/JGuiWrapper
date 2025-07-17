@@ -62,6 +62,8 @@ public class GuiItemController {
 
     public GuiItemController(@NotNull AdvancedGui gui, Key itemHandlerKey) {
         this(gui);
+
+        itemHandler(itemHandlerKey);
     }
 
     /**
@@ -128,8 +130,8 @@ public class GuiItemController {
      * @param slot Slot index to check
      * @return true if slot is managed and has an item
      */
-    public boolean hasItemInSlot(int slot) {
-        return slots.contains(slot) && getItemWrapperBySlot(slot) != null;
+    public boolean hasItem(int slot) {
+        return slots.contains(slot) && getItemWrapper(slot) != null;
     }
 
     /**
@@ -143,7 +145,7 @@ public class GuiItemController {
     /**
      * Clears all items from managed slots (without removing slots)
      */
-    public void clearAllItems() {
+    public void clear() {
         for (int slot : slots) {
             gui.holder().getInventory().clear(slot);
         }
@@ -155,7 +157,7 @@ public class GuiItemController {
      * @param itemWrapper Item to set
      * @throws IllegalArgumentException If slot is not managed by this controller
      */
-    public void setItemWrapperForSlot(int slot, @NotNull ItemWrapper itemWrapper) {
+    public void setItemWrapper(int slot, @NotNull ItemWrapper itemWrapper) {
         if (!slots.contains(slot)) {
             throw new IllegalArgumentException("Slot " + slot + " is not managed by this controller");
         }
@@ -167,7 +169,7 @@ public class GuiItemController {
      * Removes slot-specific item (reverts to default item)
      * @param slot Slot index
      */
-    public void removeItemWrapperForSlot(int slot) {
+    public void removeItemWrapper(int slot) {
         slotSpecificItems.remove(slot);
         redraw(slot);
     }
@@ -177,10 +179,10 @@ public class GuiItemController {
      * @param updater Consumer to modify items
      * @param slots Slot indexes to update
      */
-    public void updateItemsInSlots(@NotNull Consumer<ItemWrapper> updater, int... slots) {
+    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater, int... slots) {
         for (int slot : slots) {
             if (this.slots.contains(slot)) {
-                updateItemWrapperForSlot(slot, updater);
+                updateItemWrapper(slot, updater);
             }
         }
     }
@@ -199,7 +201,7 @@ public class GuiItemController {
      * @param slot Slot index
      * @return ItemWrapper for the slot or default item if not specified
      */
-    public @Nullable ItemWrapper getItemWrapperBySlot(int slot) {
+    public @Nullable ItemWrapper getItemWrapper(int slot) {
         return slotSpecificItems.getOrDefault(slot, defaultItemWrapper);
     }
 
@@ -217,7 +219,7 @@ public class GuiItemController {
      * @param clickHandler Click handler to set
      * @throws IllegalArgumentException If slot is not managed by this controller
      */
-    public void setClickHandlerBySlot(int slot, AdvancedGuiClickHandler clickHandler) {
+    public void setClickHandler(int slot, AdvancedGuiClickHandler clickHandler) {
         if (!slots.contains(slot)) {
             throw new IllegalArgumentException("Slot " + slot + " is not managed by this controller");
         }
@@ -235,7 +237,7 @@ public class GuiItemController {
      * @param slot Slot index
      * @return Click handler for the slot or default handler if not specified
      */
-    public @Nullable InventoryHandler<InventoryClickEvent> getClickHandlerBySlot(int slot) {
+    public @Nullable InventoryHandler<InventoryClickEvent> getClickHandler(int slot) {
         return slotClickHandlers.getOrDefault(slot, defaultClickHandler);
     }
 
@@ -251,7 +253,7 @@ public class GuiItemController {
      * Removes click handler for a specific slot
      * @param slot Slot index
      */
-    public void removeClickHandlerForSlot(int slot) {
+    public void removeClickHandler(int slot) {
         slotClickHandlers.remove(slot);
         redraw(slot);
     }
@@ -264,7 +266,7 @@ public class GuiItemController {
         return Collections.unmodifiableSet(slots);
     }
 
-    public AdvancedGui gui() {
+    public @NotNull AdvancedGui gui() {
         return gui;
     }
 
@@ -272,7 +274,7 @@ public class GuiItemController {
      * Gets current click handler
      * @return The click handler or null if not set
      */
-    public InventoryHandler<InventoryClickEvent> defaultClickHandler() {
+    public @Nullable InventoryHandler<InventoryClickEvent> defaultClickHandler() {
         return defaultClickHandler;
     }
 
@@ -292,14 +294,14 @@ public class GuiItemController {
     }
 
     private void redraw(int slot) {
-        InventoryHandler<InventoryClickEvent> handler = getClickHandlerBySlot(slot);
+        InventoryHandler<InventoryClickEvent> handler = getClickHandler(slot);
         if (handler != null) {
             gui.setClickHandlers(handler, slot);
         } else {
             gui.removeClickHandlers(slot);
         }
 
-        ItemWrapper item = getItemWrapperBySlot(slot);
+        ItemWrapper item = getItemWrapper(slot);
         if (item != null) {
             gui.holder().getInventory().setItem(slot, item.itemStack());
         }
@@ -309,7 +311,7 @@ public class GuiItemController {
      * Updates all items (default and slot-specific)
      * @param updater Consumer to modify items
      */
-    public void updateAllItemWrappers(@NotNull Consumer<ItemWrapper> updater) {
+    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater) {
         if (defaultItemWrapper != null) {
             updater.accept(defaultItemWrapper);
             if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update();
@@ -328,8 +330,8 @@ public class GuiItemController {
      * @param slot Slot index
      * @param updater Consumer to modify the item
      */
-    public void updateItemWrapperForSlot(int slot, @NotNull Consumer<ItemWrapper> updater) {
-        ItemWrapper item = getItemWrapperBySlot(slot);
+    public void updateItemWrapper(int slot, @NotNull Consumer<ItemWrapper> updater) {
+        ItemWrapper item = getItemWrapper(slot);
         if (item != null) {
             updater.accept(item);
             if (!item.isUpdated()) item.update();
@@ -377,7 +379,7 @@ public class GuiItemController {
          * @param itemWrapper Default item to set
          * @return this builder for chaining
          */
-        public Builder withDefaultItem(@Nullable ItemWrapper itemWrapper) {
+        public Builder defaultItem(@Nullable ItemWrapper itemWrapper) {
             this.defaultItemWrapper = itemWrapper;
             return this;
         }
@@ -387,7 +389,7 @@ public class GuiItemController {
          * @param clickHandler Click handler to set
          * @return this builder for chaining
          */
-        public Builder withDefaultClickHandler(AdvancedGuiClickHandler clickHandler) {
+        public Builder defaultClickHandler(AdvancedGuiClickHandler clickHandler) {
             this.defaultClickHandler = clickHandler;
             return this;
         }
@@ -397,7 +399,7 @@ public class GuiItemController {
          * @param slots Array of slot indexes
          * @return this builder for chaining
          */
-        public Builder withSlots(int... slots) {
+        public Builder slots(int... slots) {
             Arrays.stream(slots).forEach(this.slots::add);
             return this;
         }
@@ -407,7 +409,7 @@ public class GuiItemController {
          * @param slots Collection of slot indexes
          * @return this builder for chaining
          */
-        public Builder withSlots(@NotNull Collection<Integer> slots) {
+        public Builder slots(@NotNull Collection<Integer> slots) {
             this.slots.addAll(slots);
             return this;
         }
@@ -418,7 +420,7 @@ public class GuiItemController {
          * @param itemWrapper Item to set
          * @return this builder for chaining
          */
-        public Builder withSlotItem(int slot, @NotNull ItemWrapper itemWrapper) {
+        public Builder slotItem(int slot, @NotNull ItemWrapper itemWrapper) {
             this.slotSpecificItems.put(slot, itemWrapper);
             this.slots.add(slot);
             return this;
@@ -430,13 +432,13 @@ public class GuiItemController {
          * @param clickHandler Click handler to set
          * @return this builder for chaining
          */
-        public Builder withSlotClickHandler(int slot, @Nullable AdvancedGuiClickHandler clickHandler) {
+        public Builder slotClickHandler(int slot, @Nullable AdvancedGuiClickHandler clickHandler) {
             this.slotClickHandlers.put(slot, clickHandler);
             this.slots.add(slot);
             return this;
         }
 
-        public Builder withItemHandler(Key itemHandlerKey) {
+        public Builder itemHandler(Key itemHandlerKey) {
             this.itemHandlerKey = itemHandlerKey;
             return this;
         }
@@ -447,8 +449,8 @@ public class GuiItemController {
          */
         public GuiItemController build() {
             GuiItemController controller = new GuiItemController(gui, defaultItemWrapper, defaultClickHandler, slots);
-            slotSpecificItems.forEach(controller::setItemWrapperForSlot);
-            slotClickHandlers.forEach(controller::setClickHandlerBySlot);
+            slotSpecificItems.forEach(controller::setItemWrapper);
+            slotClickHandlers.forEach(controller::setClickHandler);
 
             controller.itemHandler(itemHandlerKey);
 

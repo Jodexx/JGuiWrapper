@@ -31,14 +31,14 @@ public class TestAdvancedGui extends AdvancedGui {
         });
 
         registerItem("test", builder -> {
-            builder.withSlots(IntStream.range(0, size() / 2).toArray())
-                    .withDefaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
-                    .withDefaultClickHandler((event, controller) -> {
+            builder.slots(IntStream.range(0, size() / 2).toArray())
+                    .defaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
+                    .defaultClickHandler((event, controller) -> {
                         event.setCancelled(true);
 
                         clicks++;
 
-                        controller.updateAllItemWrappers(itemWrapper -> {
+                        controller.updateItemWrappers(itemWrapper -> {
                             itemWrapper.displayName(Component.text(clicks));
                         });
 
@@ -48,17 +48,17 @@ public class TestAdvancedGui extends AdvancedGui {
         });
 
         registerItem("handled", builder -> {
-            builder.withSlots(size() - 2)
-                    .withDefaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
-                    .withItemHandler(JGuiPlugin.TEST_HANDLER_KEY)
+            builder.slots(size() - 2)
+                    .defaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
+                    .itemHandler(JGuiPlugin.TEST_HANDLER_KEY)
                     .build();
         });
 
         registerItem("close", builder -> {
-            builder.withSlots(size() - 1)
-                    .withDefaultItem(ItemWrapper.builder(Material.BARRIER)
+            builder.slots(size() - 1)
+                    .defaultItem(ItemWrapper.builder(Material.BARRIER)
                             .displayName(LEGACY_AMPERSAND.deserialize("&cClose")).build())
-                    .withDefaultClickHandler((event, controller) -> {
+                    .defaultClickHandler((event, controller) -> {
                         event.setCancelled(true);
 
                         close(event.getWhoClicked());

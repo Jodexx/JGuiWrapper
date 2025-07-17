@@ -4,7 +4,6 @@ import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
 
 public interface ItemHandler<T> {
 
-
     @SuppressWarnings("unchecked")
     default void load(GuiDataLoader loader, GuiItemController controller) {
         load(((T) loader), controller);
