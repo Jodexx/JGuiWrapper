@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.invoke
+
 plugins {
     java
     `java-library`
@@ -19,7 +21,13 @@ subprojects {
     apply(plugin = "maven-publish")
 
     if (name in publishProjects) {
+        java {
+            toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+        }
+
         afterEvaluate {
+            dependencies.compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
+
             publishing {
                 repositories {
                     maven {

@@ -2,7 +2,6 @@ val excludedProjects = listOf(":nms:v1_16_R3")
 
 dependencies {
     api(project(":api"))
-    compileOnlyApi("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
 }
 
 tasks.jar {
@@ -39,10 +38,6 @@ subprojects {
         } else {
 //            plugins.apply("me.kcra.takenaka.accessor")
         }
-}
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
 publishing {
