@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.api.registry;
+package com.jodexindustries.jguiwrapper.api.gui;
 
 import org.bukkit.entity.HumanEntity;
 

@@ -1,8 +1,8 @@
 package com.jodexindustries.jguiwrapper.common.registry;
 
 import com.jodexindustries.jguiwrapper.api.registry.DataRegistry;
-import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.api.registry.ItemHandler;
+import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.api.tools.Pair;
 import com.jodexindustries.jguiwrapper.common.utils.ReflectionUtils;
 

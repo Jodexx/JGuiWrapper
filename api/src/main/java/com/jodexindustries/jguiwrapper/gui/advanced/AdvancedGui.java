@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.gui.advanced;
 
-import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.gui.SimpleGui;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;

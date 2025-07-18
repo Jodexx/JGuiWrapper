@@ -1,11 +1,13 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
+import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.plugin.JGuiPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 
 import java.util.stream.IntStream;
 
@@ -18,17 +20,25 @@ public class TestAdvancedGui extends AdvancedGui {
 
         registerLoader(JGuiPlugin.TEST_LOADER_KEY);
 
+        // load item handlers
+        for (GuiItemController controller : getControllers()) {
+            controller.loadItemHandler(LoadType.ON_LOAD);
+        }
+
         onClose(event -> {
             event.getPlayer().sendMessage("Closed");
         });
 
         onOpen(event -> {
-            event.getPlayer().sendMessage("Opened");
+            HumanEntity player = event.getPlayer();
+            player.sendMessage("Opened");
 
-            loadData(event.getPlayer());
+            loadData(player);
 
             // refresh item handlers
-            getControllers().forEach(GuiItemController::loadItemHandler);
+            for (GuiItemController controller : getControllers()) {
+                controller.loadItemHandler(LoadType.ON_OPEN, player);
+            }
         });
 
         registerItem("test", builder -> {

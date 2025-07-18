@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.plugin.gui.item;
 
-import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
 import org.bukkit.entity.HumanEntity;
 
 public class TestGuiLoader implements GuiDataLoader {

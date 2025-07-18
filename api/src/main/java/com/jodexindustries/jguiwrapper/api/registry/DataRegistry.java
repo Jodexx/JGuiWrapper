@@ -1,5 +1,7 @@
 package com.jodexindustries.jguiwrapper.api.registry;
 
+import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.api.tools.Pair;
 
 import java.util.Collection;

@@ -1,11 +1,14 @@
 package com.jodexindustries.jguiwrapper.gui.advanced;
 
 import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.gui.handler.InventoryHandler;
+import com.jodexindustries.jguiwrapper.api.gui.handler.item.HandlerContext;
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
-import com.jodexindustries.jguiwrapper.api.registry.ItemHandler;
+import com.jodexindustries.jguiwrapper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.api.tools.Pair;
 import net.kyori.adventure.key.Key;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -347,13 +350,17 @@ public class GuiItemController {
                 .ifPresent(pair -> this.itemHandler = pair);
     }
 
-    public void loadItemHandler() {
+    public void loadItemHandler(@NotNull LoadType loadType) {
+        loadItemHandler(loadType, null);
+    }
+
+    public void loadItemHandler(@NotNull LoadType loadType, @Nullable HumanEntity player) {
         if (this.itemHandler == null) return;
 
         Class<?> b = this.itemHandler.b();
 
         gui.getLoader(b).ifPresent(loader -> {
-            if (b.isInstance(loader)) this.itemHandler.a().load(loader, this);
+            if (b.isInstance(loader)) this.itemHandler.a().load(loader, this, new HandlerContext(loadType, player));
         });
     }
 

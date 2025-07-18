@@ -2,7 +2,7 @@ package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
-import com.jodexindustries.jguiwrapper.api.registry.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.common.JGuiInitializer;
 import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
