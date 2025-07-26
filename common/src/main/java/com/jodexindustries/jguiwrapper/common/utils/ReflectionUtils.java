@@ -3,6 +3,7 @@ package com.jodexindustries.jguiwrapper.common.utils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+@SuppressWarnings("unused")
 public class ReflectionUtils {
     public static Class<?> getGenericClass(Class<?> clazz, int index) {
         for (Type type : clazz.getGenericInterfaces()) {

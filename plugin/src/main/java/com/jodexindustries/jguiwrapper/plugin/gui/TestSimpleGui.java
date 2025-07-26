@@ -27,6 +27,7 @@ public class TestSimpleGui extends SimpleGui {
         onDrag(event -> event.getWhoClicked().sendMessage(event.getType().name()));
     }
 
+    @SuppressWarnings("unused")
     private static class SizeLooper {
         private int currentSize = 54;
         private boolean increasing = true;

@@ -23,6 +23,7 @@ import java.util.logging.Level;
  * Provides common logic for inventory size, title, type, and holder management.
  * Handles registration of GUI instances and provides utility for legacy component serialization.
  */
+@SuppressWarnings({"unused"})
 public abstract class AbstractGui implements Gui {
     /**
      * LegacyComponentSerializer using ampersand (&amp;) as the color code character.
@@ -236,8 +237,8 @@ public abstract class AbstractGui implements Gui {
      * Updates the menu for a specific player with the current type, size, and title.
      * @param player the player to update the menu for
      */
-    public final void updateMenu(HumanEntity player) {
-        updateMenu(player, this.type, this.size, this.title);
+    public final boolean updateMenu(HumanEntity player) {
+        return updateMenu(player, this.type, this.size, this.title);
     }
 
     /**
@@ -280,8 +281,8 @@ public abstract class AbstractGui implements Gui {
      * @param player the player to update the menu for
      * @param title the new title for the menu
      */
-    public final void updateMenu(@NotNull HumanEntity player, Component title) {
-        updateMenu(player, null, this.size, title);
+    public final boolean updateMenu(@NotNull HumanEntity player, Component title) {
+        return updateMenu(player, null, this.size, title);
     }
 
     /**
@@ -289,8 +290,8 @@ public abstract class AbstractGui implements Gui {
      * @param player the player to update the menu for
      * @param type the new inventory type
      */
-    public final void updateMenu(@NotNull HumanEntity player, InventoryType type) {
-        updateMenu(player, type, this.size, null);
+    public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type) {
+        return updateMenu(player, type, this.size, null);
     }
 
     /**
@@ -299,8 +300,8 @@ public abstract class AbstractGui implements Gui {
      * @param type the new inventory type
      * @param size the new inventory size
      */
-    public final void updateMenu(@NotNull HumanEntity player, InventoryType type, int size) {
-        updateMenu(player, type, size, null);
+    public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type, int size) {
+        return updateMenu(player, type, size, null);
     }
 
     /**
@@ -310,11 +311,12 @@ public abstract class AbstractGui implements Gui {
      * @param size the new inventory size
      * @param title the new title for the menu
      */
-    public final void updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
+    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
         try {
-            NMS_WRAPPER.updateMenu(player, type, size, title);
+            return NMS_WRAPPER.updateMenu(player, type, size, title);
         } catch (Exception e) {
             API.getPlugin().getLogger().log(Level.WARNING, "Error with updating menu for player: " + player.getName(), e);
+            return false;
         }
     }
 

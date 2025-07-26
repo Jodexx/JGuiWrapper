@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.tools;
 
+@SuppressWarnings({"unused"})
 public class Pair<A, B> {
 
     private final A a;

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * Controller for managing items and their slots in an advanced GUI.
  * Supports both default items for all slots and slot-specific items.
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class GuiItemController {
 
     private final AdvancedGui gui;
@@ -134,7 +135,7 @@ public class GuiItemController {
      * @return true if slot is managed and has an item
      */
     public boolean hasItem(int slot) {
-        return slots.contains(slot) && getItemWrapper(slot) != null;
+        return slots.contains(slot) && getItem(slot) != null;
     }
 
     /**
@@ -160,7 +161,7 @@ public class GuiItemController {
      * @param itemWrapper Item to set
      * @throws IllegalArgumentException If slot is not managed by this controller
      */
-    public void setItemWrapper(int slot, @NotNull ItemWrapper itemWrapper) {
+    public void setItem(int slot, @NotNull ItemWrapper itemWrapper) {
         if (!slots.contains(slot)) {
             throw new IllegalArgumentException("Slot " + slot + " is not managed by this controller");
         }
@@ -169,12 +170,34 @@ public class GuiItemController {
     }
 
     /**
+     * Sets a specific item for a slot
+     * @param slot Slot index
+     * @param itemWrapper Item to set
+     * @throws IllegalArgumentException If slot is not managed by this controller
+     * @deprecated see {@link #setItem(int, ItemWrapper)}
+     */
+    @Deprecated
+    public void setItemWrapper(int slot, @NotNull ItemWrapper itemWrapper) {
+        setItem(slot, itemWrapper);
+    }
+
+    /**
      * Removes slot-specific item (reverts to default item)
      * @param slot Slot index
      */
-    public void removeItemWrapper(int slot) {
+    public void removeItem(int slot) {
         slotSpecificItems.remove(slot);
         redraw(slot);
+    }
+
+    /**
+     * Removes slot-specific item (reverts to default item)
+     * @param slot Slot index
+     * @deprecated see {@link #removeItem(int)}
+     */
+    @Deprecated
+    public void removeItemWrapper(int slot) {
+        removeItem(slot);
     }
 
     /**
@@ -182,21 +205,42 @@ public class GuiItemController {
      * @param updater Consumer to modify items
      * @param slots Slot indexes to update
      */
-    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater, int... slots) {
+    public void updateItems(@NotNull Consumer<ItemWrapper> updater, int... slots) {
         for (int slot : slots) {
             if (this.slots.contains(slot)) {
-                updateItemWrapper(slot, updater);
+                updateItem(slot, updater);
             }
         }
+    }
+
+    /**
+     * Updates items in specific slots
+     * @param updater Consumer to modify items
+     * @param slots Slot indexes to update
+     * @deprecated see {@link #updateItems(Consumer, int...)}
+     */
+    @Deprecated
+    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater, int... slots) {
+        updateItems(updater, slots);
     }
 
     /**
      * Sets the default item for all slots
      * @param itemWrapper Default item to set
      */
-    public void defaultItemWrapper(@NotNull ItemWrapper itemWrapper) {
+    public void defaultItem(@NotNull ItemWrapper itemWrapper) {
         this.defaultItemWrapper = itemWrapper;
         redraw();
+    }
+
+    /**
+     * Sets the default item for all slots
+     * @param itemWrapper Default item to set
+     * @deprecated see {@link #defaultItem(ItemWrapper)}
+     */
+    @Deprecated
+    public void defaultItemWrapper(@NotNull ItemWrapper itemWrapper) {
+        defaultItem(itemWrapper);
     }
 
     /**
@@ -204,16 +248,37 @@ public class GuiItemController {
      * @param slot Slot index
      * @return ItemWrapper for the slot or default item if not specified
      */
-    public @Nullable ItemWrapper getItemWrapper(int slot) {
+    public @Nullable ItemWrapper getItem(int slot) {
         return slotSpecificItems.getOrDefault(slot, defaultItemWrapper);
+    }
+
+    /**
+     * Gets the item for a specific slot
+     * @param slot Slot index
+     * @return ItemWrapper for the slot or default item if not specified
+     * @deprecated see {@link #getItem(int)}
+     */
+    @Deprecated
+    public @Nullable ItemWrapper getItemWrapper(int slot) {
+        return getItem(slot);
     }
 
     /**
      * Gets the default item
      * @return Current default ItemWrapper
      */
-    public @NotNull ItemWrapper defaultItemWrapper() {
+    public @NotNull ItemWrapper defaultItem() {
         return defaultItemWrapper;
+    }
+
+    /**
+     * Gets the default item
+     * @return Current default ItemWrapper
+     * @deprecated see {@link #defaultItem()}
+     */
+    @Deprecated
+    public @NotNull ItemWrapper defaultItemWrapper() {
+        return defaultItem();
     }
 
     /**
@@ -304,7 +369,7 @@ public class GuiItemController {
             gui.removeClickHandlers(slot);
         }
 
-        ItemWrapper item = getItemWrapper(slot);
+        ItemWrapper item = getItem(slot);
         if (item != null) {
             gui.holder().getInventory().setItem(slot, item.itemStack());
         }
@@ -333,8 +398,24 @@ public class GuiItemController {
      * @param slot Slot index
      * @param updater Consumer to modify the item
      */
+    public void updateItem(int slot, @NotNull Consumer<ItemWrapper> updater) {
+        ItemWrapper item = getItem(slot);
+        if (item != null) {
+            updater.accept(item);
+            if (!item.isUpdated()) item.update();
+            redraw(slot);
+        }
+    }
+
+    /**
+     * Updates item in a specific slot
+     * @param slot Slot index
+     * @param updater Consumer to modify the item
+     * @deprecated see {@link #updateItem(int, Consumer)}
+     */
+    @Deprecated
     public void updateItemWrapper(int slot, @NotNull Consumer<ItemWrapper> updater) {
-        ItemWrapper item = getItemWrapper(slot);
+        ItemWrapper item = getItem(slot);
         if (item != null) {
             updater.accept(item);
             if (!item.isUpdated()) item.update();
@@ -456,7 +537,7 @@ public class GuiItemController {
          */
         public GuiItemController build() {
             GuiItemController controller = new GuiItemController(gui, defaultItemWrapper, defaultClickHandler, slots);
-            slotSpecificItems.forEach(controller::setItemWrapper);
+            slotSpecificItems.forEach(controller::setItem);
             slotClickHandlers.forEach(controller::setClickHandler);
 
             controller.itemHandler(itemHandlerKey);

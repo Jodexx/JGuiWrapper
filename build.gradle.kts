@@ -11,7 +11,7 @@ plugins {
 }
 
 tasks.jar {
-    enabled = false;
+    enabled = false
 }
 
 var publishProjects = listOf("common", "api", "nms")

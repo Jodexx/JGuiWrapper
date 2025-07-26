@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
+@SuppressWarnings({"unused"})
 public class GuiListener implements Listener {
 
     @EventHandler

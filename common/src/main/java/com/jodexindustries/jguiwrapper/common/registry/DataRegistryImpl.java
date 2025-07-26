@@ -8,6 +8,7 @@ import com.jodexindustries.jguiwrapper.common.utils.ReflectionUtils;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class DataRegistryImpl implements DataRegistry {
 
     private static final Map<String, GuiDataLoader> LOADERS = new HashMap<>();

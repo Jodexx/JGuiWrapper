@@ -4,6 +4,7 @@ import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings({"unused"})
 public interface ItemHandler<T> {
 
     @SuppressWarnings("unchecked")

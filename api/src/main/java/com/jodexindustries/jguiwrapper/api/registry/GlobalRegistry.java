@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Optional;
 
+@SuppressWarnings({"unused"})
 public interface GlobalRegistry {
 
     @NotNull

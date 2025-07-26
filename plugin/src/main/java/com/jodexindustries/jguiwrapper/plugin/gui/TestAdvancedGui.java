@@ -11,6 +11,7 @@ import org.bukkit.entity.HumanEntity;
 
 import java.util.stream.IntStream;
 
+@SuppressWarnings("unused")
 public class TestAdvancedGui extends AdvancedGui {
 
     private int clicks;
@@ -25,9 +26,7 @@ public class TestAdvancedGui extends AdvancedGui {
             controller.loadItemHandler(LoadType.ON_LOAD);
         }
 
-        onClose(event -> {
-            event.getPlayer().sendMessage("Closed");
-        });
+        onClose(event -> event.getPlayer().sendMessage("Closed"));
 
         onOpen(event -> {
             HumanEntity player = event.getPlayer();
@@ -41,40 +40,32 @@ public class TestAdvancedGui extends AdvancedGui {
             }
         });
 
-        registerItem("test", builder -> {
-            builder.slots(IntStream.range(0, size() / 2).toArray())
-                    .defaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
-                    .defaultClickHandler((event, controller) -> {
-                        event.setCancelled(true);
+        registerItem("test", builder -> builder.slots(IntStream.range(0, size() / 2).toArray())
+                .defaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
+                .defaultClickHandler((event, controller) -> {
+                    event.setCancelled(true);
 
-                        clicks++;
+                    clicks++;
 
-                        controller.updateItemWrappers(itemWrapper -> {
-                            itemWrapper.displayName(Component.text(clicks));
-                        });
+                    controller.updateItemWrappers(itemWrapper -> itemWrapper.displayName(Component.text(clicks)));
 
-                        title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
-                        updateMenu();
-                    });
-        });
+                    title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
+                    updateMenu();
+                }));
 
-        registerItem("handled", builder -> {
-            builder.slots(size() - 2)
-                    .defaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
-                    .itemHandler(JGuiPlugin.TEST_HANDLER_KEY)
-                    .build();
-        });
+        registerItem("handled", builder -> builder.slots(size() - 2)
+                .defaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
+                .itemHandler(JGuiPlugin.TEST_HANDLER_KEY)
+                .build());
 
-        registerItem("close", builder -> {
-            builder.slots(size() - 1)
-                    .defaultItem(ItemWrapper.builder(Material.BARRIER)
-                            .displayName(LEGACY_AMPERSAND.deserialize("&cClose")).build())
-                    .defaultClickHandler((event, controller) -> {
-                        event.setCancelled(true);
+        registerItem("close", builder -> builder.slots(size() - 1)
+                .defaultItem(ItemWrapper.builder(Material.BARRIER)
+                        .displayName(LEGACY_AMPERSAND.deserialize("&cClose")).build())
+                .defaultClickHandler((event, controller) -> {
+                    event.setCancelled(true);
 
-                        close(event.getWhoClicked());
-                    });
-        });
+                    close(event.getWhoClicked());
+                }));
 
     }
 }

@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
  * with custom types, sizes, and titles for players. Implementations should handle compatibility with different
  * Minecraft server versions.
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public interface NMSWrapper {
     /**
      * Updates the player's currently open inventory menu with the specified type, size, and title.

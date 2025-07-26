@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Provides methods for opening, closing, and updating GUI holders for players.
  * Also manages active GUI instances for tracking and mass operations.
  */
+@SuppressWarnings({"unused"})
 public interface Gui {
     /**
      * Set of all active GUI instances, stored as weak references to prevent memory leaks.

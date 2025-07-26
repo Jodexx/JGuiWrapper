@@ -5,6 +5,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class TestAbstractGui extends AbstractGui {
 
     public TestAbstractGui() {

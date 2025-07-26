@@ -8,6 +8,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings({"unused"})
 public class GuiHolder implements InventoryHolder {
 
     private final AbstractGui gui;

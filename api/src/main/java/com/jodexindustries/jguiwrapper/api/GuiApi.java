@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
  * Provides access to core components such as the global registry, plugin instance, NMS wrapper, and GUI management utilities.
  * This class is intended to be used as a singleton and should be accessed via {@link #get()}.
  */
+@SuppressWarnings({"unused"})
 public abstract class GuiApi {
 
     private static volatile GuiApi instance = null;

@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class NMSMatcher {
 
     /**

@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
  * Provides methods to register handlers for slot clicks, open/close/drag events, and control slot cancellation behavior.
  * Designed for easy extension and use in plugin GUI development.
  */
+@SuppressWarnings({"unused"})
 public abstract class SimpleGui extends AbstractGui {
 
     private final Map<Integer, InventoryHandler<InventoryClickEvent>> slotClickHandlers = new HashMap<>();

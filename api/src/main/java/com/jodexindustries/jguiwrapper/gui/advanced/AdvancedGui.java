@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.function.Consumer;
 
+@SuppressWarnings({"unused"})
 public class AdvancedGui extends SimpleGui {
 
     private final Map<String, GuiItemController> keyMap = new HashMap<>();
@@ -60,11 +61,6 @@ public class AdvancedGui extends SimpleGui {
 
     public void registerLoader(GuiDataLoader loader) {
         loaderMap.put(loader.getClass(), loader);
-    }
-
-    public void registerLoader(final @NotNull String namespace, final @NotNull String id) {
-        Key key = Key.key(namespace, id);
-        registerLoader(key);
     }
 
     public Collection<GuiDataLoader> getLoaders() {

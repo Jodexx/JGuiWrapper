@@ -9,7 +9,7 @@ dependencies {
 }
 
 tasks.jar {
-    enabled = false;
+    enabled = false
 }
 
 tasks.shadowJar {

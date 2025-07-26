@@ -5,6 +5,7 @@ import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings({"unused"})
 public class HandlerContext {
 
     private final LoadType loadType;

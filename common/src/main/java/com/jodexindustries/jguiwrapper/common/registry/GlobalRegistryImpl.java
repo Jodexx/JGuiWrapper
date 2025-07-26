@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("unused")
 public class GlobalRegistryImpl implements GlobalRegistry {
 
     private static final Map<String, DataRegistry> REGISTRIES = new ConcurrentHashMap<>();

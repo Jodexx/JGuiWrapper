@@ -17,6 +17,7 @@ import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings({"UnstableApiUsage", "unused"})
 public class Wrapper1_19_R3 implements NMSWrapper {
 
     @Override

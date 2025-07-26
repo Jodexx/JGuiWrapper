@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings({"unused", "UnusedReturnValue", "BooleanMethodIsAlwaysInverted"})
 public class ItemWrapper {
 
     private ItemStack itemStack;

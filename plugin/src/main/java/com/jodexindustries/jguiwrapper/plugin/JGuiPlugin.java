@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+@SuppressWarnings({"unused"})
 public final class JGuiPlugin extends JavaPlugin {
 
     public static final Key TEST_LOADER_KEY = Key.key("jguiwrapper", "test");
