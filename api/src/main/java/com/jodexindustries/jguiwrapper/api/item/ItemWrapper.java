@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "BooleanMethodIsAlwaysInverted"})
@@ -98,6 +99,15 @@ public class ItemWrapper {
 
     public final Component displayName() {
         return this.displayName;
+    }
+
+    public final void lore(@NotNull String... lore) {
+        List<Component> list = new ArrayList<>();
+
+        for (String line : lore) {
+            list.add(AbstractGui.LEGACY_AMPERSAND.deserialize(line));
+        }
+        lore(list);
     }
 
     public final void lore(@Nullable List<Component> lore) {
