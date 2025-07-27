@@ -4,6 +4,7 @@ import com.jodexindustries.jguiwrapper.api.GuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.HumanEntity;
@@ -29,6 +30,10 @@ public abstract class AbstractGui implements Gui {
      * LegacyComponentSerializer using ampersand (&amp;) as the color code character.
      */
     public static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
+
+    @NotNull
+    protected SerializerType defaultSerizalizer = SerializerType.LEGACY;
+
     /**
      * Main API instance for GUI operations.
      */
@@ -75,7 +80,7 @@ public abstract class AbstractGui implements Gui {
      * @param title The GUI title as a Component
      */
     public AbstractGui(@NotNull InventoryType type, @NotNull Component title) {
-        this(type.getDefaultSize(), type, title);
+        this(type.getDefaultSize(), type, title, null);
     }
 
     /**
@@ -84,14 +89,17 @@ public abstract class AbstractGui implements Gui {
      * @param title The GUI title as a Component
      */
     public AbstractGui(int size, @NotNull Component title) {
-        this(size, null, title);
+        this(size, null, title, null);
     }
 
-    private AbstractGui(int size, @Nullable InventoryType type, @NotNull Component title) {
-        this.size =  adaptSize(size);
+    private AbstractGui(int size, @Nullable InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerizalizer) {
+        this.size = adaptSize(size);
         this.title = title;
         this.holder = new GuiHolder(this, type);
         this.type = holder.getInventory().getType();
+        if (defaultSerizalizer != null) {
+            this.defaultSerizalizer = defaultSerizalizer;
+        }
 
         INSTANCES.add(new WeakReference<>(this));
     }
@@ -133,7 +141,7 @@ public abstract class AbstractGui implements Gui {
      * @param title the new GUI title as a string (legacy color codes supported)
      */
     public final void title(@NotNull String title) {
-        this.title = LEGACY_AMPERSAND.deserialize(title);
+        this.title = defaultSerizalizer.deserialize(title);
     }
 
     /**

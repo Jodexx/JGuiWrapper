@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.api.item;
 
 import com.google.common.base.Preconditions;
-import com.jodexindustries.jguiwrapper.gui.AbstractGui;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +16,8 @@ import java.util.List;
 @SuppressWarnings({"unused", "UnusedReturnValue", "BooleanMethodIsAlwaysInverted"})
 public class ItemWrapper {
 
+    private final SerializerType serializer;
+
     private ItemStack itemStack;
 
     private Material material;
@@ -29,13 +31,26 @@ public class ItemWrapper {
 
     private boolean updated = true;
 
-    public ItemWrapper(@NotNull final ItemStack itemStack) {
+    public ItemWrapper(@NotNull final ItemStack itemStack, @Nullable SerializerType serializer) {
         this.itemStack = itemStack;
         this.material = itemStack.getType();
+        this.serializer = serializer == null ? SerializerType.LEGACY : serializer;
+    }
+
+    public ItemWrapper(@NotNull final ItemStack itemStack) {
+        this(itemStack, null);
+    }
+
+    public ItemWrapper(@NotNull final Material material, final int amount, @Nullable SerializerType serializer) {
+        this(new ItemStack(material, amount), serializer);
     }
 
     public ItemWrapper(@NotNull final Material material, final int amount) {
         this(new ItemStack(material, amount));
+    }
+
+    public ItemWrapper(@NotNull final Material material, @Nullable SerializerType serializer) {
+        this(material, 1, serializer);
     }
 
     public ItemWrapper(@NotNull final Material material) {
@@ -94,7 +109,7 @@ public class ItemWrapper {
     }
 
     public final void displayName(@Nullable String displayName) {
-        Component component = displayName == null ? null : AbstractGui.LEGACY_AMPERSAND.deserialize(displayName);
+        Component component = displayName == null ? null : serializer.deserialize(displayName);
         displayName(component);
     }
 
@@ -110,7 +125,7 @@ public class ItemWrapper {
         List<Component> list = new ArrayList<>();
 
         for (String line : lore) {
-            list.add(AbstractGui.LEGACY_AMPERSAND.deserialize(line));
+            list.add(serializer.deserialize(line));
         }
         lore(list);
     }
@@ -150,8 +165,12 @@ public class ItemWrapper {
     }
 
     public static Builder builder(@NotNull Material material) {
+        return builder(material, null);
+    }
+
+    public static Builder builder(@NotNull Material material, @Nullable SerializerType serializer) {
         Preconditions.checkArgument(material != null, "Material cannot be null");
-        return new Builder(material);
+        return new Builder(material, serializer);
     }
 
     public boolean isUpdated() {
@@ -160,14 +179,17 @@ public class ItemWrapper {
 
     public static class Builder {
         private final Material material;
+        private SerializerType serializer = SerializerType.LEGACY;
         private int amount = 1;
         private Component displayName;
         private List<Component> lore;
         private Integer customModelData;
         private boolean autoFlushUpdate;
 
-        private Builder(@NotNull Material material) {
+        private Builder(@NotNull Material material, @Nullable SerializerType serializer) {
             this.material = material;
+
+            if (serializer != null) this.serializer = serializer;
         }
 
         public Builder amount(int amount) {
@@ -181,8 +203,21 @@ public class ItemWrapper {
         }
 
         public Builder displayName(@Nullable String displayName) {
-            Component component = displayName == null ? null : AbstractGui.LEGACY_AMPERSAND.deserialize(displayName);
+            Component component = displayName == null ? null : serializer.deserialize(displayName);
             return displayName(component);
+        }
+
+        public Builder lore(@NotNull Collection<String> lore) {
+            return lore(lore.toArray(new String[0]));
+        }
+
+        public Builder lore(@NotNull String... lore) {
+            List<Component> list = new ArrayList<>();
+
+            for (String line : lore) {
+                list.add(serializer.deserialize(line));
+            }
+            return lore(list);
         }
 
         public Builder lore(@Nullable List<Component> lore) {
@@ -201,7 +236,7 @@ public class ItemWrapper {
         }
 
         public ItemWrapper build() {
-            ItemWrapper wrapper = new ItemWrapper(material, amount);
+            ItemWrapper wrapper = new ItemWrapper(material, amount, serializer);
 
             wrapper.displayName = displayName;
             wrapper.lore = lore;
