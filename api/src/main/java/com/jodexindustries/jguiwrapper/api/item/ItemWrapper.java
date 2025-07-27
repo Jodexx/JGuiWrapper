@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "BooleanMethodIsAlwaysInverted"})
@@ -99,6 +100,10 @@ public class ItemWrapper {
 
     public final Component displayName() {
         return this.displayName;
+    }
+
+    public final void lore(@NotNull Collection<String> lore) {
+        lore(lore.toArray(new String[0]));
     }
 
     public final void lore(@NotNull String... lore) {
