@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,7 @@ public class ItemWrapper {
     private Component displayName;
     private List<Component> lore;
     private Integer customModelData;
+    private boolean enchanted;
 
     private boolean canUpdate = true;
 
@@ -73,6 +75,12 @@ public class ItemWrapper {
         meta.displayName(displayName);
         meta.lore(lore);
         meta.setCustomModelData(customModelData);
+
+        if (enchanted) {
+            meta.addEnchant(Enchantment.LURE, 1, true);
+        } else {
+            meta.removeEnchant(Enchantment.LURE);
+        }
     }
 
     protected void flushUpdate() {
@@ -144,8 +152,17 @@ public class ItemWrapper {
         flushUpdate();
     }
 
-    public Integer customModelData() {
+    public final Integer customModelData() {
         return customModelData;
+    }
+
+    public final void enchanted(boolean enchanted) {
+        this.enchanted = enchanted;
+        flushUpdate();
+    }
+
+    public final boolean enchanted() {
+        return enchanted;
     }
 
     public void autoFlushUpdate(boolean autoFlushUpdate) {
@@ -184,6 +201,7 @@ public class ItemWrapper {
         private Component displayName;
         private List<Component> lore;
         private Integer customModelData;
+        private boolean enchanted;
         private boolean autoFlushUpdate;
 
         private Builder(@NotNull Material material, @Nullable SerializerType serializer) {
@@ -230,6 +248,11 @@ public class ItemWrapper {
             return this;
         }
 
+        public Builder enchanted(boolean enchanted) {
+            this.enchanted = enchanted;
+            return this;
+        }
+
         public Builder autoFlushUpdate(boolean autoFlushUpdate) {
             this.autoFlushUpdate = autoFlushUpdate;
             return this;
@@ -242,6 +265,7 @@ public class ItemWrapper {
             wrapper.lore = lore;
             wrapper.customModelData = customModelData;
             wrapper.autoFlushUpdate = autoFlushUpdate;
+            wrapper.enchanted = enchanted;
 
             wrapper.update();
 
