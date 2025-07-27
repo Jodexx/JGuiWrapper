@@ -379,7 +379,7 @@ public class GuiItemController {
      * Updates all items (default and slot-specific)
      * @param updater Consumer to modify items
      */
-    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater) {
+    public void updateItems(@NotNull Consumer<ItemWrapper> updater) {
         if (defaultItemWrapper != null) {
             updater.accept(defaultItemWrapper);
             if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update();
@@ -391,6 +391,16 @@ public class GuiItemController {
         }
 
         redraw();
+    }
+
+    /**
+     * Updates all items (default and slot-specific)
+     * @param updater Consumer to modify items
+     * @deprecated see {@link #updateItems(Consumer)}
+     */
+    @Deprecated
+    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater) {
+        updateItems(updater);
     }
 
     /**

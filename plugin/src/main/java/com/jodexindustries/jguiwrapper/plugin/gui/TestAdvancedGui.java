@@ -47,7 +47,7 @@ public class TestAdvancedGui extends AdvancedGui {
 
                     clicks++;
 
-                    controller.updateItemWrappers(itemWrapper -> itemWrapper.displayName(Component.text(clicks)));
+                    controller.updateItems(itemWrapper -> itemWrapper.displayName(Component.text(clicks)));
 
                     title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
                     updateMenu();

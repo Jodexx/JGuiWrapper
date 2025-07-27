@@ -10,6 +10,6 @@ public class TestItemHandler implements ItemHandler<TestGuiLoader> {
 
     @Override
     public void load(@NotNull TestGuiLoader loader, @NotNull GuiItemController controller, @NotNull HandlerContext context) {
-        controller.updateItemWrappers(itemWrapper -> itemWrapper.displayName("Open count: " + loader.getOpenCount()));
+        controller.updateItems(itemWrapper -> itemWrapper.displayName("Open count: " + loader.getOpenCount()));
     }
 }
