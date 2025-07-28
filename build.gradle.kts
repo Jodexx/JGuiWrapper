@@ -6,8 +6,6 @@ plugins {
     `maven-publish`
     id("com.gradleup.shadow") version "9.0.0-beta15" apply false
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.17" apply false
-//    id("me.kcra.takenaka.accessor") version "2.0.0-SNAPSHOT" apply false
-
 }
 
 tasks.jar {

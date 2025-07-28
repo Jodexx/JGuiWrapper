@@ -35,8 +35,6 @@ subprojects {
             tasks.named("assemble") {
                 dependsOn(tasks.named("reobfJar"))
             }
-        } else {
-//            plugins.apply("me.kcra.takenaka.accessor")
         }
 }
 
