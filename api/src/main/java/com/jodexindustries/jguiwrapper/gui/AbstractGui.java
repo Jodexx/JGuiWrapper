@@ -7,15 +7,19 @@ import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 
 /**
@@ -30,6 +34,8 @@ public abstract class AbstractGui implements Gui {
      * LegacyComponentSerializer using ampersand (&amp;) as the color code character.
      */
     public static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
+
+    public static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
 
     @NotNull
     protected SerializerType defaultSerizalizer = SerializerType.LEGACY;
@@ -51,6 +57,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Constructs a GUI with the default size (54) and a string title.
+     *
      * @param title The GUI title as a string (legacy color codes supported)
      */
     public AbstractGui(@NotNull String title) {
@@ -59,6 +66,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Constructs a GUI with a specific size and string title.
+     *
      * @param size  The inventory size
      * @param title The GUI title as a string (legacy color codes supported)
      */
@@ -68,6 +76,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Constructs a GUI with the default CHEST type and a component title.
+     *
      * @param title The GUI title as a Component
      */
     public AbstractGui(@NotNull Component title) {
@@ -76,6 +85,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Constructs a GUI with a specific inventory type and component title.
+     *
      * @param type  The inventory type
      * @param title The GUI title as a Component
      */
@@ -85,6 +95,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Constructs a GUI with a specific size, optional type, and component title.
+     *
      * @param size  The inventory size
      * @param title The GUI title as a Component
      */
@@ -106,6 +117,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Gets the inventory size (number of slots).
+     *
      * @return the inventory size
      */
     public final int size() {
@@ -114,6 +126,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Sets the inventory size (number of slots).
+     *
      * @param size the new inventory size
      */
     public final void size(int size) {
@@ -122,6 +135,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Gets the GUI title as a Component.
+     *
      * @return the GUI title
      */
     public final @NotNull Component title() {
@@ -130,6 +144,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Sets the GUI title as a Component.
+     *
      * @param title the new GUI title
      */
     public final void title(@NotNull Component title) {
@@ -138,6 +153,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Sets the GUI title from a legacy string.
+     *
      * @param title the new GUI title as a string (legacy color codes supported)
      */
     public final void title(@NotNull String title) {
@@ -146,6 +162,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Sets the inventory type (e.g., CHEST, HOPPER).
+     *
      * @param type the new inventory type
      */
     public final void type(@NotNull InventoryType type) {
@@ -154,6 +171,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Gets the inventory type (e.g., CHEST, HOPPER).
+     *
      * @return the inventory type
      */
     @NotNull
@@ -163,6 +181,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Gets the holder for this GUI instance.
+     *
      * @return the GuiHolder for this GUI
      */
     @Override
@@ -172,6 +191,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Opens this GUI for the specified player.
+     *
      * @param player the player to open the GUI for
      */
     @Override
@@ -181,8 +201,9 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Opens this GUI for the specified player with a custom title.
+     *
      * @param player the player to open the GUI for
-     * @param title the custom title to use
+     * @param title  the custom title to use
      */
     @Override
     public final void open(@NotNull HumanEntity player, Component title) {
@@ -201,6 +222,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Closes this GUI for the specified player.
+     *
      * @param player the player to close the GUI for
      */
     @Override
@@ -212,27 +234,35 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Called when the GUI is opened for a player. Can be overridden by subclasses.
+     *
      * @param event the InventoryOpenEvent
      */
-    public void onOpen(@NotNull InventoryOpenEvent event) {}
+    public void onOpen(@NotNull InventoryOpenEvent event) {
+    }
 
     /**
      * Called when the GUI is closed for a player. Can be overridden by subclasses.
+     *
      * @param event the InventoryCloseEvent
      */
-    public void onClose(@NotNull InventoryCloseEvent event) {}
+    public void onClose(@NotNull InventoryCloseEvent event) {
+    }
 
     /**
      * Called when a player clicks in the GUI. Can be overridden by subclasses.
+     *
      * @param event the InventoryClickEvent
      */
-    public void onClick(@NotNull InventoryClickEvent event) {}
+    public void onClick(@NotNull InventoryClickEvent event) {
+    }
 
     /**
      * Called when a player drags items in the GUI. Can be overridden by subclasses.
+     *
      * @param event the InventoryDragEvent
      */
-    public void onDrag(@NotNull InventoryDragEvent event) {}
+    public void onDrag(@NotNull InventoryDragEvent event) {
+    }
 
     /**
      * Updates the menu for all viewers with the current type, size, and title.
@@ -243,6 +273,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for a specific player with the current type, size, and title.
+     *
      * @param player the player to update the menu for
      */
     public final boolean updateMenu(HumanEntity player) {
@@ -251,6 +282,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for all viewers with a new title, keeping the current type and size.
+     *
      * @param title the new title for the menu
      */
     public final void updateMenu(Component title) {
@@ -259,6 +291,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for all viewers with a new type, keeping the current size and title.
+     *
      * @param type the new inventory type
      */
     public final void updateMenu(InventoryType type) {
@@ -267,6 +300,7 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for all viewers with a new type and size, keeping the current title.
+     *
      * @param type the new inventory type
      * @param size the new inventory size
      */
@@ -276,8 +310,9 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for all viewers with new type, size, and title.
-     * @param type the new inventory type
-     * @param size the new inventory size
+     *
+     * @param type  the new inventory type
+     * @param size  the new inventory size
      * @param title the new title for the menu
      */
     public final void updateMenu(InventoryType type, int size, Component title) {
@@ -286,8 +321,9 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for a specific player with a new title, keeping the current type and size.
+     *
      * @param player the player to update the menu for
-     * @param title the new title for the menu
+     * @param title  the new title for the menu
      */
     public final boolean updateMenu(@NotNull HumanEntity player, Component title) {
         return updateMenu(player, null, this.size, title);
@@ -295,8 +331,9 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for a specific player with a new type, keeping the current size and title.
+     *
      * @param player the player to update the menu for
-     * @param type the new inventory type
+     * @param type   the new inventory type
      */
     public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type) {
         return updateMenu(player, type, this.size, null);
@@ -304,9 +341,10 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for a specific player with a new type and size, keeping the current title.
+     *
      * @param player the player to update the menu for
-     * @param type the new inventory type
-     * @param size the new inventory size
+     * @param type   the new inventory type
+     * @param size   the new inventory size
      */
     public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type, int size) {
         return updateMenu(player, type, size, null);
@@ -314,10 +352,11 @@ public abstract class AbstractGui implements Gui {
 
     /**
      * Updates the menu for a specific player with new type, size, and title.
+     *
      * @param player the player to update the menu for
-     * @param type the new inventory type
-     * @param size the new inventory size
-     * @param title the new title for the menu
+     * @param type   the new inventory type
+     * @param size   the new inventory size
+     * @param title  the new title for the menu
      */
     public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
         try {
@@ -342,8 +381,57 @@ public abstract class AbstractGui implements Gui {
         viewers.forEach(this::open);
     }
 
+    public final BukkitTask runTask(@NotNull Runnable task) {
+        return SCHEDULER.runTask(API.getPlugin(), task);
+    }
+
+    public final BukkitTask runTaskAsync(@NotNull Runnable task) {
+        return SCHEDULER.runTaskAsynchronously(API.getPlugin(), task);
+    }
+
+    public final void runTask(@NotNull Consumer<BukkitTask> task) {
+        SCHEDULER.runTask(API.getPlugin(), task);
+    }
+
+    public final void runTaskAsync(@NotNull Consumer<BukkitTask> task) {
+        SCHEDULER.runTaskAsynchronously(API.getPlugin(), task);
+    }
+
+    public final BukkitTask runTask(@NotNull Runnable task, long delay) {
+        return SCHEDULER.runTaskLater(API.getPlugin(), task, delay);
+    }
+
+    public final BukkitTask runTaskAsync(@NotNull Runnable task, long delay) {
+        return SCHEDULER.runTaskLaterAsynchronously(API.getPlugin(), task, delay);
+    }
+
+    public final void runTask(@NotNull Consumer<BukkitTask> task, long delay) {
+        SCHEDULER.runTaskLater(API.getPlugin(), task, delay);
+    }
+
+    public final void runTaskAsync(@NotNull Consumer<BukkitTask> task, long delay) {
+        SCHEDULER.runTaskLaterAsynchronously(API.getPlugin(), task, delay);
+    }
+
+    public final BukkitTask runTask(@NotNull Runnable task, long delay, long period) {
+        return SCHEDULER.runTaskTimer(API.getPlugin(), task, delay, period);
+    }
+
+    public final BukkitTask runTaskAsync(@NotNull Runnable task, long delay, long period) {
+        return SCHEDULER.runTaskLaterAsynchronously(API.getPlugin(), task, delay);
+    }
+
+    public final void runTask(@NotNull Consumer<BukkitTask> task, long delay, long period) {
+        SCHEDULER.runTaskTimer(API.getPlugin(), task, delay, period);
+    }
+
+    public final void runTaskAsync(@NotNull Consumer<BukkitTask> task, long delay, long period) {
+        SCHEDULER.runTaskTimerAsynchronously(API.getPlugin(), task, delay, period);
+    }
+
     /**
      * Adapts the given size to the nearest valid inventory size (multiple of 9, between 1 and 54).
+     *
      * @param size the requested inventory size
      * @return the adapted inventory size
      */
