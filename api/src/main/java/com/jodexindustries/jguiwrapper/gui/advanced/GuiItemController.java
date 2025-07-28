@@ -8,6 +8,7 @@ import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.api.tools.Pair;
 import net.kyori.adventure.key.Key;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
@@ -201,6 +202,20 @@ public class GuiItemController {
     }
 
     /**
+     * Updates items in specific slots with player
+     * @param updater Consumer to modify items
+     * @param player Player to placeholder update
+     * @param slots Slot indexes to update
+     */
+    public void updateItems(@NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player, int... slots) {
+        for (int slot : slots) {
+            if (this.slots.contains(slot)) {
+                updateItem(slot, updater, player);
+            }
+        }
+    }
+
+    /**
      * Updates items in specific slots
      * @param updater Consumer to modify items
      * @param slots Slot indexes to update
@@ -376,21 +391,30 @@ public class GuiItemController {
     }
 
     /**
-     * Updates all items (default and slot-specific)
+     * Updates all items (default and slot-specific) with player
+     * @param player Player to placeholder update
      * @param updater Consumer to modify items
      */
-    public void updateItems(@NotNull Consumer<ItemWrapper> updater) {
+    public void updateItems(@NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player) {
         if (defaultItemWrapper != null) {
             updater.accept(defaultItemWrapper);
-            if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update();
+            if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update(player);
         }
 
         for (ItemWrapper item : slotSpecificItems.values()) {
             updater.accept(item);
-            if (!item.isUpdated()) item.update();
+            if (!item.isUpdated()) item.update(player);
         }
 
         redraw();
+    }
+
+    /**
+     * Updates all items (default and slot-specific)
+     * @param updater Consumer to modify items
+     */
+    public void updateItems(@NotNull Consumer<ItemWrapper> updater) {
+        updateItems(updater, (OfflinePlayer) null);
     }
 
     /**
@@ -409,10 +433,19 @@ public class GuiItemController {
      * @param updater Consumer to modify the item
      */
     public void updateItem(int slot, @NotNull Consumer<ItemWrapper> updater) {
+        updateItem(slot, updater, null);
+    }
+
+    /**
+     * Updates item in a specific slot
+     * @param slot Slot index
+     * @param updater Consumer to modify the item
+     */
+    public void updateItem(int slot, @NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player) {
         ItemWrapper item = getItem(slot);
         if (item != null) {
             updater.accept(item);
-            if (!item.isUpdated()) item.update();
+            if (!item.isUpdated()) item.update(player);
             redraw(slot);
         }
     }

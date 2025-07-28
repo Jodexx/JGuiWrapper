@@ -1,10 +1,13 @@
 package com.jodexindustries.jguiwrapper.api.item;
 
 import com.google.common.base.Preconditions;
+import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "BooleanMethodIsAlwaysInverted"})
-public class ItemWrapper {
+public class ItemWrapper implements Cloneable {
 
     private final SerializerType serializer;
 
@@ -30,6 +33,7 @@ public class ItemWrapper {
     private boolean canUpdate = true;
 
     private boolean autoFlushUpdate;
+    private PlaceholderEngine placeholderEngine;
 
     private boolean updated = true;
 
@@ -60,20 +64,36 @@ public class ItemWrapper {
     }
 
     public void update() {
+        update((OfflinePlayer) null);
+    }
+
+    public void update(@Nullable HumanEntity entity) {
+        update(((OfflinePlayer) entity));
+    }
+
+    public void update(@Nullable OfflinePlayer player) {
         if (!canUpdate) return;
 
         ItemMeta meta = this.itemStack.getItemMeta();
-        updateMeta(meta);
+        updateMeta(meta, player);
         this.itemStack.setItemMeta(meta);
         this.itemStack.setType(material);
         updated = true;
     }
 
-    protected void updateMeta(ItemMeta meta) {
+    protected void updateMeta(ItemMeta meta, @Nullable OfflinePlayer player) {
         if (meta == null) return;
 
-        meta.displayName(displayName);
-        meta.lore(lore);
+        Component tempDisplayName = this.displayName;
+        List<Component> tempLore = this.lore;
+
+        if (placeholderEngine != null) {
+            if (tempDisplayName != null) tempDisplayName = placeholderEngine.process(tempDisplayName, player);
+            if (tempLore != null) tempLore = placeholderEngine.process(tempLore, player);
+        }
+
+        meta.displayName(tempDisplayName);
+        meta.lore(tempLore);
         meta.setCustomModelData(customModelData);
 
         if (enchanted) {
@@ -153,7 +173,7 @@ public class ItemWrapper {
     }
 
     public final Integer customModelData() {
-        return customModelData;
+        return this.customModelData;
     }
 
     public final void enchanted(boolean enchanted) {
@@ -162,23 +182,31 @@ public class ItemWrapper {
     }
 
     public final boolean enchanted() {
-        return enchanted;
+        return this.enchanted;
     }
 
-    public void autoFlushUpdate(boolean autoFlushUpdate) {
+    public final void autoFlushUpdate(boolean autoFlushUpdate) {
         this.autoFlushUpdate = autoFlushUpdate;
     }
 
-    public boolean autoFlushUpdate() {
-        return autoFlushUpdate;
+    public final boolean autoFlushUpdate() {
+        return this.autoFlushUpdate;
     }
 
-    public void canUpdate(boolean canUpdate) {
+    public final void canUpdate(boolean canUpdate) {
         this.canUpdate = canUpdate;
     }
 
-    public boolean canUpdate() {
-        return canUpdate;
+    public final boolean canUpdate() {
+        return this.canUpdate;
+    }
+
+    public void placeholderEngine(PlaceholderEngine placeholderEngine) {
+        this.placeholderEngine = placeholderEngine;
+    }
+
+    public PlaceholderEngine placeholderEngine() {
+        return this.placeholderEngine;
     }
 
     public static Builder builder(@NotNull Material material) {
@@ -194,6 +222,17 @@ public class ItemWrapper {
         return updated;
     }
 
+    @Override
+    public ItemWrapper clone() {
+        try {
+            ItemWrapper clone = (ItemWrapper) super.clone();
+            clone.itemStack = this.itemStack.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
     public static class Builder {
         private final Material material;
         private SerializerType serializer = SerializerType.LEGACY;
@@ -203,6 +242,7 @@ public class ItemWrapper {
         private Integer customModelData;
         private boolean enchanted;
         private boolean autoFlushUpdate;
+        private PlaceholderEngine placeholderEngine;
 
         private Builder(@NotNull Material material, @Nullable SerializerType serializer) {
             this.material = material;
@@ -258,6 +298,11 @@ public class ItemWrapper {
             return this;
         }
 
+        public Builder placeholderEngine(PlaceholderEngine placeholderEngine) {
+            this.placeholderEngine = placeholderEngine;
+            return this;
+        }
+
         public ItemWrapper build() {
             ItemWrapper wrapper = new ItemWrapper(material, amount, serializer);
 
@@ -266,6 +311,7 @@ public class ItemWrapper {
             wrapper.customModelData = customModelData;
             wrapper.autoFlushUpdate = autoFlushUpdate;
             wrapper.enchanted = enchanted;
+            wrapper.placeholderEngine = placeholderEngine;
 
             wrapper.update();
 
