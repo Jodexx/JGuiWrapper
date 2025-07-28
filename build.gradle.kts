@@ -45,12 +45,13 @@ subprojects {
 
 allprojects {
     group = "com.jodexindustries.jguiwrapper"
-    version = "1.0.0.2"
+    version = "1.0.0.3"
 
     repositories {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
+        maven("https://repo.extendedclip.com/releases/")
         maven("https://repo.screamingsandals.org/public")
         maven("https://repo.screamingsandals.org/releases")
         maven("https://repo.screamingsandals.org/snapshots/")
