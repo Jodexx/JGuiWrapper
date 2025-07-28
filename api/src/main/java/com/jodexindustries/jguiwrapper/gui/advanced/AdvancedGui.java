@@ -39,7 +39,7 @@ public class AdvancedGui extends SimpleGui {
 
     public void loadData(HumanEntity player) {
         for (GuiDataLoader value : loaderMap.values()) {
-            value.load(player);
+            value.load(this, player);
         }
     }
 
