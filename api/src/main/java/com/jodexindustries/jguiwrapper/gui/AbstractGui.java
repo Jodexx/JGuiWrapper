@@ -228,8 +228,8 @@ public abstract class AbstractGui implements Gui {
     @Override
     public final void close(@NotNull HumanEntity player) {
         InventoryCloseEvent.Reason reason = InventoryCloseEvent.Reason.PLUGIN;
-        onClose(new InventoryCloseEvent(player.getOpenInventory(), reason));
         player.closeInventory(reason);
+        onClose(new InventoryCloseEvent(player.getOpenInventory(), reason));
     }
 
     /**
