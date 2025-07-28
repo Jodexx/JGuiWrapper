@@ -3,7 +3,9 @@ package com.jodexindustries.jguiwrapper.common;
 import com.jodexindustries.jguiwrapper.api.GuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
+import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
 import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
 import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
 import com.jodexindustries.jguiwrapper.common.gui.GuiListener;
@@ -20,6 +22,7 @@ public final class JGuiInitializer extends GuiApi {
     private static final GlobalRegistry REGISTRY = new GlobalRegistryImpl();
     private static NMSWrapper NMS_WRAPPER = NMSMatcher.EMPTY_WRAPPER;
     private static Plugin PLUGIN;
+    private static boolean PAPI = false;
 
     private JGuiInitializer() {
 
@@ -30,6 +33,8 @@ public final class JGuiInitializer extends GuiApi {
 
         plugin.getServer().getPluginManager().registerEvents(new GuiListener(), plugin);
         JGuiInitializer.PLUGIN = plugin;
+
+        PAPI = plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
 
         setInstance(new JGuiInitializer());
 
@@ -58,6 +63,16 @@ public final class JGuiInitializer extends GuiApi {
     @Override
     public @Nullable GuiHolder getOpenedGui(@NotNull Player player) {
         return GuiUtils.getHolder(player.getOpenInventory().getTopInventory());
+    }
+
+    @Override
+    public @NotNull PlaceholderEngine createPlaceholderEngine() {
+        return new PlaceholderEngineImpl();
+    }
+
+    @Override
+    public boolean isPAPI() {
+        return PAPI;
     }
 
 }

@@ -2,6 +2,7 @@ package com.jodexindustries.jguiwrapper.api;
 
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
+import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -69,4 +70,9 @@ public abstract class GuiApi {
      */
     @Nullable
     public abstract GuiHolder getOpenedGui(@NotNull Player player);
+
+    @NotNull
+    public abstract PlaceholderEngine createPlaceholderEngine();
+
+    public abstract boolean isPAPI();
 }
