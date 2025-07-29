@@ -34,6 +34,7 @@ public class NMSMatcher {
         VERSIONS.put("1.21.5", "1_21_R4");
         VERSIONS.put("1.21.6", "1_21_R5");
         VERSIONS.put("1.21.7", "1_21_R5");
+        VERSIONS.put("1.21.8", "1_21_R5");
     }
 
     private static final String NEWEST_VERSION = "1_21_R5";
