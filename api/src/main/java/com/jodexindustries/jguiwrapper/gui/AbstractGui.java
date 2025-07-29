@@ -38,7 +38,7 @@ public abstract class AbstractGui implements Gui {
     public static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
 
     @NotNull
-    protected SerializerType defaultSerizalizer = SerializerType.LEGACY;
+    protected SerializerType defaultSerializer = SerializerType.LEGACY;
 
     /**
      * Main API instance for GUI operations.
@@ -90,7 +90,20 @@ public abstract class AbstractGui implements Gui {
      * @param title The GUI title as a Component
      */
     public AbstractGui(@NotNull InventoryType type, @NotNull Component title) {
-        this(type.getDefaultSize(), type, title, null);
+        this(type, title, null);
+    }
+
+    /**
+     * Constructs a GUI with a specific inventory type and component title with serializer.
+     *
+     * @param type              The inventory type.
+     * @param title             The GUI title as a {@link Component}.
+     * @param defaultSerializer The default serializer used for converting between plain strings and {@link Component}
+     *                          instances. If {@code null}, the default
+     *                          {@link SerializerType#LEGACY} will be used.
+     */
+    public AbstractGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        this(type.getDefaultSize(), type, title, defaultSerializer);
     }
 
     /**
@@ -103,13 +116,13 @@ public abstract class AbstractGui implements Gui {
         this(size, null, title, null);
     }
 
-    private AbstractGui(int size, @Nullable InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerizalizer) {
+    private AbstractGui(int size, @Nullable InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         this.size = adaptSize(size);
         this.title = title;
         this.holder = new GuiHolder(this, type);
         this.type = holder.getInventory().getType();
-        if (defaultSerizalizer != null) {
-            this.defaultSerizalizer = defaultSerizalizer;
+        if (defaultSerializer != null) {
+            this.defaultSerializer = defaultSerializer;
         }
 
         INSTANCES.add(new WeakReference<>(this));
@@ -154,10 +167,10 @@ public abstract class AbstractGui implements Gui {
     /**
      * Sets the GUI title from a legacy string.
      *
-     * @param title the new GUI title as a string (legacy color codes supported)
+     * @param title the new GUI title as a string
      */
     public final void title(@NotNull String title) {
-        this.title = defaultSerizalizer.deserialize(title);
+        this.title = defaultSerializer.deserialize(title);
     }
 
     /**

@@ -60,7 +60,7 @@ public class TestAdvancedGui extends AdvancedGui {
 
         registerItem("close", builder -> builder.slots(size() - 1)
                 .defaultItem(ItemWrapper.builder(Material.BARRIER)
-                        .displayName(defaultSerizalizer.deserialize("&cClose")).build())
+                        .displayName(defaultSerializer.deserialize("&cClose")).build())
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);
 
