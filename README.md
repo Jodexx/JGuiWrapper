@@ -1,6 +1,6 @@
 # JGuiWrapper
 
-> A library for creating customizable GUIs on **PaperMC 1.16.5–1.21.7** servers
+> A library for creating customizable GUIs on **PaperMC 1.16.5–1.21.8** servers
 
 [![Release](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle-publish.yml)
 [![JGuiWrapper API version](https://repo.jodex.xyz/api/badge/latest/releases/com/jodexindustries/jguiwrapper/api?color=C72EFF&name=API&prefix=v)](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper/api)
