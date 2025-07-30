@@ -81,12 +81,11 @@ public class GuiItemController {
 
     /**
      * Adds a slot to be managed by this controller
-     * @param slot Slot index to add (0-53)
+     * @param slot Slot index to add
      * @throws IndexOutOfBoundsException If slot is out of bounds
      */
     public void addSlot(Integer slot) {
-        if (slot < 0 || slot >= 54)
-            throw new IndexOutOfBoundsException("Slot " + slot + " is out of inventory bounds");
+        validateSlot(slot);
         slots.add(slot);
         redraw();
     }
@@ -99,8 +98,7 @@ public class GuiItemController {
         if (slots.remove(slot)) {
             slotSpecificItems.remove(slot);
             slotClickHandlers.remove(slot);
-            gui.removeClickHandlers(slot);
-            gui.holder().getInventory().clear(slot);
+            clear(slot);
         }
     }
 
@@ -119,8 +117,21 @@ public class GuiItemController {
      */
     public void setSlots(@NotNull Collection<Integer> newSlots) {
         for (int slot : newSlots) {
-            if (slot < 0 || slot >= 54)
-                throw new IndexOutOfBoundsException("Slot " + slot + " is out of inventory bounds");
+            validateSlot(slot);
+
+            Optional<GuiItemController> existingController = gui.getController(slot);
+
+            if (existingController.isPresent() && existingController.get() != this) {
+                throw new IllegalArgumentException("Slot " + slot + " is already occupied by another controller");
+            }
+        }
+
+        for (Integer oldSlot : oldSlots) {
+            gui.slotMap.remove(oldSlot);
+        }
+
+        for (int slot : newSlots) {
+            gui.slotMap.put(slot, this);
         }
 
         oldSlots.clear();
@@ -128,6 +139,12 @@ public class GuiItemController {
         slots.clear();
         slots.addAll(newSlots);
         redraw();
+    }
+
+    private void validateSlot(int slot) {
+        if (slot < 0 || slot >= gui.size()) {
+            throw new IndexOutOfBoundsException("Slot " + slot + " is out of inventory bounds");
+        }
     }
 
     /**
@@ -152,8 +169,13 @@ public class GuiItemController {
      */
     public void clear() {
         for (int slot : slots) {
-            gui.holder().getInventory().clear(slot);
+            clear(slot);
         }
+    }
+
+    public void clear(int slot) {
+        gui.removeClickHandlers(slot);
+        gui.holder().getInventory().clear(slot);
     }
 
     /**
@@ -365,11 +387,12 @@ public class GuiItemController {
      * Redraws all managed slots
      */
     public void redraw() {
-        for (int oldSlot : oldSlots) {
-            gui.removeClickHandlers(oldSlot);
+        if (!oldSlots.isEmpty()) {
+            for (int oldSlot : oldSlots) {
+                clear(oldSlot);
+            }
+            oldSlots.clear();
         }
-        oldSlots.clear();
-        oldSlots.addAll(slots);
 
         for (int slot : slots) {
             redraw(slot);

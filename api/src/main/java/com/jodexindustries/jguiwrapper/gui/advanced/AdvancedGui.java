@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 public class AdvancedGui extends SimpleGui {
 
     private final Map<String, GuiItemController> keyMap = new HashMap<>();
+    public final Map<Integer, GuiItemController> slotMap = new HashMap<>();
     private final Map<Class<? extends GuiDataLoader>, GuiDataLoader> loaderMap = new HashMap<>();
 
     public AdvancedGui(@NotNull String title) {
@@ -78,8 +79,22 @@ public class AdvancedGui extends SimpleGui {
     public void registerItem(@NotNull String key, @NotNull GuiItemController controller) {
         if (keyMap.containsKey(key)) return;
 
+        for (int slot : controller.slots()) {
+            if (slotMap.containsKey(slot)) {
+                throw new IllegalStateException("Slot " + slot + " already occupied by another controller");
+            }
+        }
+
         keyMap.put(key, controller);
+        controller.slots().forEach(slot -> slotMap.put(slot, controller));
         controller.redraw();
+    }
+
+    public void unregister(String key) {
+        GuiItemController controller = keyMap.remove(key);
+        if (controller != null) {
+            controller.slots().forEach(slotMap::remove);
+        }
     }
 
     public Optional<GuiItemController> getController(@NotNull String key) {
@@ -87,9 +102,7 @@ public class AdvancedGui extends SimpleGui {
     }
 
     public Optional<GuiItemController> getController(int slot) {
-        return keyMap.values().stream()
-                .filter(controller -> controller.slots().contains(slot))
-                .findFirst();
+        return Optional.ofNullable(slotMap.get(slot));
     }
 
     public Collection<GuiItemController> getControllers() {
