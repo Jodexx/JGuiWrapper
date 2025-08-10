@@ -9,8 +9,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 
-import java.util.stream.IntStream;
-
 @SuppressWarnings("unused")
 public class TestAdvancedGui extends AdvancedGui {
 
@@ -40,7 +38,7 @@ public class TestAdvancedGui extends AdvancedGui {
             }
         });
 
-        registerItem("test", builder -> builder.slots(IntStream.range(0, size() / 2).toArray())
+        registerItem("test", builder -> builder.slots(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
                 .defaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);
@@ -53,12 +51,11 @@ public class TestAdvancedGui extends AdvancedGui {
                     updateMenu();
                 }));
 
-        registerItem("handled", builder -> builder.slots(size() - 2)
+        registerItem("handled", builder -> builder.slots(52)
                 .defaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
-                .itemHandler(JGuiPlugin.TEST_HANDLER_KEY)
-                .build());
+                .itemHandler(JGuiPlugin.TEST_HANDLER_KEY));
 
-        registerItem("close", builder -> builder.slots(size() - 1)
+        registerItem("close", builder -> builder.slots(53)
                 .defaultItem(ItemWrapper.builder(Material.BARRIER)
                         .displayName(defaultSerializer.deserialize("&cClose")).build())
                 .defaultClickHandler((event, controller) -> {

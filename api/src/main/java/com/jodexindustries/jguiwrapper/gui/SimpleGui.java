@@ -3,6 +3,7 @@ package com.jodexindustries.jguiwrapper.gui;
 import com.jodexindustries.jguiwrapper.api.gui.handler.InventoryHandler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -69,8 +70,10 @@ public abstract class SimpleGui extends AbstractGui {
     @Override
     public final void onClick(@NotNull InventoryClickEvent event) {
         if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-            event.setCancelled(true);
-            return;
+            Inventory clickedInventory = event.getClickedInventory();
+            if (clickedInventory != null && clickedInventory.getType() == InventoryType.PLAYER) {
+                event.setCancelled(cancelEmptySlots);
+            }
         }
 
         int slot = event.getRawSlot();

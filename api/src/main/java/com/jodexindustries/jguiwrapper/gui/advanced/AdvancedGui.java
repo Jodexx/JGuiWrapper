@@ -79,14 +79,7 @@ public class AdvancedGui extends SimpleGui {
     public void registerItem(@NotNull String key, @NotNull GuiItemController controller) {
         if (keyMap.containsKey(key)) return;
 
-        for (int slot : controller.slots()) {
-            if (slotMap.containsKey(slot)) {
-                throw new IllegalStateException("Slot " + slot + " already occupied by another controller");
-            }
-        }
-
         keyMap.put(key, controller);
-        controller.slots().forEach(slot -> slotMap.put(slot, controller));
         controller.redraw();
     }
 

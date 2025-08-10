@@ -121,7 +121,7 @@ public class GuiItemController {
 
             Optional<GuiItemController> existingController = gui.getController(slot);
 
-            if (existingController.isPresent() && existingController.get() != this) {
+            if (existingController.isPresent() && !existingController.get().equals(this)) {
                 throw new IllegalArgumentException("Slot " + slot + " is already occupied by another controller");
             }
         }
@@ -509,6 +509,18 @@ public class GuiItemController {
         gui.getLoader(b).ifPresent(loader -> {
             if (b.isInstance(loader)) this.itemHandler.a().load(loader, this, new HandlerContext(loadType, player));
         });
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        GuiItemController that = (GuiItemController) o;
+        return Objects.equals(gui, that.gui) && Objects.equals(defaultItemWrapper, that.defaultItemWrapper) && Objects.equals(defaultClickHandler, that.defaultClickHandler) && Objects.equals(slotSpecificItems, that.slotSpecificItems) && Objects.equals(slotClickHandlers, that.slotClickHandlers) && Objects.equals(slots, that.slots) && Objects.equals(oldSlots, that.oldSlots) && Objects.equals(itemHandler, that.itemHandler);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gui, defaultItemWrapper, defaultClickHandler, slotSpecificItems, slotClickHandlers, slots, oldSlots, itemHandler);
     }
 
     public static class Builder {
