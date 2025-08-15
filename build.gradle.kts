@@ -4,8 +4,8 @@ plugins {
     java
     `java-library`
     `maven-publish`
-    id("com.gradleup.shadow") version "9.0.0-beta15" apply false
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17" apply false
+    id("com.gradleup.shadow") version "9.0.2" apply false
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.18" apply false
 }
 
 tasks.jar {
