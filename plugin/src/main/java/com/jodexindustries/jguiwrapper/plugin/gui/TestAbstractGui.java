@@ -4,6 +4,7 @@ import com.jodexindustries.jguiwrapper.common.JGuiInitializer;
 import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Logger;
@@ -18,14 +19,16 @@ public class TestAbstractGui extends AbstractGui {
     }
 
     @Override
-    public void onClick(@NotNull InventoryClickEvent event) {
-        HumanEntity whoClicked = event.getWhoClicked();
+    public void onClick(@NotNull InventoryClickEvent e) {
+        HumanEntity whoClicked = e.getWhoClicked();
 
-        logger.info("Inventory: " + event.getInventory().getType());
-        logger.info("Clicked inventory: " + event.getClickedInventory().getType());
-        logger.info("Action: " + event.getAction());
-        logger.info("Slot: " + event.getSlot());
-        logger.info("Raw slot: " + event.getRawSlot());
+        Inventory clickedInventory = e.getClickedInventory();
+
+        logger.info("Inventory: " + e.getInventory().getType());
+        logger.info("Clicked inventory: " + (clickedInventory != null ? clickedInventory.getType() : "null"));
+        logger.info("Action: " + e.getAction());
+        logger.info("Slot: " + e.getSlot());
+        logger.info("Raw slot: " + e.getRawSlot());
         logger.info("--------");
     }
 }
