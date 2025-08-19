@@ -8,6 +8,7 @@ import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -89,6 +90,7 @@ public abstract class GuiApi {
      *
      * @return {@code true} if PlaceholderAPI is loaded, {@code false} otherwise
      */
+    @Contract(pure = true)
     public abstract boolean isPAPI();
 
     /**
@@ -100,6 +102,7 @@ public abstract class GuiApi {
      *
      * @return the default {@link SerializerType}, never {@code null}
      */
+    @ApiStatus.AvailableSince("1.0.0.5")
     @NotNull
     public abstract SerializerType defaultSerializer();
 
@@ -112,5 +115,6 @@ public abstract class GuiApi {
      *
      * @param serializerType the new default {@link SerializerType}, must not be {@code null}
      */
+    @ApiStatus.AvailableSince("1.0.0.5")
     public abstract void defaultSerializer(@NotNull SerializerType serializerType);
 }

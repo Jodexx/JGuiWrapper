@@ -3,6 +3,7 @@ package com.jodexindustries.jguiwrapper.api.registry;
 import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.api.tools.Pair;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -20,7 +21,9 @@ public interface DataRegistry {
 
     Optional<Pair<ItemHandler<?>, Class<?>>> getHandler(String id);
 
+    @UnmodifiableView
     Collection<GuiDataLoader> getLoaders();
 
+    @UnmodifiableView
     Collection<Pair<ItemHandler<?>, Class<?>>> getHandlers();
 }

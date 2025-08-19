@@ -13,6 +13,8 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -84,7 +86,7 @@ public class GuiItemController {
      * @param slot Slot index to add
      * @throws IndexOutOfBoundsException If slot is out of bounds
      */
-    public void addSlot(Integer slot) {
+    public void addSlot(@Range(from = 0, to = 53) int slot) {
         validateSlot(slot);
         slots.add(slot);
         redraw();
@@ -94,7 +96,7 @@ public class GuiItemController {
      * Removes a slot from this controller
      * @param slot Slot index to remove
      */
-    public void removeSlot(Integer slot) {
+    public void removeSlot(@Range(from = 0, to = 53) int slot) {
         if (slots.remove(slot)) {
             slotSpecificItems.remove(slot);
             slotClickHandlers.remove(slot);
@@ -367,6 +369,7 @@ public class GuiItemController {
      * Gets all managed slots
      * @return Unmodifiable set of slot indexes
      */
+    @UnmodifiableView
     public @NotNull Set<Integer> slots() {
         return Collections.unmodifiableSet(slots);
     }

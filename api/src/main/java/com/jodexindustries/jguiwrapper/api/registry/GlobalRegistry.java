@@ -4,6 +4,7 @@ import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.api.gui.handler.item.ItemHandler;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public interface GlobalRegistry {
 
     Optional<DataRegistry> getRegistry(@NotNull String namespace);
 
+    @UnmodifiableView
     @NotNull
     Collection<DataRegistry> getRegistries();
 }

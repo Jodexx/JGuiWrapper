@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -64,6 +65,7 @@ public class AdvancedGui extends SimpleGui {
         loaderMap.put(loader.getClass(), loader);
     }
 
+    @UnmodifiableView
     public Collection<GuiDataLoader> getLoaders() {
         return Collections.unmodifiableCollection(loaderMap.values());
     }
@@ -98,6 +100,7 @@ public class AdvancedGui extends SimpleGui {
         return Optional.ofNullable(slotMap.get(slot));
     }
 
+    @UnmodifiableView
     public Collection<GuiItemController> getControllers() {
         return Collections.unmodifiableCollection(keyMap.values());
     }
