@@ -72,9 +72,23 @@ public abstract class GuiApi {
     @Nullable
     public abstract GuiHolder getOpenedGui(@NotNull Player player);
 
+    /**
+     * Creates a new PlaceholderEngine
+     *
+     * @return new PlaceholderEngine instance
+     */
     @NotNull
     public abstract PlaceholderEngine createPlaceholderEngine();
 
+    /**
+     * Checks whether the PlaceholderAPI plugin is loaded and available on the server.
+     * <p>
+     * If PlaceholderAPI is present and enabled, this method returns {@code true},
+     * otherwise it returns {@code false}.
+     * </p>
+     *
+     * @return {@code true} if PlaceholderAPI is loaded, {@code false} otherwise
+     */
     public abstract boolean isPAPI();
 
     /**

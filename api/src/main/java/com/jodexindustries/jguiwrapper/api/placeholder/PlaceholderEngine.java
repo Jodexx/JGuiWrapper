@@ -32,7 +32,7 @@ public interface PlaceholderEngine {
 
 
     /**
-     * Creates a new PlaceholderEngine with LEGACY SerializerType
+     * Creates a new PlaceholderEngine
      *
      * @return new PlaceholderEngine instance
      */
