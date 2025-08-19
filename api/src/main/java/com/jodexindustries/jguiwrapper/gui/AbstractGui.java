@@ -288,6 +288,7 @@ public abstract class AbstractGui implements Gui {
      * Updates the menu for a specific player with the current type, size, and title.
      *
      * @param player the player to update the menu for
+     * @return true if the menu was updated successfully, false otherwise
      */
     public final boolean updateMenu(HumanEntity player) {
         return updateMenu(player, this.type, this.size, this.title);
@@ -337,6 +338,7 @@ public abstract class AbstractGui implements Gui {
      *
      * @param player the player to update the menu for
      * @param title  the new title for the menu
+     * @return true if the menu was updated successfully, false otherwise
      */
     public final boolean updateMenu(@NotNull HumanEntity player, Component title) {
         return updateMenu(player, null, this.size, title);
@@ -347,6 +349,7 @@ public abstract class AbstractGui implements Gui {
      *
      * @param player the player to update the menu for
      * @param type   the new inventory type
+     * @return true if the menu was updated successfully, false otherwise
      */
     public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type) {
         return updateMenu(player, type, this.size, null);
@@ -358,6 +361,7 @@ public abstract class AbstractGui implements Gui {
      * @param player the player to update the menu for
      * @param type   the new inventory type
      * @param size   the new inventory size
+     * @return true if the menu was updated successfully, false otherwise
      */
     public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type, int size) {
         return updateMenu(player, type, size, null);
@@ -370,10 +374,25 @@ public abstract class AbstractGui implements Gui {
      * @param type   the new inventory type
      * @param size   the new inventory size
      * @param title  the new title for the menu
+     * @return true if the menu was updated successfully, false otherwise
      */
     public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
+        return updateMenu(player, type, size, title, false);
+    }
+
+    /**
+     * Updates the menu for a specific player with new type, size, and title.
+     *
+     * @param player      the player to update the menu for
+     * @param type        the new inventory type
+     * @param size        the new inventory size
+     * @param title       the new title for the menu
+     * @param refreshData whether to refresh the menu's data
+     * @return true if the menu was updated successfully, false otherwise
+     */
+    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
         try {
-            return NMS_WRAPPER.updateMenu(player, type, size, title);
+            return NMS_WRAPPER.updateMenu(player, type, size, title, refreshData);
         } catch (Exception e) {
             API.getPlugin().getLogger().log(Level.WARNING, "Error with updating menu for player: " + player.getName(), e);
             return false;

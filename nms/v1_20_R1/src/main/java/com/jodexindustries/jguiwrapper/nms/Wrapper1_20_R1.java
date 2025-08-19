@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public class Wrapper1_20_R1 implements NMSWrapper {
 
     @Override
-    public boolean updateMenu(HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
+    public boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
         ServerPlayer sp = ((CraftPlayer) player).getHandle();
 
         MenuType<?> menuType = type != null ? getNotchInventoryType(type, size) : sp.containerMenu.getType();
@@ -29,6 +29,7 @@ public class Wrapper1_20_R1 implements NMSWrapper {
 
         ClientboundOpenScreenPacket packet = new ClientboundOpenScreenPacket(sp.containerMenu.containerId, menuType, menuTitle);
         sp.connection.send(packet);
+        if (refreshData) sp.containerMenu.sendAllDataToRemote();
         return true;
     }
 

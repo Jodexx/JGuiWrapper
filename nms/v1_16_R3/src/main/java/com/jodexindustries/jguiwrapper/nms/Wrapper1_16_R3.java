@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 public class Wrapper1_16_R3 implements NMSWrapper {
 
     @Override
-    public boolean updateMenu(HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
+    public boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         EntityPlayer sp = craftPlayer.getHandle();
 
@@ -31,6 +31,7 @@ public class Wrapper1_16_R3 implements NMSWrapper {
         PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(containerMenu.windowId, menuType, vanillaTitle);
 
         sp.playerConnection.sendPacket(packet);
+        if (refreshData) sp.updateInventory(containerMenu);
         return true;
     }
 

@@ -44,7 +44,7 @@ public class NMSMatcher {
 
     public static final NMSWrapper EMPTY_WRAPPER = new NMSWrapper() {
         @Override
-        public boolean updateMenu(HumanEntity player, @Nullable InventoryType type, int size, Component title) {
+        public boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, Component title, boolean refreshData) {
             return false;
         }
 

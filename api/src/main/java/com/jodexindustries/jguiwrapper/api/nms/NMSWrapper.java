@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public interface NMSWrapper {
+
     /**
      * Updates the player's currently open inventory menu with the specified type, size, and title.
      *
@@ -26,7 +27,21 @@ public interface NMSWrapper {
      * @param title  the new inventory title as a Component
      * @return true if the menu was updated successfully, false otherwise
      */
-    boolean updateMenu(HumanEntity player, @Nullable InventoryType type, int size, Component title);
+    default boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, Component title) {
+        return updateMenu(player, type, size, title, false);
+    }
+
+    /**
+     * Updates the player's currently open inventory menu with the specified type, size, and title.
+     *
+     * @param player      the player whose menu should be updated
+     * @param type        the inventory type to update to (nullable)
+     * @param size        the new inventory size
+     * @param title       the new inventory title as a Component
+     * @param refreshData whether to refresh the menu's data ({@code true} to refresh, {@code false} to keep existing data)
+     * @return true if the menu was updated successfully, false otherwise
+     */
+    boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData);
 
     /**
      * Opens a new inventory for the player with the specified inventory, type, size, and title.
