@@ -12,6 +12,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 /**
  * Main entry point for the JGuiWrapper API.
  * <p>
@@ -39,6 +41,29 @@ public abstract class GuiApi {
     public static GuiApi get() {
         if (GuiApi.instance == null) throw new IllegalStateException("GuiApi instance has not been set yet.");
         return instance;
+    }
+
+    /**
+     * Gets the singleton instance of the API, if it has been initialized.
+     * <p>
+     * Unlike {@link #get()}, this method does not throw an exception when the instance
+     * is not yet set. Instead, it returns an {@link Optional} which will be empty
+     * if the API has not been initialized.
+     * </p>
+     *
+     * <pre>{@code
+     * GuiApi.getOptional().ifPresent(api -> {
+     *     // Safe access to the API
+     *     Plugin plugin = api.getPlugin();
+     * });
+     * }</pre>
+     *
+     * @return an {@link Optional} containing the API instance if initialized,
+     *         or an empty optional if not
+     */
+    @NotNull
+    public static Optional<GuiApi> getOptional() {
+        return Optional.ofNullable(instance);
     }
 
     /**
