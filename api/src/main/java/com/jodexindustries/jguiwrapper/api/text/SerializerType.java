@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.text;
 
+import com.jodexindustries.jguiwrapper.api.GuiApi;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
 import org.jetbrains.annotations.NotNull;
@@ -59,11 +60,21 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
      */
     PLAIN("net.kyori.adventure.text.serializer.plain.PlainComponentSerializer", "plain"),
 
+    /**
+     * JSON serializer
+     * Uses {@code JSONComponentSerializer.json()}.
+     */
     JSON("net.kyori.adventure.text.serializer.json.JSONComponentSerializer", "json"),
 
+    /**
+     * GSON serializer
+     * Uses {@code GsonComponentSerializer.gson()}.
+     */
     GSON("net.kyori.adventure.text.serializer.gson.GsonComponentSerializer", "gson");
 
     ComponentSerializer<Component, Component, String> serializer;
+
+    volatile boolean informed;
 
     @SuppressWarnings("unchecked")
     SerializerType(String name, String method) {
@@ -83,28 +94,32 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
     /**
      * Deserializes a string into a {@link Component}.
      *
-     * @param string the string to deserialize, may be {@code null}
-     * @return the deserialized component, or {@link Component#empty()} if input is {@code null}
-     * or the serializer is unavailable
+     * @param string the string to deserialize
+     * @return the deserialized component, or {@link Component#empty()} if the serializer is unavailable
      */
     @NotNull
     @Override
-    public Component deserialize(@Nullable String string) {
-        if (string == null || serializer == null) return Component.empty();
-
+    public Component deserialize(@NotNull String string) {
+        if (serializer == null) {
+            warnOnce(string);
+            return Component.empty();
+        }
         return serializer.deserialize(string);
     }
 
     /**
      * Serializes a {@link Component} into a string.
      *
-     * @param component the component to serialize, must not be {@code null}
-     * @return the serialized string, or {@code empty} if the serializer is unavailable
+     * @param component the component to serialize
+     * @return the serialized string, or an empty string ("") if the serializer is unavailable
      */
     @NotNull
     @Override
     public String serialize(@NotNull Component component) {
-        if (serializer == null) return "";
+        if (serializer == null) {
+            warnOnce(component);
+            return "";
+        }
 
         return serializer.serialize(component);
     }
@@ -117,5 +132,14 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
     @Nullable
     public ComponentSerializer<Component, Component, String> serializer() {
         return serializer;
+    }
+
+    private void warnOnce(Object input) {
+        if (!informed) {
+            GuiApi.getOptional().ifPresent(api -> {
+                api.getPlugin().getLogger().warning("Serializer: '" + name() + "' not found! Couldn't serialize: " + input);
+                informed = true;
+            });
+        }
     }
 }
