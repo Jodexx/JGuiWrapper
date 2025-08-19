@@ -4,6 +4,7 @@ import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.ApiStatus;
@@ -75,4 +76,27 @@ public abstract class GuiApi {
     public abstract PlaceholderEngine createPlaceholderEngine();
 
     public abstract boolean isPAPI();
+
+    /**
+     * Returns the default {@link SerializerType} used by the API.
+     * <p>
+     * By default, this value is set to {@link SerializerType#LEGACY}, but it may be
+     * changed at runtime using {@link #defaultSerializer(SerializerType)}.
+     * </p>
+     *
+     * @return the default {@link SerializerType}, never {@code null}
+     */
+    @NotNull
+    public abstract SerializerType defaultSerializer();
+
+    /**
+     * Sets the default {@link SerializerType} to be used by the API.
+     * <p>
+     * This will affect all future operations that rely on the default serializer,
+     * unless explicitly overridden.
+     * </p>
+     *
+     * @param serializerType the new default {@link SerializerType}, must not be {@code null}
+     */
+    public abstract void defaultSerializer(@NotNull SerializerType serializerType);
 }

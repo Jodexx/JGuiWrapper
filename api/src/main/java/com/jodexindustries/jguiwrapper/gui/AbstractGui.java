@@ -37,9 +37,6 @@ public abstract class AbstractGui implements Gui {
 
     public static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
 
-    @NotNull
-    protected SerializerType defaultSerializer = SerializerType.LEGACY;
-
     /**
      * Main API instance for GUI operations.
      */
@@ -48,6 +45,9 @@ public abstract class AbstractGui implements Gui {
      * NMS wrapper for version-dependent operations.
      */
     protected static final NMSWrapper NMS_WRAPPER = API.getNMSWrapper();
+
+    @NotNull
+    protected SerializerType defaultSerializer = API.defaultSerializer();
 
     private int size;
     private Component title;
@@ -99,8 +99,8 @@ public abstract class AbstractGui implements Gui {
      * @param type              The inventory type.
      * @param title             The GUI title as a {@link Component}.
      * @param defaultSerializer The default serializer used for converting between plain strings and {@link Component}
-     *                          instances. If {@code null}, the default
-     *                          {@link SerializerType#LEGACY} will be used.
+     *                          instances. If {@code null}, the
+     *                          {@link #defaultSerializer} will be used.
      */
     public AbstractGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         this(type.getDefaultSize(), type, title, defaultSerializer);

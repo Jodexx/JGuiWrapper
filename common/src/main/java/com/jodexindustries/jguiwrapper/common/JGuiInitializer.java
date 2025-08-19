@@ -5,6 +5,7 @@ import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
 import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
 import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
@@ -23,6 +24,7 @@ public final class JGuiInitializer extends GuiApi {
     private static NMSWrapper NMS_WRAPPER = NMSMatcher.EMPTY_WRAPPER;
     private static Plugin PLUGIN;
     private static boolean PAPI = false;
+    private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY;
 
     private JGuiInitializer() {
 
@@ -75,4 +77,13 @@ public final class JGuiInitializer extends GuiApi {
         return PAPI;
     }
 
+    @Override
+    public @NotNull SerializerType defaultSerializer() {
+        return DEFAULT_SERIALIZER;
+    }
+
+    @Override
+    public void defaultSerializer(@NotNull SerializerType serializerType) {
+        DEFAULT_SERIALIZER = serializerType;
+    }
 }
