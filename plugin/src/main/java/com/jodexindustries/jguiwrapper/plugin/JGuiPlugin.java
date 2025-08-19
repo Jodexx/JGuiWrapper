@@ -42,7 +42,7 @@ public final class JGuiPlugin extends JavaPlugin {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            sender.sendMessage("/jguiwrapper test (simple/advanced)");
+            sender.sendMessage("/jguiwrapper test (abstract/simple/advanced)");
             sender.sendMessage("/jguiwrapper list");
             return true;
         } else {
