@@ -24,7 +24,7 @@ public abstract class GuiApi {
     private static volatile GuiApi instance = null;
 
     @ApiStatus.Internal
-    protected static synchronized void setInstance(GuiApi api) {
+    protected static synchronized void setInstance(@NotNull GuiApi api) {
         if (GuiApi.instance != null) throw new IllegalStateException("GuiApi instance is already set.");
         GuiApi.instance = api;
     }
@@ -35,6 +35,7 @@ public abstract class GuiApi {
      * @return the GuiApi instance
      * @throws IllegalStateException if the instance has not been set yet
      */
+    @NotNull
     public static GuiApi get() {
         if (GuiApi.instance == null) throw new IllegalStateException("GuiApi instance has not been set yet.");
         return instance;
@@ -96,7 +97,7 @@ public abstract class GuiApi {
     /**
      * Returns the default {@link SerializerType} used by the API.
      * <p>
-     * By default, this value is set to {@link SerializerType#LEGACY}, but it may be
+     * By default, this value is set to {@link SerializerType#LEGACY_AMPERSAND}, but it may be
      * changed at runtime using {@link #defaultSerializer(SerializerType)}.
      * </p>
      *

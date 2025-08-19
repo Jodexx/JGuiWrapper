@@ -3,7 +3,6 @@ package com.jodexindustries.jguiwrapper.plugin;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.common.JGuiInitializer;
 import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
@@ -93,7 +92,7 @@ public final class JGuiPlugin extends JavaPlugin {
                         send(sender, "Index: &6" + index);
                         send(sender, "Class: &6" + abstractGui.getClass().getName());
                         send(sender, "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName());
-                        send(sender, "Title: " + SerializerType.LEGACY.serialize(abstractGui.title()));
+                        send(sender, "Title: " + JGuiInitializer.get().defaultSerializer().serialize(abstractGui.title()));
                         send(sender, "Size: &6" + abstractGui.size());
                         send(sender, "Type: &6" + abstractGui.type());
                         if (abstractGui instanceof AdvancedGui) {
@@ -148,6 +147,6 @@ public final class JGuiPlugin extends JavaPlugin {
     }
 
     private void send(CommandSender sender, String text) {
-        sender.sendMessage(SerializerType.LEGACY.deserialize(text));
+        sender.sendMessage(JGuiInitializer.get().defaultSerializer().deserialize(text));
     }
 }

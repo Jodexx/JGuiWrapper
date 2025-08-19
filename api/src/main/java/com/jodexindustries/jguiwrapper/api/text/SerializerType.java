@@ -8,11 +8,60 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public enum SerializerType {
+/**
+ * Represents different {@link ComponentSerializer} types that can be used to serialize and
+ * deserialize {@link Component} objects.
+ * <p>
+ * Each constant corresponds to a particular Adventure serializer implementation.
+ * If the underlying serializer class cannot be found on the classpath,
+ * the serializer will be {@code null} and calls to {@link #serialize(Component)} will return {@code null},
+ * while {@link #deserialize(String)} will return {@link Component#empty()}.
+ * </p>
+ */
+@SuppressWarnings({"unused"})
+public enum SerializerType implements ComponentSerializer<Component, Component, String> {
 
-    LEGACY("net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer", "legacyAmpersand"),
+    /**
+     * Legacy serializer using the {@code &}-based formatting codes.
+     * <p>
+     * Uses {@code LegacyComponentSerializer.legacyAmpersand()}.
+     * </p>
+     */
+    LEGACY_AMPERSAND("net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer", "legacyAmpersand"),
 
-    MINI_MESSAGE("net.kyori.adventure.text.minimessage.MiniMessage", "miniMessage");
+    /**
+     * Legacy serializer using the {@code §}-based formatting codes.
+     * <p>
+     * Uses {@code LegacyComponentSerializer.legacySection()}.
+     * </p>
+     */
+    LEGACY_SECTION("net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer", "legacySection"),
+
+    /**
+     * @deprecated This constant is obsolete. Use {@link #LEGACY_AMPERSAND} instead.
+     */
+    @Deprecated
+    LEGACY(LEGACY_AMPERSAND.serializer),
+
+    /**
+     * MiniMessage serializer.
+     * <p>
+     * Uses {@code MiniMessage.miniMessage()}.
+     * </p>
+     */
+    MINI_MESSAGE("net.kyori.adventure.text.minimessage.MiniMessage", "miniMessage"),
+
+    /**
+     * Plain text serializer.
+     * <p>
+     * Uses {@code PlainComponentSerializer.plain()}.
+     * </p>
+     */
+    PLAIN("net.kyori.adventure.text.serializer.plain.PlainComponentSerializer", "plain"),
+
+    JSON("net.kyori.adventure.text.serializer.json.JSONComponentSerializer", "json"),
+
+    GSON("net.kyori.adventure.text.serializer.gson.GsonComponentSerializer", "gson");
 
     ComponentSerializer<Component, Component, String> serializer;
 
@@ -27,20 +76,44 @@ public enum SerializerType {
         }
     }
 
+    SerializerType(ComponentSerializer<Component, Component, String> serializer) {
+        this.serializer = serializer;
+    }
+
+    /**
+     * Deserializes a string into a {@link Component}.
+     *
+     * @param string the string to deserialize, may be {@code null}
+     * @return the deserialized component, or {@link Component#empty()} if input is {@code null}
+     * or the serializer is unavailable
+     */
     @NotNull
+    @Override
     public Component deserialize(@Nullable String string) {
         if (string == null || serializer == null) return Component.empty();
 
         return serializer.deserialize(string);
     }
 
-    @Nullable
+    /**
+     * Serializes a {@link Component} into a string.
+     *
+     * @param component the component to serialize, must not be {@code null}
+     * @return the serialized string, or {@code empty} if the serializer is unavailable
+     */
+    @NotNull
+    @Override
     public String serialize(@NotNull Component component) {
-        if (serializer == null) return null;
+        if (serializer == null) return "";
 
         return serializer.serialize(component);
     }
 
+    /**
+     * Returns the underlying serializer instance for this type.
+     *
+     * @return the serializer instance, or {@code null} if unavailable
+     */
     @Nullable
     public ComponentSerializer<Component, Component, String> serializer() {
         return serializer;

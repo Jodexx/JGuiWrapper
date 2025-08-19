@@ -24,7 +24,7 @@ public final class JGuiInitializer extends GuiApi {
     private static NMSWrapper NMS_WRAPPER = NMSMatcher.EMPTY_WRAPPER;
     private static Plugin PLUGIN;
     private static boolean PAPI = false;
-    private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY;
+    private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY_AMPERSAND;
 
     private JGuiInitializer() {
 

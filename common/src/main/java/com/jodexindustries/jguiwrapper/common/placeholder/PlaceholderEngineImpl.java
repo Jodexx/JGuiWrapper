@@ -18,6 +18,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"unused"})
 public class PlaceholderEngineImpl implements PlaceholderEngine {
 
     private final Map<String, Function<@Nullable OfflinePlayer, String>> placeholders = new LinkedHashMap<>();
