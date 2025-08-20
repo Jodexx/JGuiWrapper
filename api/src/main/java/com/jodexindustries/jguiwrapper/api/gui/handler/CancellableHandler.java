@@ -19,7 +19,7 @@ public final class CancellableHandler <T extends InventoryEvent> implements Inve
     }
 
     @Override
-    public void handle(T event, SimpleGui gui) {
+    public void handle(@NotNull T event, SimpleGui gui) {
         if(event instanceof Cancellable) {
             ((Cancellable) event).setCancelled(cancel);
         }
