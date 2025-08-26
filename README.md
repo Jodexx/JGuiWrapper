@@ -32,7 +32,7 @@ There are **two ways** to use the library depending on your project structure:
 <dependency>
   <groupId>com.jodexindustries.jguiwrapper</groupId>
   <artifactId>api</artifactId>
-  <version>1.0.0.5</version>
+  <version>1.0.0.6</version>
 </dependency>
 ```
 
@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.jodexindustries.jguiwrapper:api:1.0.0.5'
+    compileOnly 'com.jodexindustries.jguiwrapper:api:1.0.0.6'
 }
 ```
 
@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.jodexindustries.jguiwrapper:api:1.0.0.5")
+    compileOnly("com.jodexindustries.jguiwrapper:api:1.0.0.6")
 }
 ```
 
@@ -77,7 +77,7 @@ dependencies {
 <dependency>
   <groupId>com.jodexindustries.jguiwrapper</groupId>
   <artifactId>common</artifactId>
-  <version>1.0.0.5</version>
+  <version>1.0.0.6</version>
 </dependency>
 ```
 
@@ -89,7 +89,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.jodexindustries.jguiwrapper:common:1.0.0.5'
+    implementation 'com.jodexindustries.jguiwrapper:common:1.0.0.6'
 }
 ```
 
@@ -101,7 +101,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.jodexindustries.jguiwrapper:common:1.0.0.5")
+    implementation("com.jodexindustries.jguiwrapper:common:1.0.0.6")
 }
 ```
 
