@@ -2,6 +2,7 @@ package com.jodexindustries.jguiwrapper.api.text;
 
 import com.jodexindustries.jguiwrapper.api.GuiApi;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -104,7 +105,7 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
             warnOnce(string);
             return Component.empty();
         }
-        return serializer.deserialize(string);
+        return serializer.deserialize(string).decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 
     /**
