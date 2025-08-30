@@ -23,7 +23,7 @@ public final class JGuiInitializer extends GuiApi {
     private static final GlobalRegistry REGISTRY = new GlobalRegistryImpl();
     private static NMSWrapper NMS_WRAPPER = NMSMatcher.EMPTY_WRAPPER;
     private static Plugin PLUGIN;
-    private static boolean PAPI = false;
+    private static boolean PAPI;
     private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY_AMPERSAND;
 
     private JGuiInitializer() {
@@ -31,6 +31,10 @@ public final class JGuiInitializer extends GuiApi {
     }
 
     public static void init(Plugin plugin) {
+        init(plugin, true);
+    }
+
+    public static void init(Plugin plugin, boolean log) {
         if (JGuiInitializer.PLUGIN != null) return;
 
         plugin.getServer().getPluginManager().registerEvents(new GuiListener(), plugin);
@@ -41,9 +45,9 @@ public final class JGuiInitializer extends GuiApi {
         setInstance(new JGuiInitializer());
 
         try {
-            NMS_WRAPPER = NMSMatcher.getWrapper(plugin);
+            NMS_WRAPPER = NMSMatcher.getWrapper(plugin, log);
         } catch (JGuiWrapperVersionException e) {
-            plugin.getLogger().log(Level.WARNING, "NMSWrapper loading error: ", e);
+            if (log) plugin.getLogger().log(Level.WARNING, "NMSWrapper loading error: ", e);
         }
     }
 

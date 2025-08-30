@@ -54,10 +54,10 @@ public class NMSMatcher {
         }
     };
 
-    public static NMSWrapper getWrapper(Plugin plugin) throws JGuiWrapperVersionException {
+    public static NMSWrapper getWrapper(Plugin plugin, boolean log) throws JGuiWrapperVersionException {
         if (!initialized) {
             initialized = true;
-            return wrapper = initWrapper(plugin);
+            return wrapper = initWrapper(plugin, log);
         }
 
         if (wrapper == null) {
@@ -71,7 +71,7 @@ public class NMSMatcher {
         return wrapper;
     }
 
-    private static NMSWrapper initWrapper(Plugin plugin) throws JGuiWrapperVersionException {
+    private static NMSWrapper initWrapper(Plugin plugin, boolean log) throws JGuiWrapperVersionException {
         String craftBukkitPackage = Bukkit.getServer().getClass().getPackage().getName();
 
         String version = craftBukkitPackage.contains(".v")
@@ -80,7 +80,7 @@ public class NMSMatcher {
 
         String className = NMSMatcher.class.getPackage().getName() + ".Wrapper" + version;
 
-        plugin.getLogger().info("Using " + version + " NMS");
+        if (log) plugin.getLogger().info("Using " + version + " NMS");
 
         try {
             return (NMSWrapper) Class.forName(className).getDeclaredConstructor().newInstance();
