@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.common;
+package com.jodexindustries.jguiwrapper.utils;
 
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import org.bukkit.inventory.Inventory;

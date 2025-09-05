@@ -1,6 +1,7 @@
 package com.jodexindustries.jguiwrapper.common;
 
 import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.utils.GuiUtils;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
