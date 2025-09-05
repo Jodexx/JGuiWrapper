@@ -32,7 +32,7 @@ There are **two ways** to use the library depending on your project structure:
 <dependency>
   <groupId>com.jodexindustries.jguiwrapper</groupId>
   <artifactId>api</artifactId>
-  <version>1.0.0.6</version>
+  <version>1.0.0.7</version>
 </dependency>
 ```
 
@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.jodexindustries.jguiwrapper:api:1.0.0.6'
+    compileOnly 'com.jodexindustries.jguiwrapper:api:1.0.0.7'
 }
 ```
 
@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.jodexindustries.jguiwrapper:api:1.0.0.6")
+    compileOnly("com.jodexindustries.jguiwrapper:api:1.0.0.7")
 }
 ```
 
@@ -77,13 +77,13 @@ dependencies {
 <dependency>
   <groupId>com.jodexindustries.jguiwrapper</groupId>
   <artifactId>common</artifactId>
-  <version>1.0.0.6</version>
+  <version>1.0.0.7</version>
 </dependency>
 <!-- if you want to include nms logic for title management -->
 <dependency>
   <groupId>com.jodexindustries.jguiwrapper</groupId>
   <artifactId>nms</artifactId>
-  <version>1.0.0.6</version>
+  <version>1.0.0.7</version>
 </dependency>
 ```
 
@@ -95,8 +95,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.jodexindustries.jguiwrapper:common:1.0.0.6'
-    implementation 'com.jodexindustries.jguiwrapper:nms:1.0.0.6' // if you want to include nms logic for title management 
+    implementation 'com.jodexindustries.jguiwrapper:common:1.0.0.7'
+    implementation 'com.jodexindustries.jguiwrapper:nms:1.0.0.7' // if you want to include nms logic for title management 
 }
 ```
 
@@ -108,8 +108,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.jodexindustries.jguiwrapper:common:1.0.0.6")
-    implementation("com.jodexindustries.jguiwrapper:nms:1.0.0.6") // if you want to include nms logic for title management 
+    implementation("com.jodexindustries.jguiwrapper:common:1.0.0.7")
+    implementation("com.jodexindustries.jguiwrapper:nms:1.0.0.7") // if you want to include nms logic for title management 
 }
 ```
 
