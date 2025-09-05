@@ -2,6 +2,7 @@ package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.handler.CancellableHandler;
 import com.jodexindustries.jguiwrapper.gui.SimpleGui;
+import net.kyori.adventure.text.Component;
 
 public class TestSimpleGui extends SimpleGui {
 
@@ -13,11 +14,9 @@ public class TestSimpleGui extends SimpleGui {
         super(3123, "&cExample");
 
         setClickHandlers(
-                CancellableHandler.wrap((event, gui) -> {
-                    title(String.valueOf(clicks++));
-                    size(looper.nextSize());
-                    updateMenu();
-                }, true)
+                CancellableHandler.wrap((event, gui) ->
+                        runTask(() ->
+                        updateMenu(event.getWhoClicked(), type(), looper.nextSize(), Component.text(clicks++), true)), true)
         );
 
         onOpen(event -> event.getPlayer().sendMessage(event.getInventory().getType().defaultTitle()));
