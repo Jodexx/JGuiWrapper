@@ -60,10 +60,16 @@ public abstract class SimpleGui extends AbstractGui {
 
     @Override
     public final void onDrag(@NotNull InventoryDragEvent event) {
+        if (cancelEmptySlots) {
+            for (Integer rawSlot : event.getRawSlots()) {
+                if (rawSlot < size()) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+
         if (dragEventConsumer != null) {
             dragEventConsumer.accept(event);
-        } else {
-            event.setCancelled(true);
         }
     }
 
