@@ -2,15 +2,8 @@ package com.jodexindustries.jguiwrapper.nms;
 
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -41,18 +34,6 @@ public class NMSMatcher {
 
     private static boolean initialized = false;
     private static NMSWrapper wrapper;
-
-    public static final NMSWrapper EMPTY_WRAPPER = new NMSWrapper() {
-        @Override
-        public boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, Component title, boolean refreshData) {
-            return false;
-        }
-
-        @Override
-        public InventoryView openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
-            return null;
-        }
-    };
 
     public static NMSWrapper getWrapper(Plugin plugin, boolean log) throws JGuiWrapperVersionException {
         if (!initialized) {

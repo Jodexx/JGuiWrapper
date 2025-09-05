@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":nms"))
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
 }
 
