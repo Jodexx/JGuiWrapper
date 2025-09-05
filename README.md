@@ -79,6 +79,12 @@ dependencies {
   <artifactId>common</artifactId>
   <version>1.0.0.6</version>
 </dependency>
+<!-- if you want to include nms logic for title management -->
+<dependency>
+  <groupId>com.jodexindustries.jguiwrapper</groupId>
+  <artifactId>nms</artifactId>
+  <version>1.0.0.6</version>
+</dependency>
 ```
 
 ##### Gradle (Groovy DSL)
@@ -90,6 +96,7 @@ repositories {
 
 dependencies {
     implementation 'com.jodexindustries.jguiwrapper:common:1.0.0.6'
+    implementation 'com.jodexindustries.jguiwrapper:nms:1.0.0.6' // if you want to include nms logic for title management 
 }
 ```
 
@@ -102,6 +109,7 @@ repositories {
 
 dependencies {
     implementation("com.jodexindustries.jguiwrapper:common:1.0.0.6")
+    implementation("com.jodexindustries.jguiwrapper:nms:1.0.0.6") // if you want to include nms logic for title management 
 }
 ```
 
