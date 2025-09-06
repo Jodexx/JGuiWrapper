@@ -68,7 +68,7 @@ public final class JGuiInitializer extends GuiApi {
                 NMS_WRAPPER = EMPTY_WRAPPER;
                 if (log) plugin.getLogger().log(Level.WARNING, "NMSWrapper loading error: ", e);
             }
-        } catch (NoClassDefFoundError e) {
+        } catch (Throwable e) {
             if (log) plugin.getLogger().log(Level.INFO, "NMSWrapper is not included in JGuiWrapper");
         }
     }
