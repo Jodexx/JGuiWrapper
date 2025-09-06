@@ -3,7 +3,6 @@ package com.jodexindustries.jguiwrapper.gui;
 import com.jodexindustries.jguiwrapper.api.GuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
-import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -41,10 +40,6 @@ public abstract class AbstractGui implements Gui {
      * Main API instance for GUI operations.
      */
     protected static final GuiApi API = GuiApi.get();
-    /**
-     * NMS wrapper for version-dependent operations.
-     */
-    protected static final NMSWrapper NMS_WRAPPER = API.getNMSWrapper();
 
     @NotNull
     protected SerializerType defaultSerializer = API.defaultSerializer();
@@ -221,7 +216,7 @@ public abstract class AbstractGui implements Gui {
     @Override
     public final void open(@NotNull HumanEntity player, Component title) {
         try {
-            InventoryView view = NMS_WRAPPER.openInventory(player, holder.getInventory(), type, size, title);
+            InventoryView view = API.getNMSWrapper().openInventory(player, holder.getInventory(), type, size, title);
 
             if (view == null) {
                 player.openInventory(holder.getInventory());
@@ -392,7 +387,7 @@ public abstract class AbstractGui implements Gui {
      */
     public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
         try {
-            return NMS_WRAPPER.updateMenu(player, type, size, title, refreshData);
+            return API.getNMSWrapper().updateMenu(player, type, size, title, refreshData);
         } catch (Exception e) {
             API.getPlugin().getLogger().log(Level.WARNING, "Error with updating menu for player: " + player.getName(), e);
             return false;
