@@ -5,7 +5,6 @@ import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.*;
@@ -29,10 +28,6 @@ import java.util.logging.Level;
  */
 @SuppressWarnings({"unused"})
 public abstract class AbstractGui implements Gui {
-    /**
-     * LegacyComponentSerializer using ampersand (&amp;) as the color code character.
-     */
-    public static final LegacyComponentSerializer LEGACY_AMPERSAND = LegacyComponentSerializer.legacyAmpersand();
 
     public static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
 
@@ -53,7 +48,7 @@ public abstract class AbstractGui implements Gui {
     /**
      * Constructs a GUI with the default size (54) and a string title.
      *
-     * @param title The GUI title as a string (legacy color codes supported)
+     * @param title The GUI title as a string
      */
     public AbstractGui(@NotNull String title) {
         this(54, title);
@@ -63,10 +58,10 @@ public abstract class AbstractGui implements Gui {
      * Constructs a GUI with a specific size and string title.
      *
      * @param size  The inventory size
-     * @param title The GUI title as a string (legacy color codes supported)
+     * @param title The GUI title as a string
      */
     public AbstractGui(int size, @NotNull String title) {
-        this(size, LEGACY_AMPERSAND.deserialize(title));
+        this(size, API.defaultSerializer().deserialize(title));
     }
 
     /**
