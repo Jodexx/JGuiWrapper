@@ -65,7 +65,6 @@ public final class JGuiInitializer extends GuiApi {
             try {
                 NMS_WRAPPER = NMSMatcher.getWrapper(plugin, log);
             } catch (JGuiWrapperVersionException e) {
-                NMS_WRAPPER = EMPTY_WRAPPER;
                 if (log) plugin.getLogger().log(Level.WARNING, "NMSWrapper loading error: ", e);
             }
         } catch (Throwable e) {
@@ -85,7 +84,7 @@ public final class JGuiInitializer extends GuiApi {
 
     @Override
     public @NotNull NMSWrapper getNMSWrapper() {
-        return NMS_WRAPPER;
+        return NMS_WRAPPER == null ? EMPTY_WRAPPER : NMS_WRAPPER;
     }
 
     @Override
