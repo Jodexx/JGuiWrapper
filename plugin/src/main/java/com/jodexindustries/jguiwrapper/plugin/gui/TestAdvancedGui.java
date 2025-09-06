@@ -21,11 +21,6 @@ public class TestAdvancedGui extends AdvancedGui {
 
         registerLoader(JGuiPlugin.TEST_LOADER_KEY);
 
-        // load item handlers
-//        for (GuiItemController controller : getControllers()) {
-//            controller.loadItemHandler(LoadType.ON_LOAD);
-//        }
-
         onClose(event -> event.getPlayer().sendMessage("Closed"));
 
         onOpen(event -> {
