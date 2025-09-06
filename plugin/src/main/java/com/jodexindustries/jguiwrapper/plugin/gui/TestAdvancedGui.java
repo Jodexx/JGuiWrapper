@@ -9,6 +9,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 
+import java.util.Random;
+
 @SuppressWarnings("unused")
 public class TestAdvancedGui extends AdvancedGui {
 
@@ -38,7 +40,7 @@ public class TestAdvancedGui extends AdvancedGui {
             }
         });
 
-        registerItem("test", builder -> builder.slots(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        registerItem("test", builder -> builder.slots(0, 1, 2, 3, 4, 5, 6, 7, 8)
                 .defaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);
@@ -50,6 +52,21 @@ public class TestAdvancedGui extends AdvancedGui {
                     title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
                     updateMenu();
                 }));
+
+        registerItem("random", builder -> builder.slots(45)
+                .defaultItem(
+                        ItemWrapper.builder(Material.STRUCTURE_VOID)
+                                .displayName("&#EC8C8CR&#F6A98Ca&#FFC58Bn&#FFE295d&#FFFF9Eo&#CDFF9Cm &#97CFF5b&#9DB5FAl&#A39AFFo&#C99DFFc&#EEA0FFk").build()
+                )
+                .defaultClickHandler((event, controller) -> {
+                    event.setCancelled(true);
+                    controller.updateItems(wrapper -> {
+                        Material material = randomMaterial();
+                        wrapper.material(material);
+                        wrapper.lore("&7Current material: &6" + material.name());
+                    });
+                })
+        );
 
         registerItem("handled", builder -> builder.slots(52)
                 .defaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
@@ -64,5 +81,17 @@ public class TestAdvancedGui extends AdvancedGui {
                     close(event.getWhoClicked());
                 }));
 
+    }
+
+    private static Material randomMaterial() {
+        Random random = new Random();
+
+        Material[] values = Material.values();
+
+        Material material = values[random.nextInt(values.length)];
+
+        if (!material.isItem() || !material.isBlock() || material.isEmpty()) return randomMaterial();
+
+        return material;
     }
 }
