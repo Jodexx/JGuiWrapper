@@ -6,8 +6,8 @@
 [![JGuiWrapper API version](https://repo.jodex.xyz/api/badge/latest/releases/com/jodexindustries/jguiwrapper/api?color=C72EFF&name=API&prefix=v)](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper/api)
 ---
 
-| [MavenRepo](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper) | [JavaDocs](https://repo.jodex.xyz/javadoc/releases/com/jodexindustries/jguiwrapper/api/latest) |
-|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| [MavenRepo](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper) | [JavaDocs](https://repo.jodex.xyz/javadoc/releases/com/jodexindustries/jguiwrapper/api/latest) | [Wiki](https://wiki.jodex.xyz/JGuiWrapper/jguiwrapper-start) |
+|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 
 ## Installation and Usage
 
