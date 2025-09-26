@@ -6,7 +6,9 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -22,9 +24,9 @@ public abstract class SimpleGui extends AbstractGui {
 
     private final Map<Integer, InventoryHandler<InventoryClickEvent>> slotClickHandlers = new HashMap<>();
 
-    private Consumer<InventoryOpenEvent> openEventConsumer;
-    private Consumer<InventoryCloseEvent> closeEventConsumer;
-    private Consumer<InventoryDragEvent> dragEventConsumer;
+    private final List<Consumer<InventoryOpenEvent>> openEventConsumers = new ArrayList<>();
+    private final List<Consumer<InventoryCloseEvent>> closeEventConsumers = new ArrayList<>();
+    private final List<Consumer<InventoryDragEvent>> dragEventConsumers = new ArrayList<>();
 
     private boolean cancelEmptySlots = true;
 
@@ -50,12 +52,16 @@ public abstract class SimpleGui extends AbstractGui {
 
     @Override
     public final void onOpen(@NotNull InventoryOpenEvent event) {
-        if (openEventConsumer != null) openEventConsumer.accept(event);
+        for (Consumer<InventoryOpenEvent> consumer : openEventConsumers) {
+            consumer.accept(event);
+        }
     }
 
     @Override
     public final void onClose(@NotNull InventoryCloseEvent event) {
-        if (closeEventConsumer != null) closeEventConsumer.accept(event);
+        for (Consumer<InventoryCloseEvent> consumer : closeEventConsumers) {
+            consumer.accept(event);
+        }
     }
 
     @Override
@@ -68,8 +74,8 @@ public abstract class SimpleGui extends AbstractGui {
             }
         }
 
-        if (dragEventConsumer != null) {
-            dragEventConsumer.accept(event);
+        for (Consumer<InventoryDragEvent> consumer : dragEventConsumers) {
+            consumer.accept(event);
         }
     }
 
@@ -100,7 +106,7 @@ public abstract class SimpleGui extends AbstractGui {
      * @param consumer the consumer to handle InventoryOpenEvent
      */
     public final void onOpen(Consumer<InventoryOpenEvent> consumer) {
-        this.openEventConsumer = consumer;
+        this.openEventConsumers.add(consumer);
     }
 
     /**
@@ -108,7 +114,7 @@ public abstract class SimpleGui extends AbstractGui {
      * @param consumer the consumer to handle InventoryCloseEvent
      */
     public final void onClose(Consumer<InventoryCloseEvent> consumer) {
-        this.closeEventConsumer = consumer;
+        this.closeEventConsumers.add(consumer);
     }
 
     /**
@@ -116,7 +122,7 @@ public abstract class SimpleGui extends AbstractGui {
      * @param consumer the consumer to handle InventoryDragEvent
      */
     public final void onDrag(Consumer<InventoryDragEvent> consumer) {
-        this.dragEventConsumer = consumer;
+        this.dragEventConsumers.add(consumer);
     }
 
     public void setClickHandlers(@NotNull InventoryHandler<InventoryClickEvent> handler, int @NotNull ... slots) {
