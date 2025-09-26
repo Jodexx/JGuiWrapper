@@ -90,6 +90,7 @@ public abstract class SimpleGui extends AbstractGui {
 
         int slot = event.getRawSlot();
 
+        // TODO Support for player inventory clicks, with disable option (improved handling)
         if (slot >= size()) return;
 
         InventoryHandler<InventoryClickEvent> handler = slotClickHandlers.get(slot);
