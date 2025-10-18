@@ -1,5 +1,5 @@
 plugins {
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
     id("com.gradleup.shadow")
 }
 
@@ -33,8 +33,4 @@ tasks.processResources {
     filesMatching("plugin.yml") {
         expand(props)
     }
-}
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
