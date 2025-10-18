@@ -9,6 +9,11 @@
 | [MavenRepo](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper) | [JavaDocs](https://repo.jodex.xyz/javadoc/releases/com/jodexindustries/jguiwrapper/api/latest) | [Wiki](https://wiki.jodex.xyz/JGuiWrapper/jguiwrapper-start) |
 |--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 
+## Requirements
+
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="16" width="16" alt="Java icon"> <b>Java 16</b> or higher
+- <img src="https://assets.papermc.io/brand/papermc_logo.min.svg" height="16" width="16" alt="PaperMC icon"> <b>Paper 1.16.5</b> or higher
+
 ## Installation and Usage
 
 Snippets are available for Maven, Gradle Groovy, and Gradle Kotlin DSL.
