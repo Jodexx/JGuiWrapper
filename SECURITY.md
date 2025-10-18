@@ -3,7 +3,7 @@
 ## Supported Versions
 
 | Version | Supported          |
-| ------- | ------------------ |
+|---------|--------------------|
 | 1.0.x   | :white_check_mark: |
 
 We only support the latest stable release branch. Older versions may contain unpatched vulnerabilities and are no longer maintained.  
