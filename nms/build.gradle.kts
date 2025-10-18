@@ -25,17 +25,17 @@ tasks.jar {
 }
 
 subprojects {
-        dependencies {
-            compileOnly(project(":api"))
-        }
+    dependencies {
+        compileOnly(project(":api"))
+    }
 
-        if (!excludedProjects.contains(path)) {
-            plugins.apply("io.papermc.paperweight.userdev")
+    if (!excludedProjects.contains(path)) {
+        plugins.apply("io.papermc.paperweight.userdev")
 
-            tasks.named("assemble") {
-                dependsOn(tasks.named("reobfJar"))
-            }
+        tasks.named("assemble") {
+            dependsOn(tasks.named("reobfJar"))
         }
+    }
 }
 
 publishing {

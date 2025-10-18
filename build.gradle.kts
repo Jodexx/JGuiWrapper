@@ -13,13 +13,11 @@ tasks.jar {
 var publishProjects = listOf("common", "api", "nms")
 
 subprojects {
+    apply(plugin = "java")
     apply(plugin = "java-library")
-    apply(plugin = "maven-publish")
 
     if (name in publishProjects) {
-        java {
-            toolchain.languageVersion.set(JavaLanguageVersion.of(8))
-        }
+        apply(plugin = "maven-publish")
 
         afterEvaluate {
             dependencies.compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
@@ -30,7 +28,8 @@ subprojects {
                         url = uri("https://repo.jodex.xyz/releases")
                         credentials {
                             username = findProperty("jodexRepoUser") as String? ?: System.getenv("JODEX_REPO_USER")
-                            password = findProperty("jodexRepoPassword") as String? ?: System.getenv("JODEX_REPO_PASSWORD")
+                            password =
+                                findProperty("jodexRepoPassword") as String? ?: System.getenv("JODEX_REPO_PASSWORD")
                         }
                     }
                 }
@@ -51,5 +50,11 @@ allprojects {
         maven("https://repo.screamingsandals.org/public")
         maven("https://repo.screamingsandals.org/releases")
         maven("https://repo.screamingsandals.org/snapshots/")
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(16)
+        }
     }
 }
