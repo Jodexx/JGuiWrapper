@@ -26,7 +26,7 @@ import java.util.logging.Level;
  * Provides common logic for inventory size, title, type, and holder management.
  * Handles registration of GUI instances and provides utility for legacy component serialization.
  */
-@SuppressWarnings({"unused"})
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public abstract class AbstractGui implements Gui {
 
     public static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();

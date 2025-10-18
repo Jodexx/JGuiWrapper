@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Level;
 
+@SuppressWarnings("unused")
 public final class JGuiInitializer extends GuiApi {
 
     private static final GlobalRegistry REGISTRY = new GlobalRegistryImpl();
