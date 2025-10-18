@@ -104,5 +104,4 @@ public class AdvancedGui extends SimpleGui {
     public Collection<GuiItemController> getControllers() {
         return Collections.unmodifiableCollection(keyMap.values());
     }
-
 }

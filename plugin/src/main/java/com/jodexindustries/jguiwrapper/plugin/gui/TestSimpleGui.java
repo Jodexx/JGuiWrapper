@@ -16,7 +16,7 @@ public class TestSimpleGui extends SimpleGui {
         setClickHandlers(
                 CancellableHandler.wrap((event, gui) ->
                         runTask(() ->
-                        updateMenu(event.getWhoClicked(), type(), looper.nextSize(), Component.text(clicks++), true)), true)
+                                updateMenu(event.getWhoClicked(), type(), looper.nextSize(), Component.text(clicks++), true)), true)
         );
 
         onOpen(event -> event.getPlayer().sendMessage(event.getInventory().getType().defaultTitle()));

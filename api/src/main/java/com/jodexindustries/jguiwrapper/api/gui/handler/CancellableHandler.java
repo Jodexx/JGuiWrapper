@@ -8,7 +8,7 @@ import org.jetbrains.annotations.TestOnly;
 
 @TestOnly
 @SuppressWarnings({"unused"})
-public final class CancellableHandler <T extends InventoryEvent> implements InventoryHandler<T> {
+public final class CancellableHandler<T extends InventoryEvent> implements InventoryHandler<T> {
 
     private final InventoryHandler<T> handler;
     private final boolean cancel;
@@ -20,7 +20,7 @@ public final class CancellableHandler <T extends InventoryEvent> implements Inve
 
     @Override
     public void handle(@NotNull T event, SimpleGui gui) {
-        if(event instanceof Cancellable) {
+        if (event instanceof Cancellable) {
             ((Cancellable) event).setCancelled(cancel);
         }
 

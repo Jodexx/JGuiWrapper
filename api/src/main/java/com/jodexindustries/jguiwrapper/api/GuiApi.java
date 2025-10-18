@@ -59,7 +59,7 @@ public abstract class GuiApi {
      * }</pre>
      *
      * @return an {@link Optional} containing the API instance if initialized,
-     *         or an empty optional if not
+     * or an empty optional if not
      */
     @NotNull
     public static Optional<GuiApi> getOptional() {

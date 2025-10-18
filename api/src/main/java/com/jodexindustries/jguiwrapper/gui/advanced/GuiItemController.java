@@ -42,10 +42,11 @@ public class GuiItemController {
 
     /**
      * Creates a new controller with specified slots
-     * @param gui The parent GUI
-     * @param defaultItemWrapper Default item for all slots
+     *
+     * @param gui                 The parent GUI
+     * @param defaultItemWrapper  Default item for all slots
      * @param defaultClickHandler Click handler for all slots
-     * @param slots Collection of slot indexes
+     * @param slots               Collection of slot indexes
      */
     public GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
                              AdvancedGuiClickHandler defaultClickHandler, @NotNull Collection<Integer> slots) {
@@ -57,10 +58,11 @@ public class GuiItemController {
 
     /**
      * Creates a new controller with specified slots
-     * @param gui The parent GUI
-     * @param defaultItemWrapper Default item for all slots
+     *
+     * @param gui                 The parent GUI
+     * @param defaultItemWrapper  Default item for all slots
      * @param defaultClickHandler Click handler for all slots
-     * @param slots Array of slot indexes
+     * @param slots               Array of slot indexes
      */
     public GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
                              AdvancedGuiClickHandler defaultClickHandler, int @NotNull ... slots) {
@@ -75,6 +77,7 @@ public class GuiItemController {
 
     /**
      * Creates an empty controller for specified GUI.
+     *
      * @param gui The parent GUI to associate with this controller
      */
     public GuiItemController(@NotNull AdvancedGui gui) {
@@ -83,6 +86,7 @@ public class GuiItemController {
 
     /**
      * Adds a slot to be managed by this controller
+     *
      * @param slot Slot index to add
      * @throws IndexOutOfBoundsException If slot is out of bounds
      */
@@ -94,6 +98,7 @@ public class GuiItemController {
 
     /**
      * Removes a slot from this controller
+     *
      * @param slot Slot index to remove
      */
     public void removeSlot(@Range(from = 0, to = 53) int slot) {
@@ -106,6 +111,7 @@ public class GuiItemController {
 
     /**
      * Sets slots to be managed by this controller
+     *
      * @param slots Array of slot indexes
      */
     public void setSlots(int... slots) {
@@ -114,6 +120,7 @@ public class GuiItemController {
 
     /**
      * Sets slots to be managed by this controller
+     *
      * @param newSlots Collection of slot indexes
      * @throws IndexOutOfBoundsException If any slot is out of bounds
      */
@@ -151,6 +158,7 @@ public class GuiItemController {
 
     /**
      * Checks if a slot has an item assigned
+     *
      * @param slot Slot index to check
      * @return true if slot is managed and has an item
      */
@@ -160,6 +168,7 @@ public class GuiItemController {
 
     /**
      * Checks if controller has no items assigned
+     *
      * @return true if no default item and no slot-specific items
      */
     public boolean isEmpty() {
@@ -182,7 +191,8 @@ public class GuiItemController {
 
     /**
      * Sets a specific item for a slot
-     * @param slot Slot index
+     *
+     * @param slot        Slot index
      * @param itemWrapper Item to set
      * @throws IllegalArgumentException If slot is not managed by this controller
      */
@@ -195,19 +205,8 @@ public class GuiItemController {
     }
 
     /**
-     * Sets a specific item for a slot
-     * @param slot Slot index
-     * @param itemWrapper Item to set
-     * @throws IllegalArgumentException If slot is not managed by this controller
-     * @deprecated see {@link #setItem(int, ItemWrapper)}
-     */
-    @Deprecated
-    public void setItemWrapper(int slot, @NotNull ItemWrapper itemWrapper) {
-        setItem(slot, itemWrapper);
-    }
-
-    /**
      * Removes slot-specific item (reverts to default item)
+     *
      * @param slot Slot index
      */
     public void removeItem(int slot) {
@@ -216,20 +215,11 @@ public class GuiItemController {
     }
 
     /**
-     * Removes slot-specific item (reverts to default item)
-     * @param slot Slot index
-     * @deprecated see {@link #removeItem(int)}
-     */
-    @Deprecated
-    public void removeItemWrapper(int slot) {
-        removeItem(slot);
-    }
-
-    /**
      * Updates items in specific slots with player
+     *
      * @param updater Consumer to modify items
-     * @param player Player to placeholder update
-     * @param slots Slot indexes to update
+     * @param player  Player to placeholder update
+     * @param slots   Slot indexes to update
      */
     public void updateItems(@NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player, int... slots) {
         for (int slot : slots) {
@@ -241,8 +231,9 @@ public class GuiItemController {
 
     /**
      * Updates items in specific slots
+     *
      * @param updater Consumer to modify items
-     * @param slots Slot indexes to update
+     * @param slots   Slot indexes to update
      */
     public void updateItems(@NotNull Consumer<ItemWrapper> updater, int... slots) {
         for (int slot : slots) {
@@ -253,18 +244,8 @@ public class GuiItemController {
     }
 
     /**
-     * Updates items in specific slots
-     * @param updater Consumer to modify items
-     * @param slots Slot indexes to update
-     * @deprecated see {@link #updateItems(Consumer, int...)}
-     */
-    @Deprecated
-    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater, int... slots) {
-        updateItems(updater, slots);
-    }
-
-    /**
      * Sets the default item for all slots
+     *
      * @param itemWrapper Default item to set
      */
     public void defaultItem(@NotNull ItemWrapper itemWrapper) {
@@ -273,17 +254,8 @@ public class GuiItemController {
     }
 
     /**
-     * Sets the default item for all slots
-     * @param itemWrapper Default item to set
-     * @deprecated see {@link #defaultItem(ItemWrapper)}
-     */
-    @Deprecated
-    public void defaultItemWrapper(@NotNull ItemWrapper itemWrapper) {
-        defaultItem(itemWrapper);
-    }
-
-    /**
      * Gets the item for a specific slot
+     *
      * @param slot Slot index
      * @return ItemWrapper for the slot or default item if not specified
      */
@@ -292,18 +264,8 @@ public class GuiItemController {
     }
 
     /**
-     * Gets the item for a specific slot
-     * @param slot Slot index
-     * @return ItemWrapper for the slot or default item if not specified
-     * @deprecated see {@link #getItem(int)}
-     */
-    @Deprecated
-    public @Nullable ItemWrapper getItemWrapper(int slot) {
-        return getItem(slot);
-    }
-
-    /**
      * Gets the default item
+     *
      * @return Current default ItemWrapper
      */
     public @NotNull ItemWrapper defaultItem() {
@@ -311,18 +273,9 @@ public class GuiItemController {
     }
 
     /**
-     * Gets the default item
-     * @return Current default ItemWrapper
-     * @deprecated see {@link #defaultItem()}
-     */
-    @Deprecated
-    public @NotNull ItemWrapper defaultItemWrapper() {
-        return defaultItem();
-    }
-
-    /**
      * Sets click handler for a specific slot
-     * @param slot Slot index
+     *
+     * @param slot         Slot index
      * @param clickHandler Click handler to set
      * @throws IllegalArgumentException If slot is not managed by this controller
      */
@@ -341,6 +294,7 @@ public class GuiItemController {
 
     /**
      * Gets click handler for a specific slot
+     *
      * @param slot Slot index
      * @return Click handler for the slot or default handler if not specified
      */
@@ -350,6 +304,7 @@ public class GuiItemController {
 
     /**
      * Sets click handler for all slots
+     *
      * @param defaultClickHandler New click handler
      */
     public void defaultClickHandler(AdvancedGuiClickHandler defaultClickHandler) {
@@ -358,6 +313,7 @@ public class GuiItemController {
 
     /**
      * Removes click handler for a specific slot
+     *
      * @param slot Slot index
      */
     public void removeClickHandler(int slot) {
@@ -367,6 +323,7 @@ public class GuiItemController {
 
     /**
      * Gets all managed slots
+     *
      * @return Unmodifiable set of slot indexes
      */
     @UnmodifiableView
@@ -380,6 +337,7 @@ public class GuiItemController {
 
     /**
      * Gets current click handler
+     *
      * @return The click handler or null if not set
      */
     public @Nullable InventoryHandler<InventoryClickEvent> defaultClickHandler() {
@@ -418,7 +376,8 @@ public class GuiItemController {
 
     /**
      * Updates all items (default and slot-specific) with player
-     * @param player Player to placeholder update
+     *
+     * @param player  Player to placeholder update
      * @param updater Consumer to modify items
      */
     public void updateItems(@NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player) {
@@ -437,6 +396,7 @@ public class GuiItemController {
 
     /**
      * Updates all items (default and slot-specific)
+     *
      * @param updater Consumer to modify items
      */
     public void updateItems(@NotNull Consumer<ItemWrapper> updater) {
@@ -444,18 +404,9 @@ public class GuiItemController {
     }
 
     /**
-     * Updates all items (default and slot-specific)
-     * @param updater Consumer to modify items
-     * @deprecated see {@link #updateItems(Consumer)}
-     */
-    @Deprecated
-    public void updateItemWrappers(@NotNull Consumer<ItemWrapper> updater) {
-        updateItems(updater);
-    }
-
-    /**
      * Updates item in a specific slot
-     * @param slot Slot index
+     *
+     * @param slot    Slot index
      * @param updater Consumer to modify the item
      */
     public void updateItem(int slot, @NotNull Consumer<ItemWrapper> updater) {
@@ -464,7 +415,8 @@ public class GuiItemController {
 
     /**
      * Updates item in a specific slot
-     * @param slot Slot index
+     *
+     * @param slot    Slot index
      * @param updater Consumer to modify the item
      */
     public void updateItem(int slot, @NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player) {
@@ -472,22 +424,6 @@ public class GuiItemController {
         if (item != null) {
             updater.accept(item);
             if (!item.isUpdated()) item.update(player);
-            redraw(slot);
-        }
-    }
-
-    /**
-     * Updates item in a specific slot
-     * @param slot Slot index
-     * @param updater Consumer to modify the item
-     * @deprecated see {@link #updateItem(int, Consumer)}
-     */
-    @Deprecated
-    public void updateItemWrapper(int slot, @NotNull Consumer<ItemWrapper> updater) {
-        ItemWrapper item = getItem(slot);
-        if (item != null) {
-            updater.accept(item);
-            if (!item.isUpdated()) item.update();
             redraw(slot);
         }
     }
@@ -537,6 +473,7 @@ public class GuiItemController {
 
         /**
          * Creates a new builder for specified GUI.
+         *
          * @param gui The parent GUI to associate with controller
          */
         public Builder(@NotNull AdvancedGui gui) {
@@ -545,6 +482,7 @@ public class GuiItemController {
 
         /**
          * Sets default item for all slots.
+         *
          * @param itemWrapper Default item to set
          * @return this builder for chaining
          */
@@ -555,6 +493,7 @@ public class GuiItemController {
 
         /**
          * Sets default click handler for all slots.
+         *
          * @param clickHandler Click handler to set
          * @return this builder for chaining
          */
@@ -565,6 +504,7 @@ public class GuiItemController {
 
         /**
          * Adds slots to be managed by controller.
+         *
          * @param slots Array of slot indexes
          * @return this builder for chaining
          */
@@ -575,6 +515,7 @@ public class GuiItemController {
 
         /**
          * Adds slots to be managed by controller.
+         *
          * @param slots Collection of slot indexes
          * @return this builder for chaining
          */
@@ -585,7 +526,8 @@ public class GuiItemController {
 
         /**
          * Sets specific item for slot.
-         * @param slot Slot index
+         *
+         * @param slot        Slot index
          * @param itemWrapper Item to set
          * @return this builder for chaining
          */
@@ -597,7 +539,8 @@ public class GuiItemController {
 
         /**
          * Sets specific click handler for slot.
-         * @param slot Slot index
+         *
+         * @param slot         Slot index
          * @param clickHandler Click handler to set
          * @return this builder for chaining
          */
@@ -614,6 +557,7 @@ public class GuiItemController {
 
         /**
          * Builds and returns configured {@link GuiItemController}.
+         *
          * @return Configured controller instance
          */
         public GuiItemController build() {
@@ -626,5 +570,4 @@ public class GuiItemController {
             return controller;
         }
     }
-
 }

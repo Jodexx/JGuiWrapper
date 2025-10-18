@@ -40,12 +40,6 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
     LEGACY_SECTION("net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer", "legacySection"),
 
     /**
-     * @deprecated This constant is obsolete. Use {@link #LEGACY_AMPERSAND} instead.
-     */
-    @Deprecated
-    LEGACY(LEGACY_AMPERSAND.serializer),
-
-    /**
      * MiniMessage serializer.
      * <p>
      * Uses {@code MiniMessage.miniMessage()}.

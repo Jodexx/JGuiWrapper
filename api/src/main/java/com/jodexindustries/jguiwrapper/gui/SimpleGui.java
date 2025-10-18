@@ -104,6 +104,7 @@ public abstract class SimpleGui extends AbstractGui {
 
     /**
      * Registers a consumer to be called when the GUI is opened.
+     *
      * @param consumer the consumer to handle InventoryOpenEvent
      */
     public final void onOpen(Consumer<InventoryOpenEvent> consumer) {
@@ -112,6 +113,7 @@ public abstract class SimpleGui extends AbstractGui {
 
     /**
      * Registers a consumer to be called when the GUI is closed.
+     *
      * @param consumer the consumer to handle InventoryCloseEvent
      */
     public final void onClose(Consumer<InventoryCloseEvent> consumer) {
@@ -120,6 +122,7 @@ public abstract class SimpleGui extends AbstractGui {
 
     /**
      * Registers a consumer to be called when the GUI is dragged in.
+     *
      * @param consumer the consumer to handle InventoryDragEvent
      */
     public final void onDrag(Consumer<InventoryDragEvent> consumer) {

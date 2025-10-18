@@ -26,6 +26,7 @@ public interface Gui {
 
     /**
      * Gets the holder for this GUI instance.
+     *
      * @return the GuiHolder associated with this GUI
      */
     @NotNull GuiHolder holder();
@@ -38,19 +39,22 @@ public interface Gui {
 
     /**
      * Opens this GUI for the specified player.
+     *
      * @param player the player to open the GUI for
      */
     void open(@NotNull HumanEntity player);
 
     /**
      * Opens this GUI for the specified player with a custom title.
+     *
      * @param player the player to open the GUI for
-     * @param title the custom title to use
+     * @param title  the custom title to use
      */
     void open(@NotNull HumanEntity player, Component title);
 
     /**
      * Closes this GUI for the specified player.
+     *
      * @param player the player to close the GUI for
      */
     void close(@NotNull HumanEntity player);
@@ -64,6 +68,7 @@ public interface Gui {
 
     /**
      * Returns a set of all currently active GUI instances.
+     *
      * @return set of active GUI instances
      */
     static Set<Gui> getActiveInstances() {
