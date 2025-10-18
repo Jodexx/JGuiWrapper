@@ -4,14 +4,9 @@ java {
 }
 
 tasks.withType<Javadoc> {
-    javadocTool.set(javaToolchains.javadocToolFor {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    })
-
     options {
         encoding = "UTF-8"
         (this as StandardJavadocDocletOptions).apply {
-            source = "8"
             addBooleanOption("html5", true)
             addBooleanOption("Xdoclint:none", true)
             links = listOf(
