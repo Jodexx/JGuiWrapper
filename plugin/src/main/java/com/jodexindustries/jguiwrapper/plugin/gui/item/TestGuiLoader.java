@@ -5,6 +5,7 @@ import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
 import org.bukkit.entity.HumanEntity;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class TestGuiLoader implements GuiDataLoader {
@@ -24,7 +25,7 @@ public class TestGuiLoader implements GuiDataLoader {
     }
 
     @Override
-    public void load(AdvancedGui gui, HumanEntity player) {
+    public void load(@NotNull AdvancedGui gui, @NotNull HumanEntity player) {
         openCount++;
 
         for (GuiItemController controller : gui.getControllers()) {

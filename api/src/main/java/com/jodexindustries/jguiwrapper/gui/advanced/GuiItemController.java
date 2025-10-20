@@ -35,6 +35,8 @@ public class GuiItemController {
     private final Map<Integer, ItemWrapper> slotSpecificItems = new HashMap<>();
     private final Map<Integer, AdvancedGuiClickHandler> slotClickHandlers = new HashMap<>();
 
+    private final Collection<Integer> defaultSlots;
+
     private final Set<Integer> slots = new LinkedHashSet<>();
     private final Set<Integer> oldSlots = new LinkedHashSet<>();
 
@@ -48,12 +50,12 @@ public class GuiItemController {
      * @param defaultClickHandler Click handler for all slots
      * @param slots               Collection of slot indexes
      */
-    public GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
+    protected GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
                              AdvancedGuiClickHandler defaultClickHandler, @NotNull Collection<Integer> slots) {
         this.gui = gui;
         this.defaultItemWrapper = defaultItemWrapper;
         this.defaultClickHandler = defaultClickHandler;
-        setSlots(slots);
+        this.defaultSlots = slots;
     }
 
     /**
@@ -64,12 +66,12 @@ public class GuiItemController {
      * @param defaultClickHandler Click handler for all slots
      * @param slots               Array of slot indexes
      */
-    public GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
+    protected GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
                              AdvancedGuiClickHandler defaultClickHandler, int @NotNull ... slots) {
         this(gui, defaultItemWrapper, defaultClickHandler, Arrays.stream(slots).boxed().collect(Collectors.toList()));
     }
 
-    public GuiItemController(@NotNull AdvancedGui gui, Key itemHandlerKey) {
+    protected GuiItemController(@NotNull AdvancedGui gui, Key itemHandlerKey) {
         this(gui);
 
         itemHandler(itemHandlerKey);
@@ -107,6 +109,10 @@ public class GuiItemController {
             slotClickHandlers.remove(slot);
             clear(slot);
         }
+    }
+
+    protected void drawSlots() {
+        setSlots(this.defaultSlots);
     }
 
     /**

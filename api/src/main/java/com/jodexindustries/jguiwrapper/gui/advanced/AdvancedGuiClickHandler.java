@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public interface AdvancedGuiClickHandler extends InventoryHandler<InventoryClickEvent> {
 
     @Override
-    default void handle(@NotNull InventoryClickEvent event, SimpleGui gui) {
+    default void handle(@NotNull InventoryClickEvent event, @NotNull SimpleGui gui) {
         if (gui instanceof AdvancedGui) {
             ((AdvancedGui) gui).getController(event.getRawSlot()).ifPresent(controller -> this.handle(event, controller));
         } else {

@@ -39,13 +39,13 @@ public class AdvancedGui extends SimpleGui {
         super(size, title);
     }
 
-    public void loadData(HumanEntity player) {
+    public void loadData(@NotNull HumanEntity player) {
         for (GuiDataLoader value : loaderMap.values()) {
             value.load(this, player);
         }
     }
 
-    public <T extends GuiDataLoader> Optional<T> getTypedLoader(Class<T> clazz) {
+    public <T extends GuiDataLoader> Optional<T> getTypedLoader(@NotNull Class<T> clazz) {
         return Optional.of(clazz.cast(getLoader0(clazz)));
     }
 
@@ -78,16 +78,26 @@ public class AdvancedGui extends SimpleGui {
         registerItem(key, builder.build());
     }
 
-    public void registerItem(@NotNull String key, @NotNull GuiItemController controller) {
+    public void registerItem(@NotNull String key, @NotNull GuiItemController controller) throws IllegalArgumentException {
         if (keyMap.containsKey(key)) return;
 
+        if (!controller.gui().equals(this)) {
+            throw new IllegalArgumentException("Controller belongs to a different GUI instance");
+        }
+
+        controller.drawSlots();
+
         keyMap.put(key, controller);
-        controller.redraw();
+    }
+
+    public GuiItemController.Builder createController() {
+        return new GuiItemController.Builder(this);
     }
 
     public void unregister(String key) {
         GuiItemController controller = keyMap.remove(key);
         if (controller != null) {
+            controller.clear();
             controller.slots().forEach(slotMap::remove);
         }
     }
