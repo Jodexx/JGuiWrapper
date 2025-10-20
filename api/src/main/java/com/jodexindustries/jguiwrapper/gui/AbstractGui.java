@@ -275,6 +275,15 @@ public abstract class AbstractGui implements Gui {
     }
 
     /**
+     * Updates the menu for all viewers with the current type, size, and title.
+     *
+     * @param refreshData whether to refresh the menu's data
+     */
+    public final void updateMenu(boolean refreshData) {
+        updateMenu(this.type, this.size, this.title, refreshData);
+    }
+
+    /**
      * Updates the menu for a specific player with the current type, size, and title.
      *
      * @param player the player to update the menu for
@@ -321,6 +330,18 @@ public abstract class AbstractGui implements Gui {
      */
     public final void updateMenu(InventoryType type, int size, Component title) {
         this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title));
+    }
+
+    /**
+     * Updates the menu for all viewers with new type, size, and title.
+     *
+     * @param type        the new inventory type
+     * @param size        the new inventory size
+     * @param title       the new title for the menu
+     * @param refreshData whether to refresh the menu's data
+     */
+    public final void updateMenu(InventoryType type, int size, Component title, boolean refreshData) {
+        this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title, refreshData));
     }
 
     /**
