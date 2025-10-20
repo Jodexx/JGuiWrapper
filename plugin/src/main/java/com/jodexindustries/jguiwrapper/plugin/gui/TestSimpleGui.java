@@ -1,8 +1,10 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
-import com.jodexindustries.jguiwrapper.api.gui.handler.CancellableHandler;
 import com.jodexindustries.jguiwrapper.gui.SimpleGui;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemStack;
 
 public class TestSimpleGui extends SimpleGui {
 
@@ -13,11 +15,18 @@ public class TestSimpleGui extends SimpleGui {
     public TestSimpleGui() {
         super(3123, "&cExample");
 
-        setClickHandlers(
-                CancellableHandler.wrap((event, gui) ->
-                        runTask(() ->
-                                updateMenu(event.getWhoClicked(), type(), looper.nextSize(), Component.text(clicks++), true)), true)
-        );
+        holder().getInventory().setItem(0, new ItemStack(Material.EMERALD));
+
+        setClickHandlers((event, gui) -> {
+            event.setCancelled(true);
+
+            ClickType click = event.getClick();
+
+            if (click.isRightClick())
+                runTask(() -> updateMenu(event.getWhoClicked(), type(), looper.nextSize(), Component.text(clicks++), true));
+            else
+                event.getWhoClicked().sendMessage(String.valueOf(event.getRawSlot()));
+        });
 
         onOpen(event -> event.getPlayer().sendMessage(event.getInventory().getType().defaultTitle()));
 
