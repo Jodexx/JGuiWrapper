@@ -9,6 +9,7 @@ import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAbstractGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAdvancedGui;
+import com.jodexindustries.jguiwrapper.plugin.gui.TestPaginatedAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestSimpleGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.item.TestGuiLoader;
 import com.jodexindustries.jguiwrapper.plugin.gui.item.TestItemHandler;
@@ -41,7 +42,7 @@ public final class JGuiPlugin extends JavaPlugin {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            sender.sendMessage("/jguiwrapper test (abstract/simple/advanced)");
+            sender.sendMessage("/jguiwrapper test (abstract/simple/advanced/paginated)");
             sender.sendMessage("/jguiwrapper list");
             return true;
         } else {
@@ -58,18 +59,11 @@ public final class JGuiPlugin extends JavaPlugin {
                         String gui = args[1];
 
                         switch (gui) {
-                            case "abstract":
-                                new TestAbstractGui().open(player);
-                                break;
-                            case "simple":
-                                new TestSimpleGui().open(player);
-                                break;
-                            case "advanced":
-                                new TestAdvancedGui().open(player);
-                                break;
-                            default:
-                                sender.sendMessage("Unknown gui");
-                                break;
+                            case "abstract" -> new TestAbstractGui().open(player);
+                            case "simple" -> new TestSimpleGui().open(player);
+                            case "advanced" -> new TestAdvancedGui().open(player);
+                            case "paginated" -> new TestPaginatedAdvancedGui().open(player);
+                            default -> sender.sendMessage("Unknown gui");
                         }
                     }
                     break;
@@ -137,7 +131,7 @@ public final class JGuiPlugin extends JavaPlugin {
         }
 
         if (args.length == 2 && args[0].equals("test")) {
-            return Arrays.asList("abstract", "simple", "advanced");
+            return Arrays.asList("abstract", "simple", "advanced", "paginated");
         }
 
         return Collections.emptyList();
