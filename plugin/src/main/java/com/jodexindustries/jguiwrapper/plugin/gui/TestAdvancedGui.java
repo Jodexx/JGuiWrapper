@@ -45,7 +45,7 @@ public class TestAdvancedGui extends AdvancedGui {
                     controller.updateItems(itemWrapper -> itemWrapper.displayName(Component.text(clicks)));
 
                     title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
-                    updateMenu();
+                    runTask(() -> updateMenu(true));
                 }));
 
         registerItem("random", builder -> builder.slots(45)
