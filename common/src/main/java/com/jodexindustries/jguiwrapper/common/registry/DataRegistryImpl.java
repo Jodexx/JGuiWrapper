@@ -9,21 +9,10 @@ import com.jodexindustries.jguiwrapper.common.utils.ReflectionUtils;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class DataRegistryImpl implements DataRegistry {
+public record DataRegistryImpl(String namespace) implements DataRegistry {
 
     private static final Map<String, GuiDataLoader> LOADERS = new HashMap<>();
     private static final Map<String, Pair<ItemHandler<?>, Class<?>>> HANDLERS = new HashMap<>();
-
-    private final String namespace;
-
-    public DataRegistryImpl(String namespace) {
-        this.namespace = namespace;
-    }
-
-    @Override
-    public String namespace() {
-        return namespace;
-    }
 
     @Override
     public void registerLoader(String id, GuiDataLoader loader) {

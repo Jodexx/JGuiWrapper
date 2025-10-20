@@ -83,22 +83,27 @@ public abstract class SimpleGui extends AbstractGui {
     public final void onClick(@NotNull InventoryClickEvent event) {
         if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
             Inventory clickedInventory = event.getClickedInventory();
-            if (clickedInventory != null && clickedInventory.getType() == InventoryType.PLAYER) {
-                event.setCancelled(cancelEmptySlots);
+            if (clickedInventory != null && clickedInventory.getType() == InventoryType.PLAYER && cancelEmptySlots) {
+                event.setCancelled(true);
             }
         }
 
         int slot = event.getRawSlot();
 
-        // TODO Support for player inventory clicks, with disable option (improved handling)
-        if (slot >= size()) return;
-
         InventoryHandler<InventoryClickEvent> handler = slotClickHandlers.get(slot);
 
-        if (handler != null) {
-            handler.handle(event, this);
-        } else if (cancelEmptySlots) {
-            event.setCancelled(true);
+        if (slot < size()) {
+            // gui slots
+            if (handler != null) {
+                handler.handle(event, this);
+            } else if (cancelEmptySlots) {
+                event.setCancelled(true);
+            }
+        } else {
+            // player slots
+            if (handler != null) {
+                handler.handle(event, this);
+            }
         }
     }
 

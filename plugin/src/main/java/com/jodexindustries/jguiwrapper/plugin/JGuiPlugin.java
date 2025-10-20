@@ -49,12 +49,10 @@ public final class JGuiPlugin extends JavaPlugin {
 
             switch (sub) {
                 case "test": {
-                    if (!(sender instanceof Player)) {
+                    if (!(sender instanceof Player player)) {
                         sender.sendMessage("It is impossible to test from the console!");
                         return false;
                     }
-
-                    Player player = ((Player) sender);
 
                     if (args.length >= 2) {
                         String gui = args[1];
@@ -95,8 +93,7 @@ public final class JGuiPlugin extends JavaPlugin {
                         send(sender, "Title: " + JGuiInitializer.get().defaultSerializer().serialize(abstractGui.title()));
                         send(sender, "Size: &6" + abstractGui.size());
                         send(sender, "Type: &6" + abstractGui.type());
-                        if (abstractGui instanceof AdvancedGui) {
-                            AdvancedGui advancedGui = (AdvancedGui) abstractGui;
+                        if (abstractGui instanceof AdvancedGui advancedGui) {
                             Collection<GuiItemController> controllers = advancedGui.getControllers();
                             if (!controllers.isEmpty()) {
                                 send(sender, "- Controllers:");

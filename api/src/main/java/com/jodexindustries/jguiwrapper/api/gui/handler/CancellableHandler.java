@@ -8,10 +8,8 @@ import org.jetbrains.annotations.TestOnly;
 
 @TestOnly
 @SuppressWarnings({"unused"})
-public final class CancellableHandler<T extends InventoryEvent> implements InventoryHandler<T> {
-
-    private final InventoryHandler<T> handler;
-    private final boolean cancel;
+public record CancellableHandler<T extends InventoryEvent>(InventoryHandler<T> handler,
+                                                           boolean cancel) implements InventoryHandler<T> {
 
     public CancellableHandler(@NotNull InventoryHandler<T> handler, boolean cancel) {
         this.handler = handler;

@@ -64,68 +64,35 @@ public class Wrapper1_16_R3 implements NMSWrapper {
     }
 
     public Containers<?> getNotchInventoryType(InventoryType type, int size) {
-        switch (type) {
-            case PLAYER:
-            case CHEST:
-            case ENDER_CHEST:
-            case BARREL:
-                switch (size) {
-                    case 9:
-                        return Containers.GENERIC_9X1;
-                    case 18:
-                        return Containers.GENERIC_9X2;
-                    case 27:
-                        return Containers.GENERIC_9X3;
-                    case 36:
-                    case 41:
-                        return Containers.GENERIC_9X4;
-                    case 45:
-                        return Containers.GENERIC_9X5;
-                    default:
-                        return Containers.GENERIC_9X6;
-                }
-            case WORKBENCH:
-                return Containers.CRAFTING;
-            case FURNACE:
-                return Containers.FURNACE;
-            case DISPENSER:
-            case DROPPER:
-                return Containers.GENERIC_3X3;
-            case ENCHANTING:
-                return Containers.ENCHANTMENT;
-            case BREWING:
-                return Containers.BREWING_STAND;
-            case BEACON:
-                return Containers.BEACON;
-            case ANVIL:
-                return Containers.ANVIL;
-            case HOPPER:
-                return Containers.HOPPER;
-            case SHULKER_BOX:
-                return Containers.SHULKER_BOX;
-            case BLAST_FURNACE:
-                return Containers.BLAST_FURNACE;
-            case LECTERN:
-                return Containers.LECTERN;
-            case SMOKER:
-                return Containers.SMOKER;
-            case LOOM:
-                return Containers.LOOM;
-            case CARTOGRAPHY:
-                return Containers.CARTOGRAPHY_TABLE;
-            case GRINDSTONE:
-                return Containers.GRINDSTONE;
-            case STONECUTTER:
-                return Containers.STONECUTTER;
-            case SMITHING:
-                return Containers.SMITHING;
-            case CREATIVE:
-            case CRAFTING:
-            case MERCHANT:
-                throw new IllegalArgumentException("Can't open a " + type + " inventory!");
-            default:
-                return Containers.GENERIC_9X3;
-        }
+        return switch (type) {
+            case PLAYER, CHEST, ENDER_CHEST, BARREL -> switch (size) {
+                case 9 -> Containers.GENERIC_9X1;
+                case 18 -> Containers.GENERIC_9X2;
+                case 27 -> Containers.GENERIC_9X3;
+                case 36, 41 -> Containers.GENERIC_9X4;
+                case 45 -> Containers.GENERIC_9X5;
+                default -> Containers.GENERIC_9X6;
+            };
+            case WORKBENCH -> Containers.CRAFTING;
+            case FURNACE -> Containers.FURNACE;
+            case DISPENSER, DROPPER -> Containers.GENERIC_3X3;
+            case ENCHANTING -> Containers.ENCHANTMENT;
+            case BREWING -> Containers.BREWING_STAND;
+            case BEACON -> Containers.BEACON;
+            case ANVIL -> Containers.ANVIL;
+            case HOPPER -> Containers.HOPPER;
+            case SHULKER_BOX -> Containers.SHULKER_BOX;
+            case BLAST_FURNACE -> Containers.BLAST_FURNACE;
+            case LECTERN -> Containers.LECTERN;
+            case SMOKER -> Containers.SMOKER;
+            case LOOM -> Containers.LOOM;
+            case CARTOGRAPHY -> Containers.CARTOGRAPHY_TABLE;
+            case GRINDSTONE -> Containers.GRINDSTONE;
+            case STONECUTTER -> Containers.STONECUTTER;
+            case SMITHING -> Containers.SMITHING;
+            case CREATIVE, CRAFTING, MERCHANT ->
+                    throw new IllegalArgumentException("Can't open a " + type + " inventory!");
+        };
     }
 
 }
