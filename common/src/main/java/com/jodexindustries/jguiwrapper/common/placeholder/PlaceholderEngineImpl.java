@@ -6,7 +6,6 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.OfflinePlayer;
-import org.intellij.lang.annotations.RegExp;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,22 +15,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"unused"})
 public class PlaceholderEngineImpl implements PlaceholderEngine {
 
-    private final Map<String, Function<@Nullable OfflinePlayer, String>> placeholders = new LinkedHashMap<>();
-    private final Map<String, BiFunction<String, @Nullable OfflinePlayer, String>> regexPlaceholders = new LinkedHashMap<>();
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("%([^%]+)%");
+
+    private final Map<Pattern, @NotNull Function<@Nullable OfflinePlayer, String>> literalPlaceholders = new LinkedHashMap<>();
+    private final Map<Pattern, @NotNull BiFunction<String, @Nullable OfflinePlayer, String>> regexPlaceholders = new LinkedHashMap<>();
 
     @Override
-    public void register(@NotNull String placeholder, Function<@Nullable OfflinePlayer, @NotNull String> resolver) {
-        placeholders.put(placeholder, resolver);
+    public void register(@NotNull String placeholder, @NotNull Function<@Nullable OfflinePlayer, @NotNull String> resolver) {
+        literalPlaceholders.put(Pattern.compile(placeholder, Pattern.LITERAL), resolver);
     }
 
     @Override
     public void register(@NotNull String placeholder, @NotNull String resolver) {
-        placeholders.put(placeholder, player -> resolver);
+        register(placeholder, player -> resolver);
     }
 
     @Override
@@ -40,7 +42,12 @@ public class PlaceholderEngineImpl implements PlaceholderEngine {
     }
 
     @Override
-    public void registerRegex(@NotNull @RegEx String pattern, BiFunction<String, @Nullable OfflinePlayer, @NotNull String> resolver) {
+    public void registerRegex(@NotNull @RegEx String pattern, @NotNull BiFunction<String, @Nullable OfflinePlayer, @NotNull String> resolver) {
+        registerRegex(Pattern.compile(pattern), resolver);
+    }
+
+    @Override
+    public void registerRegex(@NotNull Pattern pattern, @NotNull BiFunction<@NotNull String, @Nullable OfflinePlayer, @NotNull String> resolver) {
         regexPlaceholders.put(pattern, resolver);
     }
 
@@ -49,7 +56,7 @@ public class PlaceholderEngineImpl implements PlaceholderEngine {
         PlaceholderEngineImpl engine = (PlaceholderEngineImpl) placeholderEngine;
 
         this.regexPlaceholders.putAll(engine.regexPlaceholders);
-        this.placeholders.putAll(engine.placeholders);
+        this.literalPlaceholders.putAll(engine.literalPlaceholders);
     }
 
     @Override
@@ -61,13 +68,13 @@ public class PlaceholderEngineImpl implements PlaceholderEngine {
     public @NotNull Component process(@NotNull Component input, @Nullable OfflinePlayer player) {
         Component current = input;
 
-        for (Map.Entry<String, Function<OfflinePlayer, String>> entry : placeholders.entrySet()) {
-            String key = entry.getKey();
+        for (Map.Entry<Pattern, Function<OfflinePlayer, String>> entry : literalPlaceholders.entrySet()) {
+            Pattern pattern = entry.getKey();
             Function<OfflinePlayer, String> value = entry.getValue();
 
             try {
                 current = current.replaceText(builder -> builder
-                        .matchLiteral(key)
+                        .match(pattern)
                         .replacement(value.apply(player))
                 );
             } catch (Exception e) {
@@ -75,9 +82,9 @@ public class PlaceholderEngineImpl implements PlaceholderEngine {
             }
         }
 
-        for (Map.Entry<String, BiFunction<String, @Nullable OfflinePlayer, String>> entry : regexPlaceholders.entrySet()) {
-            @RegExp String pattern = entry.getKey();
-            BiFunction<String, @Nullable OfflinePlayer, String> value = entry.getValue();
+        for (Map.Entry<Pattern, BiFunction<String, OfflinePlayer, String>> entry : regexPlaceholders.entrySet()) {
+            Pattern pattern = entry.getKey();
+            BiFunction<String, OfflinePlayer, String> value = entry.getValue();
 
             current = current.replaceText(TextReplacementConfig.builder()
                     .match(pattern)
@@ -93,11 +100,11 @@ public class PlaceholderEngineImpl implements PlaceholderEngine {
         return current;
     }
 
-    private Component applyPapi(Component component, OfflinePlayer player) {
+    private Component applyPapi(@NotNull Component component, @Nullable OfflinePlayer player) {
         if (!GuiApi.get().isPAPI() || player == null) return component;
 
         return component.replaceText(TextReplacementConfig.builder()
-                .match("%([^%]+)%")
+                .match(PLACEHOLDER_PATTERN)
                 .replacement(match -> {
                     String placeholder = match.content();
                     String parsed = PlaceholderAPI.setPlaceholders(player, placeholder);

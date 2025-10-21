@@ -10,26 +10,26 @@ import javax.annotation.RegEx;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 @SuppressWarnings({"unused"})
 public interface PlaceholderEngine {
 
-    void register(@NotNull String placeholder, Function<@Nullable OfflinePlayer, @NotNull String> resolver);
+    void register(@NotNull String placeholder, @NotNull Function<@Nullable OfflinePlayer, @NotNull String> resolver);
 
     void register(@NotNull String placeholder, @NotNull String resolver);
 
     void register(@NotNull String placeholder, @NotNull Object resolver);
 
-    void registerRegex(@NotNull @RegEx String pattern, BiFunction<@NotNull String, @Nullable OfflinePlayer, @NotNull String> resolver);
+    void registerRegex(@NotNull @RegEx String pattern, @NotNull BiFunction<@NotNull String, @Nullable OfflinePlayer, @NotNull String> resolver);
+
+    void registerRegex(@NotNull Pattern pattern, @NotNull BiFunction<@NotNull String, @Nullable OfflinePlayer, @NotNull String> resolver);
 
     void addAll(@NotNull PlaceholderEngine placeholderEngine);
 
-    @NotNull
-    List<Component> process(@NotNull List<Component> input, @Nullable OfflinePlayer player);
+    @NotNull List<Component> process(@NotNull List<Component> input, @Nullable OfflinePlayer player);
 
-    @NotNull
-    Component process(@NotNull Component input, @Nullable OfflinePlayer player);
-
+    @NotNull Component process(@NotNull Component input, @Nullable OfflinePlayer player);
 
     /**
      * Creates a new PlaceholderEngine
