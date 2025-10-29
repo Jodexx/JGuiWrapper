@@ -126,18 +126,10 @@ public class PaginatedAdvancedGui extends AdvancedGui {
         if (page < 0 || page >= pages.size()) return;
 
         Page currentPage = pages.get(this.currentPage);
-
-        for (int i = 0; i < currentPage.controllers().size(); i++) {
-            unregister(Page.ITEM_KEY + i);
-        }
+        currentPage.unregister();
 
         Page newPage = pages.get(page);
-
-        for (int i = 0; i < newPage.controllers().size(); i++) {
-            GuiItemController controller = newPage.controllers().get(i);
-
-            registerItem(Page.ITEM_KEY + i, controller);
-        }
+        newPage.register();
 
         this.currentPage = page;
     }
@@ -156,6 +148,20 @@ public class PaginatedAdvancedGui extends AdvancedGui {
                 builderConsumer.accept(builder);
                 return builder.build();
             }).toList());
+        }
+
+        public void register() {
+            for (int i = 0; i < controllers.size(); i++) {
+                GuiItemController controller = controllers.get(i);
+                controller.gui().registerItem(Page.ITEM_KEY + i, controller);
+            }
+        }
+
+        public void unregister() {
+            for (int i = 0; i < controllers.size(); i++) {
+                GuiItemController controller = controllers.get(i);
+                controller.gui().unregister(ITEM_KEY + i);
+            }
         }
 
     }
