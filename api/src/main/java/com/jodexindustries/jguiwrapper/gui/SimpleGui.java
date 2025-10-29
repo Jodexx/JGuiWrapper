@@ -1,10 +1,12 @@
 package com.jodexindustries.jguiwrapper.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.handler.InventoryHandler;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,24 +32,65 @@ public abstract class SimpleGui extends AbstractGui {
 
     private boolean cancelEmptySlots = true;
 
+    /**
+     * Constructs a GUI with the default size (54) and a string title.
+     *
+     * @param title The GUI title as a string
+     */
     public SimpleGui(@NotNull String title) {
         super(title);
     }
 
+    /**
+     * Constructs a GUI with a specific size and string title.
+     *
+     * @param size  The inventory size
+     * @param title The GUI title as a string
+     */
     public SimpleGui(int size, @NotNull String title) {
         super(size, title);
     }
 
+    /**
+     * Constructs a GUI with the default CHEST type and a component title.
+     *
+     * @param title The GUI title as a Component
+     */
     public SimpleGui(@NotNull Component title) {
         super(title);
     }
 
-    public SimpleGui(InventoryType type, @NotNull Component title) {
+    /**
+     * Constructs a GUI with a specific inventory type and component title.
+     *
+     * @param type  The inventory type
+     * @param title The GUI title as a Component
+     */
+    public SimpleGui(@NotNull InventoryType type, @NotNull Component title) {
         super(type, title);
     }
 
+    /**
+     * Constructs a GUI with a specific size, optional type, and component title.
+     *
+     * @param size  The inventory size
+     * @param title The GUI title as a Component
+     */
     public SimpleGui(int size, @NotNull Component title) {
         super(size, title);
+    }
+
+    /**
+     * Constructs a GUI with a specific inventory type and component title with serializer.
+     *
+     * @param type              The inventory type.
+     * @param title             The GUI title as a {@link Component}.
+     * @param defaultSerializer The default serializer used for converting between plain strings and {@link Component}
+     *                          instances. If {@code null}, the
+     *                          {@link #defaultSerializer} will be used.
+     */
+    public SimpleGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(type, title, defaultSerializer);
     }
 
     @Override
@@ -108,7 +151,7 @@ public abstract class SimpleGui extends AbstractGui {
      *
      * @param consumer the consumer to handle InventoryOpenEvent
      */
-    public final void onOpen(Consumer<InventoryOpenEvent> consumer) {
+    public final void onOpen(@NotNull Consumer<InventoryOpenEvent> consumer) {
         this.openEventConsumers.add(consumer);
     }
 
@@ -117,7 +160,7 @@ public abstract class SimpleGui extends AbstractGui {
      *
      * @param consumer the consumer to handle InventoryCloseEvent
      */
-    public final void onClose(Consumer<InventoryCloseEvent> consumer) {
+    public final void onClose(@NotNull Consumer<InventoryCloseEvent> consumer) {
         this.closeEventConsumers.add(consumer);
     }
 
@@ -126,10 +169,16 @@ public abstract class SimpleGui extends AbstractGui {
      *
      * @param consumer the consumer to handle InventoryDragEvent
      */
-    public final void onDrag(Consumer<InventoryDragEvent> consumer) {
+    public final void onDrag(@NotNull Consumer<InventoryDragEvent> consumer) {
         this.dragEventConsumers.add(consumer);
     }
 
+    /**
+     * Sets click handlers for specific slots or all slots if none are specified.
+     *
+     * @param handler the handler to manage slot clicks
+     * @param slots   the slots to assign the handler to
+     */
     public void setClickHandlers(@NotNull InventoryHandler<InventoryClickEvent> handler, int @NotNull ... slots) {
         if (slots.length == 0) {
             setClickHandlers0(handler, IntStream.range(0, super.size()).toArray());
@@ -145,21 +194,29 @@ public abstract class SimpleGui extends AbstractGui {
         }
     }
 
+    /**
+     * Removes click handlers from specific slots or all slots if none are specified.
+     *
+     * @param slots the slots to remove handlers from
+     */
     public void removeClickHandlers(int @NotNull ... slots) {
         if (slots.length == 0) {
             slotClickHandlers.clear();
             return;
         }
 
-        removeClickHandlers0(slots);
-    }
-
-    private void removeClickHandlers0(int @NotNull ... slots) {
         for (int slot : slots) {
             slotClickHandlers.remove(slot);
         }
     }
 
+    /**
+     * Sets whether empty slots should be canceled.
+     * <p>
+     * By "empty slots" we mean slots that have no assigned click handlers.
+     *
+     * @param cancelEmptySlots true to cancel empty slots, false otherwise
+     */
     public void setCancelEmptySlots(boolean cancelEmptySlots) {
         this.cancelEmptySlots = cancelEmptySlots;
     }

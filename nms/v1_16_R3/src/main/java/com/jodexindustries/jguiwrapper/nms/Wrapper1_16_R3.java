@@ -36,7 +36,7 @@ public class Wrapper1_16_R3 implements NMSWrapper {
     }
 
     @Override
-    public InventoryView openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
+    public InventoryView openInventory(@NotNull HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, @NotNull Component title) {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         EntityPlayer sp = craftPlayer.getHandle();
 

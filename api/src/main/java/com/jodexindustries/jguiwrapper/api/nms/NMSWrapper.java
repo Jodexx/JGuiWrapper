@@ -27,7 +27,7 @@ public interface NMSWrapper {
      * @param title  the new inventory title as a Component
      * @return true if the menu was updated successfully, false otherwise
      */
-    default boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, Component title) {
+    default boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
         return updateMenu(player, type, size, title, false);
     }
 
@@ -54,5 +54,5 @@ public interface NMSWrapper {
      * @return the InventoryView if successful, or null if the operation failed
      */
     @Nullable
-    InventoryView openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title);
+    InventoryView openInventory(@NotNull HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, @NotNull Component title);
 }

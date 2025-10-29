@@ -42,7 +42,7 @@ public final class JGuiInitializer extends GuiApi {
             }
 
             @Override
-            public InventoryView openInventory(HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, Component title) {
+            public InventoryView openInventory(@NotNull HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, @NotNull Component title) {
                 return null;
             }
         };

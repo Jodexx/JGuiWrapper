@@ -1,14 +1,18 @@
 package com.jodexindustries.jguiwrapper.gui.advanced;
 
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 @ApiStatus.Experimental
 @SuppressWarnings({"unused", "UnusedReturnValue"})
@@ -18,24 +22,65 @@ public class PaginatedAdvancedGui extends AdvancedGui {
 
     private int currentPage = 0;
 
+    /**
+     * Constructs a GUI with the default size (54) and a string title.
+     *
+     * @param title The GUI title as a string
+     */
     public PaginatedAdvancedGui(@NotNull String title) {
         super(title);
     }
 
+    /**
+     * Constructs a GUI with a specific size and string title.
+     *
+     * @param size  The inventory size
+     * @param title The GUI title as a string
+     */
     public PaginatedAdvancedGui(int size, @NotNull String title) {
         super(size, title);
     }
 
+    /**
+     * Constructs a GUI with the default CHEST type and a component title.
+     *
+     * @param title The GUI title as a Component
+     */
     public PaginatedAdvancedGui(@NotNull Component title) {
         super(title);
     }
 
-    public PaginatedAdvancedGui(InventoryType type, @NotNull Component title) {
+    /**
+     * Constructs a GUI with a specific inventory type and component title.
+     *
+     * @param type  The inventory type
+     * @param title The GUI title as a Component
+     */
+    public PaginatedAdvancedGui(@NotNull InventoryType type, @NotNull Component title) {
         super(type, title);
     }
 
+    /**
+     * Constructs a GUI with a specific size, optional type, and component title.
+     *
+     * @param size  The inventory size
+     * @param title The GUI title as a Component
+     */
     public PaginatedAdvancedGui(int size, @NotNull Component title) {
         super(size, title);
+    }
+
+    /**
+     * Constructs a GUI with a specific inventory type and component title with serializer.
+     *
+     * @param type              The inventory type.
+     * @param title             The GUI title as a {@link Component}.
+     * @param defaultSerializer The default serializer used for converting between plain strings and {@link Component}
+     *                          instances. If {@code null}, the
+     *                          {@link #defaultSerializer} will be used.
+     */
+    public PaginatedAdvancedGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(type, title, defaultSerializer);
     }
 
     @Contract(pure = true)
@@ -49,20 +94,11 @@ public class PaginatedAdvancedGui extends AdvancedGui {
     }
 
     @SafeVarargs
-    public final void addPage(@NotNull Consumer<GuiItemController.Builder> @NotNull ... builderConsumers) {
-        Page page = new Page();
-
-        for (Consumer<GuiItemController.Builder> builderConsumer : builderConsumers) {
-            GuiItemController.Builder builder = new GuiItemController.Builder(this);
-            builderConsumer.accept(builder);
-
-            page.controllers.add(builder.build());
-        }
-
-        addPage(page);
+    public final void addPage(@NotNull Consumer<GuiItemController.@NotNull Builder> @NotNull ... builderConsumers) {
+        addPage(new Page(this, Arrays.stream(builderConsumers)));
     }
 
-    public final void addPage(@NotNull List<Consumer<GuiItemController.Builder>> builderConsumers) {
+    public final void addPage(@NotNull List<Consumer<GuiItemController.@NotNull Builder>> builderConsumers) {
         addPage(new Page(this, builderConsumers));
     }
 
@@ -74,18 +110,16 @@ public class PaginatedAdvancedGui extends AdvancedGui {
         if (currentPage < pages.size() - 1) {
             openPage(currentPage + 1);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public boolean previousPage() {
         if (currentPage > 0) {
             openPage(currentPage - 1);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void openPage(int page) {
@@ -108,16 +142,16 @@ public class PaginatedAdvancedGui extends AdvancedGui {
         this.currentPage = page;
     }
 
-    protected record Page(List<GuiItemController> controllers) {
+    protected record Page(@NotNull List<GuiItemController> controllers) {
 
         public static final String ITEM_KEY = "paged_item_";
 
-        public Page() {
-            this(new ArrayList<>());
+        public Page(@NotNull AdvancedGui gui, @NotNull List<Consumer<GuiItemController.@NotNull Builder>> builderConsumers) {
+            this(gui, builderConsumers.stream());
         }
 
-        public Page(AdvancedGui gui, List<Consumer<GuiItemController.Builder>> builderConsumers) {
-            this(builderConsumers.stream().map(builderConsumer -> {
+        public Page(@NotNull AdvancedGui gui, @NotNull Stream<Consumer<GuiItemController.@NotNull Builder>> builderStream) {
+            this(builderStream.map(builderConsumer -> {
                 GuiItemController.Builder builder = new GuiItemController.Builder(gui);
                 builderConsumer.accept(builder);
                 return builder.build();

@@ -7,6 +7,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 @SuppressWarnings({"unused"})
 public class GuiHolder implements InventoryHolder {
@@ -18,11 +20,11 @@ public class GuiHolder implements InventoryHolder {
 
     private final Inventory inventory;
 
-    public GuiHolder(AbstractGui gui) {
+    public GuiHolder(@NotNull AbstractGui gui) {
         this(gui, null);
     }
 
-    public GuiHolder(AbstractGui gui, InventoryType type) {
+    public GuiHolder(@NotNull AbstractGui gui, @Nullable InventoryType type) {
         this.gui = gui;
         this.size = gui.size();
         this.title = gui.title();
@@ -38,12 +40,12 @@ public class GuiHolder implements InventoryHolder {
         return gui;
     }
 
-    public Component title() {
+    public @NotNull Component title() {
         return title;
     }
 
+    @Range(from = 0L, to = 54L)
     public int size() {
         return size;
     }
-
 }

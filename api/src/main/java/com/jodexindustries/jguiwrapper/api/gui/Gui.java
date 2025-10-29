@@ -32,7 +32,7 @@ public interface Gui {
     @NotNull GuiHolder holder();
 
     /**
-     * Updates the holder for this GUI instance. Experimental API.
+     * Updates the holder for this GUI instance and reopens the GUI for all viewers.
      */
     @ApiStatus.Experimental
     void updateHolder();
@@ -50,7 +50,7 @@ public interface Gui {
      * @param player the player to open the GUI for
      * @param title  the custom title to use
      */
-    void open(@NotNull HumanEntity player, Component title);
+    void open(@NotNull HumanEntity player, @NotNull Component title);
 
     /**
      * Closes this GUI for the specified player.

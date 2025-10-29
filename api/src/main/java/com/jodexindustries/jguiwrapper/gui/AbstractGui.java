@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -182,34 +183,18 @@ public abstract class AbstractGui implements Gui {
         return type;
     }
 
-    /**
-     * Gets the holder for this GUI instance.
-     *
-     * @return the GuiHolder for this GUI
-     */
     @Override
     public final @NotNull GuiHolder holder() {
         return holder;
     }
 
-    /**
-     * Opens this GUI for the specified player.
-     *
-     * @param player the player to open the GUI for
-     */
     @Override
     public final void open(@NotNull HumanEntity player) {
         open(player, title);
     }
 
-    /**
-     * Opens this GUI for the specified player with a custom title.
-     *
-     * @param player the player to open the GUI for
-     * @param title  the custom title to use
-     */
     @Override
-    public final void open(@NotNull HumanEntity player, Component title) {
+    public final void open(@NotNull HumanEntity player, @NotNull Component title) {
         try {
             InventoryView view = API.getNMSWrapper().openInventory(player, holder.getInventory(), type, size, title);
 
@@ -223,11 +208,6 @@ public abstract class AbstractGui implements Gui {
         }
     }
 
-    /**
-     * Closes this GUI for the specified player.
-     *
-     * @param player the player to close the GUI for
-     */
     @Override
     public final void close(@NotNull HumanEntity player) {
         InventoryCloseEvent.Reason reason = InventoryCloseEvent.Reason.PLUGIN;
@@ -236,34 +216,38 @@ public abstract class AbstractGui implements Gui {
     }
 
     /**
-     * Called when the GUI is opened for a player. Can be overridden by subclasses.
+     * Called when the GUI is opened for a player.
      *
      * @param event the InventoryOpenEvent
      */
+    @ApiStatus.Internal
     public void onOpen(@NotNull InventoryOpenEvent event) {
     }
 
     /**
-     * Called when the GUI is closed for a player. Can be overridden by subclasses.
+     * Called when the GUI is closed for a player.
      *
      * @param event the InventoryCloseEvent
      */
+    @ApiStatus.Internal
     public void onClose(@NotNull InventoryCloseEvent event) {
     }
 
     /**
-     * Called when a player clicks in the GUI. Can be overridden by subclasses.
+     * Called when a player clicks in the GUI.
      *
      * @param event the InventoryClickEvent
      */
+    @ApiStatus.Internal
     public void onClick(@NotNull InventoryClickEvent event) {
     }
 
     /**
-     * Called when a player drags items in the GUI. Can be overridden by subclasses.
+     * Called when a player drags items in the GUI.
      *
      * @param event the InventoryDragEvent
      */
+    @ApiStatus.Internal
     public void onDrag(@NotNull InventoryDragEvent event) {
     }
 
@@ -289,7 +273,7 @@ public abstract class AbstractGui implements Gui {
      * @param player the player to update the menu for
      * @return true if the menu was updated successfully, false otherwise
      */
-    public final boolean updateMenu(HumanEntity player) {
+    public final boolean updateMenu(@NotNull HumanEntity player) {
         return updateMenu(player, this.type, this.size, this.title);
     }
 
@@ -298,7 +282,7 @@ public abstract class AbstractGui implements Gui {
      *
      * @param title the new title for the menu
      */
-    public final void updateMenu(Component title) {
+    public final void updateMenu(@Nullable Component title) {
         updateMenu(null, this.size, title);
     }
 
@@ -307,7 +291,7 @@ public abstract class AbstractGui implements Gui {
      *
      * @param type the new inventory type
      */
-    public final void updateMenu(InventoryType type) {
+    public final void updateMenu(@Nullable InventoryType type) {
         updateMenu(type, this.size);
     }
 
@@ -317,7 +301,7 @@ public abstract class AbstractGui implements Gui {
      * @param type the new inventory type
      * @param size the new inventory size
      */
-    public final void updateMenu(InventoryType type, int size) {
+    public final void updateMenu(@Nullable InventoryType type, int size) {
         updateMenu(type, size, null);
     }
 
@@ -328,7 +312,7 @@ public abstract class AbstractGui implements Gui {
      * @param size  the new inventory size
      * @param title the new title for the menu
      */
-    public final void updateMenu(InventoryType type, int size, Component title) {
+    public final void updateMenu(@Nullable InventoryType type, int size, @Nullable Component title) {
         this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title));
     }
 
@@ -340,7 +324,7 @@ public abstract class AbstractGui implements Gui {
      * @param title       the new title for the menu
      * @param refreshData whether to refresh the menu's data
      */
-    public final void updateMenu(InventoryType type, int size, Component title, boolean refreshData) {
+    public final void updateMenu(@Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
         this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title, refreshData));
     }
 
@@ -351,7 +335,7 @@ public abstract class AbstractGui implements Gui {
      * @param title  the new title for the menu
      * @return true if the menu was updated successfully, false otherwise
      */
-    public final boolean updateMenu(@NotNull HumanEntity player, Component title) {
+    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable Component title) {
         return updateMenu(player, null, this.size, title);
     }
 
@@ -362,7 +346,7 @@ public abstract class AbstractGui implements Gui {
      * @param type   the new inventory type
      * @return true if the menu was updated successfully, false otherwise
      */
-    public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type) {
+    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type) {
         return updateMenu(player, type, this.size, null);
     }
 
@@ -374,7 +358,7 @@ public abstract class AbstractGui implements Gui {
      * @param size   the new inventory size
      * @return true if the menu was updated successfully, false otherwise
      */
-    public final boolean updateMenu(@NotNull HumanEntity player, InventoryType type, int size) {
+    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size) {
         return updateMenu(player, type, size, null);
     }
 
@@ -410,9 +394,6 @@ public abstract class AbstractGui implements Gui {
         }
     }
 
-    /**
-     * Updates the holder for this GUI instance and reopens the GUI for all viewers.
-     */
     @Override
     public final void updateHolder() {
         List<HumanEntity> viewers = new ArrayList<>(this.holder.getInventory().getViewers());
