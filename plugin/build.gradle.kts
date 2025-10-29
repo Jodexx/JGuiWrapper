@@ -24,7 +24,7 @@ tasks.build {
 
 tasks.runServer {
     minecraftVersion("1.16.5")
-    jvmArgs("-XX:+UseG1GC")
+    jvmArgs("-DPaper.IgnoreJavaVersion=true")
 }
 
 tasks.processResources {
