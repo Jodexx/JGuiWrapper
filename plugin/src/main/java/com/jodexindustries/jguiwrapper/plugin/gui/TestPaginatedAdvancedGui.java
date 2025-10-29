@@ -1,44 +1,60 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.gui.advanced.PaginatedAdvancedGui;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "unchecked"})
 public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
 
-    @SuppressWarnings("unchecked")
     public TestPaginatedAdvancedGui() {
-        super("&cAdvanced paginated gui");
+        super(54, generateTitle(0, 5));
 
         registerItem("prev_page", b -> b.slots(45)
                 .defaultItem(ItemWrapper.builder(Material.ARROW).build())
-                .defaultClickHandler((e, gui) -> {
+                .defaultClickHandler((e, c) -> {
                     e.setCancelled(true);
-                    previousPage();
+                    if (previousPage()) {
+                        title(generateTitle());
+                        runTask(() -> updateMenu(true));
+                    }
                 }));
 
         registerItem("next_page", b -> b.slots(53)
                 .defaultItem(ItemWrapper.builder(Material.ARROW).build())
-                .defaultClickHandler((e, gui) -> {
+                .defaultClickHandler((e, c) -> {
                     e.setCancelled(true);
-                    nextPage();
+                    if (nextPage()) {
+                        title(generateTitle());
+                        runTask(() -> updateMenu(true));
+                    }
                 }));
 
-        int count = 10;
+        int pages = 5;
+        int itemsPerPage = 45;
 
-        for (int page = 1; page < 3; page++) {
-            Consumer<GuiItemController.Builder>[] consumers = new Consumer[count];
+        for (int j = 0; j < pages; j++) {
+            final int page = j;
 
-            for (int i = 0; i < count; i++) {
+            Consumer<GuiItemController.Builder>[] consumers = new Consumer[itemsPerPage];
+
+            for (int i = 0; i < itemsPerPage; i++) {
                 final int slot = i;
-                ItemStack itemStack = new ItemStack(Material.DIAMOND, (i + 1) * page);
 
-                Consumer<GuiItemController.Builder> item = (builder) -> builder.slots(slot).defaultItem(new ItemWrapper(itemStack));
+                ItemStack itemStack = new ItemStack(Material.DIAMOND, Math.min((i + 1), 64));
+
+                Consumer<GuiItemController.Builder> item = (b) -> b.slots(slot)
+                        .defaultItem(new ItemWrapper(itemStack))
+                        .defaultClickHandler((e, c) -> {
+                            e.setCancelled(true);
+                            e.getWhoClicked().sendMessage("Page: " + page + " Item: " + slot);
+                        });
 
                 consumers[slot] = item;
             }
@@ -48,5 +64,13 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
 
         openPage(0); // draw the first page
 
+    }
+
+    private Component generateTitle() {
+        return generateTitle(currentPage(), pages());
+    }
+
+    private static Component generateTitle(int currentPage, int max) {
+        return SerializerType.LEGACY_AMPERSAND.deserialize("Page: &c" + (currentPage + 1) + "&0/&c" + max);
     }
 }
