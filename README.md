@@ -3,11 +3,10 @@
 > A library for creating customizable GUIs on **PaperMC 1.16.5–1.21.10** servers
 
 [![Release](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle-publish.yml)
-[![JGuiWrapper API version](https://repo.jodex.xyz/api/badge/latest/releases/com/jodexindustries/jguiwrapper/api?color=C72EFF&name=API&prefix=v)](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper/api)
+[![JGuiWrapper API version](https://jitpack.io/v/Jodexx/JGuiWrapper.svg)](https://jitpack.io/#Jodexx/JGuiWrapper)
 ---
 
-| [MavenRepo](https://repo.jodex.xyz/#/releases/com/jodexindustries/jguiwrapper) | [JavaDocs](https://repo.jodex.xyz/javadoc/releases/com/jodexindustries/jguiwrapper/api/latest) | [Wiki](https://wiki.jodex.xyz/JGuiWrapper/jguiwrapper-start) |
-|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+## [Wiki](https://wiki.jodex.xyz/JGuiWrapper/jguiwrapper-start)
 
 ## Requirements
 
@@ -29,15 +28,14 @@ There are **two ways** to use the library depending on your project structure:
 
 ```xml
 <repository>
-  <id>Jodexindustries-releases</id>
-  <name>JodexIndustries Repo</name>
-  <url>https://repo.jodex.xyz/releases</url>
+    <id>jitpack.io</id>
+  <url>https://jitpack.io</url>
 </repository>
 
 <dependency>
-  <groupId>com.jodexindustries.jguiwrapper</groupId>
+  <groupId>com.github.Jodexx.JGuiWrapper</groupId>
   <artifactId>api</artifactId>
-  <version>1.0.0.8</version>
+  <version>v1.0.0.9-beta</version>
 </dependency>
 ```
 
@@ -45,11 +43,11 @@ There are **two ways** to use the library depending on your project structure:
 
 ```groovy
 repositories {
-    maven { url = 'https://repo.jodex.xyz/releases' }
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
-    compileOnly 'com.jodexindustries.jguiwrapper:api:1.0.0.8'
+    compileOnly 'com.github.Jodexx.JGuiWrapper:v1.0.0.9-beta'
 }
 ```
 
@@ -57,11 +55,11 @@ dependencies {
 
 ```kotlin
 repositories {
-    maven("https://repo.jodex.xyz/releases")
+    maven("https://jitpack.io")
 }
 
 dependencies {
-    compileOnly("com.jodexindustries.jguiwrapper:api:1.0.0.8")
+    compileOnly("com.github.Jodexx.JGuiWrapper:api:v1.0.0.9-beta")
 }
 ```
 
@@ -74,21 +72,20 @@ dependencies {
 
 ```xml
 <repository>
-  <id>Jodexindustries-releases</id>
-  <name>JodexIndustries Repo</name>
-  <url>https://repo.jodex.xyz/releases</url>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
 </repository>
 
 <dependency>
-  <groupId>com.jodexindustries.jguiwrapper</groupId>
+  <groupId>com.github.Jodexx.JGuiWrapper</groupId>
   <artifactId>common</artifactId>
-  <version>1.0.0.8</version>
+  <version>v1.0.0.9-beta</version>
 </dependency>
 <!-- if you want to include nms logic for title management -->
 <dependency>
-  <groupId>com.jodexindustries.jguiwrapper</groupId>
+  <groupId>com.github.Jodexx.JGuiWrapper</groupId>
   <artifactId>nms</artifactId>
-  <version>1.0.0.8</version>
+  <version>v1.0.0.9-beta</version>
 </dependency>
 ```
 
@@ -96,12 +93,12 @@ dependencies {
 
 ```groovy
 repositories {
-    maven { url = 'https://repo.jodex.xyz/releases' }
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.jodexindustries.jguiwrapper:common:1.0.0.8'
-    implementation 'com.jodexindustries.jguiwrapper:nms:1.0.0.8' // if you want to include nms logic for title management 
+    implementation 'com.github.Jodexx.JGuiWrapper:common:v1.0.0.9-beta'
+    implementation 'com.github.Jodexx.JGuiWrapper:nms:v1.0.0.9-beta' // if you want to include nms logic for title management 
 }
 ```
 
@@ -109,12 +106,12 @@ dependencies {
 
 ```kotlin
 repositories {
-    maven("https://repo.jodex.xyz/releases")
+    maven("https://jitpack.io")
 }
 
 dependencies {
-    implementation("com.jodexindustries.jguiwrapper:common:1.0.0.8")
-    implementation("com.jodexindustries.jguiwrapper:nms:1.0.0.8") // if you want to include nms logic for title management 
+    implementation("com.github.Jodexx.JGuiWrapper:common:v1.0.0.9-beta")
+    implementation("com.github.Jodexx.JGuiWrapper:nms:v1.0.0.9-beta") // if you want to include nms logic for title management 
 }
 ```
 

@@ -21,19 +21,6 @@ subprojects {
 
         afterEvaluate {
             dependencies.compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
-
-            publishing {
-                repositories {
-                    maven {
-                        url = uri("https://repo.jodex.xyz/releases")
-                        credentials {
-                            username = findProperty("jodexRepoUser") as String? ?: System.getenv("JODEX_REPO_USER")
-                            password =
-                                findProperty("jodexRepoPassword") as String? ?: System.getenv("JODEX_REPO_PASSWORD")
-                        }
-                    }
-                }
-            }
         }
     }
 }
