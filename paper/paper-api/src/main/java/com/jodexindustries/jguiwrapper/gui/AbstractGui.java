@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.gui;
 
-import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
@@ -35,7 +35,7 @@ public abstract class AbstractGui implements Gui {
     /**
      * Main API instance for GUI operations.
      */
-    protected static final GuiApi API = GuiApi.get();
+    protected static final PaperGuiApi API = PaperGuiApi.get();
 
     @NotNull
     protected SerializerType defaultSerializer = API.defaultSerializer();

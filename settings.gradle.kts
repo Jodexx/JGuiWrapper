@@ -13,7 +13,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(":paper:paper-api", ":paper:paper-plugin", ":paper:nms", ":paper:paper-common")
+include(":api", ":paper:paper-api", ":paper:paper-plugin", ":paper:nms", ":paper:paper-common")
 
 file("paper/nms").listFiles()
     ?.filter { it.isDirectory && File(it, "build.gradle.kts").isFile }

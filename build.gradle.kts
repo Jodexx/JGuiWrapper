@@ -11,14 +11,14 @@ tasks.jar {
 }
 
 var excludedProjects = listOf("paper")
-var publishProjects = listOf("paper-common", "paper-api", "nms")
+var paperProjects = listOf("paper-common", "paper-api", "nms")
 
 subprojects {
     if (name !in excludedProjects) {
         apply(plugin = "java")
         apply(plugin = "java-library")
 
-        if (name in publishProjects) {
+        if (name in paperProjects) {
             apply(plugin = "maven-publish")
 
             afterEvaluate {

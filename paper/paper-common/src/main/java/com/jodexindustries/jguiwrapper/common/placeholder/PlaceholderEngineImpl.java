@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.common.placeholder;
 
-import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
@@ -101,7 +101,7 @@ public class PlaceholderEngineImpl implements PlaceholderEngine {
     }
 
     private Component applyPapi(@NotNull Component component, @Nullable OfflinePlayer player) {
-        if (!GuiApi.get().isPAPI() || player == null) return component;
+        if (!PaperGuiApi.get().isPAPI() || player == null) return component;
 
         return component.replaceText(TextReplacementConfig.builder()
                 .match(PLACEHOLDER_PATTERN)

@@ -1,3 +1,7 @@
+dependencies {
+    api(project(":api"))
+}
+
 java {
     withSourcesJar()
     withJavadocJar()

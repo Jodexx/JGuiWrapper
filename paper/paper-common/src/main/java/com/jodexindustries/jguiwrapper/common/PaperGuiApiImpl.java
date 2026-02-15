@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.common;
 
-import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.utils.GuiUtils;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
@@ -25,27 +25,27 @@ import org.jetbrains.annotations.Nullable;
 import java.util.logging.Level;
 
 @SuppressWarnings("unused")
-public final class JGuiInitializer extends GuiApi {
+public final class PaperGuiApiImpl extends PaperGuiApi {
 
     private static final GlobalRegistry REGISTRY = new GlobalRegistryImpl();
     private static NMSWrapper NMS_WRAPPER;
-    private static NMSWrapper EMPTY_WRAPPER;
-    private static Plugin PLUGIN;
+    private static final NMSWrapper EMPTY_WRAPPER = new NMSWrapper() {
+        @Override
+        public boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, Component title, boolean refreshData) {
+            return false;
+        }
+
+        @Override
+        public InventoryView openInventory(@NotNull HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, @NotNull Component title) {
+            return null;
+        }
+    };
+
     private static boolean PAPI;
     private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY_AMPERSAND;
 
-    private JGuiInitializer() {
-        EMPTY_WRAPPER = new NMSWrapper() {
-            @Override
-            public boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, Component title, boolean refreshData) {
-                return false;
-            }
-
-            @Override
-            public InventoryView openInventory(@NotNull HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, @NotNull Component title) {
-                return null;
-            }
-        };
+    private PaperGuiApiImpl(Plugin plugin) {
+        super(plugin);
     }
 
     public static void init(Plugin plugin) {
@@ -53,14 +53,13 @@ public final class JGuiInitializer extends GuiApi {
     }
 
     public static void init(Plugin plugin, boolean log) {
-        if (JGuiInitializer.PLUGIN != null) return;
+        if (instance != null) return;
 
         plugin.getServer().getPluginManager().registerEvents(new GuiListener(), plugin);
-        JGuiInitializer.PLUGIN = plugin;
 
         PAPI = plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
 
-        setInstance(new JGuiInitializer());
+        setInstance(new PaperGuiApiImpl(plugin));
 
         try {
             try {
@@ -76,11 +75,6 @@ public final class JGuiInitializer extends GuiApi {
     @Override
     public @NotNull GlobalRegistry getRegistry() {
         return REGISTRY;
-    }
-
-    @Override
-    public @NotNull Plugin getPlugin() {
-        return PLUGIN;
     }
 
     @Override

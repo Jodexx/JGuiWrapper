@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.api.item;
 
 import com.google.common.base.Preconditions;
-import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
@@ -41,7 +41,7 @@ public class ItemWrapper implements Cloneable {
     public ItemWrapper(@NotNull final ItemStack itemStack, @Nullable SerializerType serializer) {
         this.itemStack = itemStack;
         this.material = itemStack.getType();
-        this.serializer = serializer == null ? GuiApi.get().defaultSerializer() : serializer;
+        this.serializer = serializer == null ? PaperGuiApi.get().defaultSerializer() : serializer;
     }
 
     public ItemWrapper(@NotNull final ItemStack itemStack) {
@@ -236,7 +236,7 @@ public class ItemWrapper implements Cloneable {
 
     public static class Builder {
         private final Material material;
-        private SerializerType serializer = GuiApi.get().defaultSerializer();
+        private SerializerType serializer = PaperGuiApi.get().defaultSerializer();
         private int amount = 1;
         private Component displayName;
         private List<Component> lore;

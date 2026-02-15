@@ -132,7 +132,7 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
     private void warnOnce(Object input) {
         if (!informed) {
             GuiApi.getOptional().ifPresent(api -> {
-                api.getPlugin().getLogger().warning("Serializer: '" + name() + "' not found! Couldn't serialize: " + input);
+                api.getModule().getLogger().warning("Serializer: '" + name() + "' not found! Couldn't serialize: " + input);
                 informed = true;
             });
         }

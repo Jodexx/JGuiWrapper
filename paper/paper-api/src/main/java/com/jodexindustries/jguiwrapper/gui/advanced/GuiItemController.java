@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.gui.advanced;
 
-import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.gui.handler.InventoryHandler;
 import com.jodexindustries.jguiwrapper.api.gui.handler.item.HandlerContext;
@@ -437,7 +437,7 @@ public class GuiItemController {
     public void itemHandler(Key itemHandlerKey) {
         if (itemHandlerKey == null) return;
 
-        GuiApi.get().getRegistry().getRegistry(itemHandlerKey.namespace())
+        PaperGuiApi.get().getRegistry().getRegistry(itemHandlerKey.namespace())
                 .flatMap(dataRegistry -> dataRegistry.getHandler(itemHandlerKey.value()))
                 .ifPresent(pair -> this.itemHandler = pair);
     }

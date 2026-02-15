@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.placeholder;
 
-import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
 import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +38,6 @@ public interface PlaceholderEngine {
      */
     @NotNull
     static PlaceholderEngine of() {
-        return GuiApi.get().createPlaceholderEngine();
+        return PaperGuiApi.get().createPlaceholderEngine();
     }
 }

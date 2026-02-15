@@ -3,7 +3,7 @@ package com.jodexindustries.jguiwrapper.plugin;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.common.JGuiInitializer;
+import com.jodexindustries.jguiwrapper.common.PaperGuiApiImpl;
 import com.jodexindustries.jguiwrapper.gui.AbstractGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
@@ -30,9 +30,9 @@ public final class JGuiPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        JGuiInitializer.init(this);
+        PaperGuiApiImpl.init(this);
 
-        GlobalRegistry registry = JGuiInitializer.get().getRegistry();
+        GlobalRegistry registry = PaperGuiApiImpl.get().getRegistry();
         registry.registerLoader(TEST_LOADER_KEY, new TestGuiLoader());
         registry.registerHandler(TEST_HANDLER_KEY, new TestItemHandler());
 
@@ -84,7 +84,7 @@ public final class JGuiPlugin extends JavaPlugin {
                         send(sender, "Index: &6" + index);
                         send(sender, "Class: &6" + abstractGui.getClass().getName());
                         send(sender, "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName());
-                        send(sender, "Title: " + JGuiInitializer.get().defaultSerializer().serialize(abstractGui.title()));
+                        send(sender, "Title: " + PaperGuiApiImpl.get().defaultSerializer().serialize(abstractGui.title()));
                         send(sender, "Size: &6" + abstractGui.size());
                         send(sender, "Type: &6" + abstractGui.type());
                         if (abstractGui instanceof AdvancedGui advancedGui) {
@@ -138,6 +138,6 @@ public final class JGuiPlugin extends JavaPlugin {
     }
 
     private void send(CommandSender sender, String text) {
-        sender.sendMessage(JGuiInitializer.get().defaultSerializer().deserialize(text));
+        sender.sendMessage(PaperGuiApiImpl.get().defaultSerializer().deserialize(text));
     }
 }
