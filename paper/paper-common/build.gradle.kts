@@ -1,6 +1,6 @@
 dependencies {
-    api(project(":api"))
-    compileOnly(project(":nms"))
+    api(project(":paper:paper-api"))
+    compileOnly(project(":paper:nms"))
     compileOnly("me.clip:placeholderapi:2.11.6")
 }
 

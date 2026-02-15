@@ -40,5 +40,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-/plugin/run/
+
+/paper/paper-plugin/run/
 /.idea/

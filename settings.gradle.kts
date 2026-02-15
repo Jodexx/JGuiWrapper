@@ -13,12 +13,12 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(":api", ":plugin", ":nms", ":common")
+include(":paper:paper-api", ":paper:paper-plugin", ":paper:nms", ":paper:paper-common")
 
-file("nms").listFiles()
+file("paper/nms").listFiles()
     ?.filter { it.isDirectory && File(it, "build.gradle.kts").isFile }
     ?.sortedBy { it.name }
     ?.forEach { dir ->
-        include(":nms:${dir.name}")
-        project(":nms:${dir.name}").projectDir = dir
+        include(":paper:nms:${dir.name}")
+        project(":paper:nms:${dir.name}").projectDir = dir
     }

@@ -1,7 +1,7 @@
-val excludedProjects = listOf(":nms:v1_16_R3")
+val excludedProjects = listOf(":paper:nms:v1_16_R3")
 
 dependencies {
-    api(project(":api"))
+    api(project(":paper:paper-api"))
 }
 
 tasks.jar {
@@ -26,7 +26,7 @@ tasks.jar {
 
 subprojects {
     dependencies {
-        compileOnly(project(":api"))
+        compileOnly(project(":paper:paper-api"))
     }
 
     if (!excludedProjects.contains(path)) {

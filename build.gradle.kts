@@ -10,17 +10,26 @@ tasks.jar {
     enabled = false
 }
 
-var publishProjects = listOf("common", "api", "nms")
+var excludedProjects = listOf("paper")
+var publishProjects = listOf("paper-common", "paper-api", "nms")
 
 subprojects {
-    apply(plugin = "java")
-    apply(plugin = "java-library")
+    if (name !in excludedProjects) {
+        apply(plugin = "java")
+        apply(plugin = "java-library")
 
-    if (name in publishProjects) {
-        apply(plugin = "maven-publish")
+        if (name in publishProjects) {
+            apply(plugin = "maven-publish")
 
-        afterEvaluate {
-            dependencies.compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
+            afterEvaluate {
+                dependencies.compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
+            }
+        }
+
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(16)
+            }
         }
     }
 }
@@ -39,9 +48,4 @@ allprojects {
         maven("https://repo.screamingsandals.org/snapshots/")
     }
 
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(16)
-        }
-    }
 }
