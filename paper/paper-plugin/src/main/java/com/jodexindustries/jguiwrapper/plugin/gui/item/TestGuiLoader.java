@@ -1,16 +1,17 @@
 package com.jodexindustries.jguiwrapper.plugin.gui.item;
 
-import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
-import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
-import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class TestGuiLoader implements GuiDataLoader {
 
-    private final PlaceholderEngine placeholderEngine = PlaceholderEngine.of();
+    private final PlaceholderEngine<OfflinePlayer> placeholderEngine = PlaceholderEngine.of(OfflinePlayer.class);
 
     private int openCount;
     private int clickCount;

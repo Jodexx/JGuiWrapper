@@ -1,18 +1,19 @@
 package com.jodexindustries.jguiwrapper.common;
 
-import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
-import com.jodexindustries.jguiwrapper.utils.GuiUtils;
-import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
-import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
-import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
-import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
+import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
+import com.jodexindustries.jguiwrapper.paper.utils.GuiUtils;
+import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
+import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
+import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
 import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
-import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
+import com.jodexindustries.jguiwrapper.paper.exception.JGuiWrapperVersionException;
 import com.jodexindustries.jguiwrapper.common.gui.GuiListener;
 import com.jodexindustries.jguiwrapper.nms.NMSMatcher;
 import net.kyori.adventure.text.Component;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -83,12 +84,12 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
     }
 
     @Override
-    public @Nullable GuiHolder getOpenedGui(@NotNull Player player) {
+    public @Nullable PaperGuiHolder getOpenedGui(@NotNull Player player) {
         return GuiUtils.getHolder(player.getOpenInventory().getTopInventory());
     }
 
     @Override
-    public @NotNull PlaceholderEngine createPlaceholderEngine() {
+    public @NotNull PlaceholderEngine<OfflinePlayer> createPlaceholderEngine0() {
         return new PlaceholderEngineImpl();
     }
 

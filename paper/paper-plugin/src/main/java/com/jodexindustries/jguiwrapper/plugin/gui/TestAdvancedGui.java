@@ -1,9 +1,9 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
-import com.jodexindustries.jguiwrapper.api.gui.LoadType;
-import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
-import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
-import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.paper.api.gui.LoadType;
+import com.jodexindustries.jguiwrapper.paper.api.item.ItemWrapper;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.plugin.JGuiPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;

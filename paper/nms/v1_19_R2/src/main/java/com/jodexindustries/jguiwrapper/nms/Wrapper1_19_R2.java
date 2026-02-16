@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.nms;
 
-import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
+import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
 import io.papermc.paper.adventure.PaperAdventure;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;

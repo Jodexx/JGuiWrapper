@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.common.gui;
 
-import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
-import com.jodexindustries.jguiwrapper.utils.GuiUtils;
+import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
+import com.jodexindustries.jguiwrapper.paper.utils.GuiUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -13,7 +13,7 @@ public class GuiListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        GuiHolder holder = GuiUtils.getHolder(e.getInventory());
+        PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
         if (holder == null) return;
 
         holder.gui().onClick(e);
@@ -23,7 +23,7 @@ public class GuiListener implements Listener {
     public void onInventoryClose(InventoryCloseEvent e) {
         if (e.getReason() == InventoryCloseEvent.Reason.PLUGIN) return;
 
-        GuiHolder holder = GuiUtils.getHolder(e.getInventory());
+        PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
         if (holder == null) return;
 
         holder.gui().onClose(e);
@@ -31,7 +31,7 @@ public class GuiListener implements Listener {
 
     @EventHandler
     public void onInventory(InventoryDragEvent e) {
-        GuiHolder holder = GuiUtils.getHolder(e.getInventory());
+        PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
         if (holder == null) return;
 
         holder.gui().onDrag(e);

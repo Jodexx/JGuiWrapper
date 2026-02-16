@@ -1,6 +1,8 @@
 package com.jodexindustries.jguiwrapper.api;
 
+import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
+import com.jodexindustries.jguiwrapper.utils.ReflectionUtils;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -89,4 +91,40 @@ public abstract class GuiApi {
      * @param serializerType the new default {@link SerializerType}, must not be {@code null}
      */
     public abstract void defaultSerializer(@NotNull SerializerType serializerType);
+
+
+    /**
+     * Creates a new {@link PlaceholderEngine}.
+     *
+     * @return a new engine instance
+     */
+    @SuppressWarnings("unchecked")
+    @NotNull
+    @ApiStatus.Experimental
+    public final <C> PlaceholderEngine<C> createPlaceholderEngine() {
+        return (PlaceholderEngine<C>) createPlaceholderEngine0();
+    }
+
+    /**
+     * Creates a new {@link PlaceholderEngine} for the expected context type.
+     *
+     * @param type expected context type
+     * @return a new engine instance
+     * @throws IllegalStateException if the provided type is incompatible
+     */
+    @SuppressWarnings("unchecked")
+    @NotNull
+    public final <C> PlaceholderEngine<C> createPlaceholderEngine(@NotNull Class<C> type) {
+        PlaceholderEngine<?> engine = createPlaceholderEngine0();
+
+        Class<?> genericClass = ReflectionUtils.getGenericClass(engine.getClass(), 0);
+
+        if (!type.equals(genericClass)) {
+            throw new IllegalStateException("Wrong context type");
+        }
+
+        return (PlaceholderEngine<C>) engine;
+    }
+
+    protected abstract PlaceholderEngine<?> createPlaceholderEngine0();
 }

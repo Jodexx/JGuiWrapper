@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.nms;
 
-import com.jodexindustries.jguiwrapper.api.nms.NMSWrapper;
-import com.jodexindustries.jguiwrapper.exception.JGuiWrapperVersionException;
+import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
+import com.jodexindustries.jguiwrapper.paper.exception.JGuiWrapperVersionException;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 

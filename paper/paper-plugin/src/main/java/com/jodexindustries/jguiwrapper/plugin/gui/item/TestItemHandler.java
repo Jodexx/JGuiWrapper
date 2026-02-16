@@ -1,8 +1,8 @@
 package com.jodexindustries.jguiwrapper.plugin.gui.item;
 
-import com.jodexindustries.jguiwrapper.api.gui.handler.item.HandlerContext;
-import com.jodexindustries.jguiwrapper.api.gui.handler.item.ItemHandler;
-import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.HandlerContext;
+import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.common.placeholder;
 
-import com.jodexindustries.jguiwrapper.api.PaperGuiApi;
-import com.jodexindustries.jguiwrapper.api.placeholder.PlaceholderEngine;
+import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
+import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"unused"})
-public class PlaceholderEngineImpl implements PlaceholderEngine {
+public class PlaceholderEngineImpl implements PlaceholderEngine<OfflinePlayer> {
 
     private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("%([^%]+)%");
 
@@ -52,7 +52,7 @@ public class PlaceholderEngineImpl implements PlaceholderEngine {
     }
 
     @Override
-    public void addAll(@NotNull PlaceholderEngine placeholderEngine) {
+    public void addAll(@NotNull PlaceholderEngine<OfflinePlayer> placeholderEngine) {
         PlaceholderEngineImpl engine = (PlaceholderEngineImpl) placeholderEngine;
 
         this.regexPlaceholders.putAll(engine.regexPlaceholders);

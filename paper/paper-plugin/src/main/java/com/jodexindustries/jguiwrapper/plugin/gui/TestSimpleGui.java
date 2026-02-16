@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
-import com.jodexindustries.jguiwrapper.gui.SimpleGui;
+import com.jodexindustries.jguiwrapper.paper.gui.SimpleGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;

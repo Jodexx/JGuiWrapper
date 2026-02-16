@@ -1,12 +1,12 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
-import com.jodexindustries.jguiwrapper.api.registry.GlobalRegistry;
-import com.jodexindustries.jguiwrapper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.common.PaperGuiApiImpl;
-import com.jodexindustries.jguiwrapper.gui.AbstractGui;
-import com.jodexindustries.jguiwrapper.gui.advanced.AdvancedGui;
-import com.jodexindustries.jguiwrapper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAbstractGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestPaginatedAdvancedGui;

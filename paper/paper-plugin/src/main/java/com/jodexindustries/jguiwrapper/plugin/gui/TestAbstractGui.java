@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
-import com.jodexindustries.jguiwrapper.gui.AbstractGui;
+import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
