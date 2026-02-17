@@ -92,7 +92,6 @@ public abstract class GuiApi {
      */
     public abstract void defaultSerializer(@NotNull SerializerType serializerType);
 
-
     /**
      * Creates a new {@link PlaceholderEngine}.
      *
