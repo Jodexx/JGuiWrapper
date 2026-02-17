@@ -13,12 +13,30 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(":api", ":paper:paper-api", ":paper:paper-plugin", ":paper:nms", ":paper:paper-common")
+include(
+    ":api",
+    ":common",
+    ":paper:paper-api",
+    ":paper:paper-plugin",
 
-file("paper/nms").listFiles()
-    ?.filter { it.isDirectory && File(it, "build.gradle.kts").isFile }
-    ?.sortedBy { it.name }
-    ?.forEach { dir ->
-        include(":paper:nms:${dir.name}")
-        project(":paper:nms:${dir.name}").projectDir = dir
-    }
+    ":paper:nms",
+    ":paper:nms:v1_16_R3",
+    ":paper:nms:v1_17_R1",
+    ":paper:nms:v1_18_R1",
+    ":paper:nms:v1_18_R2",
+    ":paper:nms:v1_19_R1",
+    ":paper:nms:v1_19_R2",
+    ":paper:nms:v1_19_R3",
+    ":paper:nms:v1_20_R1",
+    ":paper:nms:v1_20_R2",
+    ":paper:nms:v1_20_R3",
+    ":paper:nms:v1_20_R4",
+    ":paper:nms:v1_21_R1",
+    ":paper:nms:v1_21_R2",
+    ":paper:nms:v1_21_R3",
+    ":paper:nms:v1_21_R4",
+    ":paper:nms:v1_21_R5",
+    ":paper:nms:v1_21_R6",
+
+    ":paper:paper-common"
+)
