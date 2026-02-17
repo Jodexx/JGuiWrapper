@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation(project(":paper:paper-common"))
     implementation(project(":paper:nms"))
-    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-20211218.082619-371")
+    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
 }
 
 tasks.jar {
@@ -27,10 +27,11 @@ tasks.runServer {
     jvmArgs("-DPaper.IgnoreJavaVersion=true")
 }
 
-tasks.processResources {
+tasks.withType<ProcessResources>().configureEach {
     val props = mapOf("version" to project.version)
+
     inputs.properties(props)
-    filteringCharset = "UTF-8"
+
     filesMatching("plugin.yml") {
         expand(props)
     }

@@ -1,14 +1,14 @@
 rootProject.name = "JGuiWrapper"
 
-pluginManagement {
+dependencyResolutionManagement {
     repositories {
+        mavenCentral()
         gradlePluginPortal()
+        maven("https://repo.extendedclip.com/releases/")
         maven("https://repo.papermc.io/repository/maven-public/")
-        maven("https://repo.screamingsandals.org/public/")
-        maven("https://repo.screamingsandals.org/releases")
-        maven("https://repo.screamingsandals.org/snapshots/")
     }
 }
+
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
