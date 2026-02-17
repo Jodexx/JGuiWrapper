@@ -11,7 +11,7 @@ import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
 import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
 import com.jodexindustries.jguiwrapper.paper.exception.JGuiWrapperVersionException;
 import com.jodexindustries.jguiwrapper.common.gui.GuiListener;
-import com.jodexindustries.jguiwrapper.nms.NMSMatcher;
+import com.jodexindustries.jguiwrapper.paper.nms.NMSMatcher;
 import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
