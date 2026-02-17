@@ -31,7 +31,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
 
-            artifactId = "api"
+            artifactId = "paper-api"
         }
     }
 }

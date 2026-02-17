@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.paper.api.tools;
+package com.jodexindustries.jguiwrapper.utils;
 
 @SuppressWarnings({"unused"})
 public record Pair<A, B>(A a, B b) {

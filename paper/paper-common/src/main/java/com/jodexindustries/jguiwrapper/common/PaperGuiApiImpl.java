@@ -1,17 +1,16 @@
 package com.jodexindustries.jguiwrapper.common;
 
-import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
-import com.jodexindustries.jguiwrapper.paper.utils.GuiUtils;
+import com.jodexindustries.jguiwrapper.common.gui.GuiListener;
+import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
+import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
+import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
-import com.jodexindustries.jguiwrapper.api.text.SerializerType;
-import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
-import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
 import com.jodexindustries.jguiwrapper.paper.exception.JGuiWrapperVersionException;
-import com.jodexindustries.jguiwrapper.common.gui.GuiListener;
 import com.jodexindustries.jguiwrapper.paper.nms.NMSMatcher;
+import com.jodexindustries.jguiwrapper.paper.utils.GuiUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
@@ -43,7 +42,6 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
     };
 
     private static boolean PAPI;
-    private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY_AMPERSAND;
 
     private PaperGuiApiImpl(Plugin plugin) {
         super(plugin);
@@ -96,15 +94,5 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
     @Override
     public boolean isPAPI() {
         return PAPI;
-    }
-
-    @Override
-    public @NotNull SerializerType defaultSerializer() {
-        return DEFAULT_SERIALIZER;
-    }
-
-    @Override
-    public void defaultSerializer(@NotNull SerializerType serializerType) {
-        DEFAULT_SERIALIZER = serializerType;
     }
 }

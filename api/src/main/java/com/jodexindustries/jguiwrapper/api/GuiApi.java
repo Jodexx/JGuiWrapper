@@ -12,6 +12,8 @@ public abstract class GuiApi {
 
     protected static volatile GuiApi instance = null;
 
+    private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY_AMPERSAND;
+
     protected final Module module;
 
     protected GuiApi(Module module) {
@@ -79,7 +81,9 @@ public abstract class GuiApi {
      * @return the default {@link SerializerType}, never {@code null}
      */
     @NotNull
-    public abstract SerializerType defaultSerializer();
+    public SerializerType defaultSerializer() {
+        return DEFAULT_SERIALIZER;
+    }
 
     /**
      * Sets the default {@link SerializerType} to be used by the API.
@@ -90,7 +94,9 @@ public abstract class GuiApi {
      *
      * @param serializerType the new default {@link SerializerType}, must not be {@code null}
      */
-    public abstract void defaultSerializer(@NotNull SerializerType serializerType);
+    public void defaultSerializer(@NotNull SerializerType serializerType) {
+        DEFAULT_SERIALIZER = serializerType;
+    }
 
     /**
      * Creates a new {@link PlaceholderEngine}.

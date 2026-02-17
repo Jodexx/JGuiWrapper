@@ -1,4 +1,5 @@
 dependencies {
+    api(project(":common"))
     api(project(":paper:paper-api"))
     compileOnly(project(":paper:nms"))
     compileOnly("me.clip:placeholderapi:2.11.6")
@@ -10,7 +11,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
 
-            artifactId = "common"
+            artifactId = "paper-common"
         }
     }
 }

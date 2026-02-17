@@ -2,7 +2,7 @@ package com.jodexindustries.jguiwrapper.paper.api.registry;
 
 import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
-import com.jodexindustries.jguiwrapper.paper.api.tools.Pair;
+import com.jodexindustries.jguiwrapper.utils.Pair;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collection;

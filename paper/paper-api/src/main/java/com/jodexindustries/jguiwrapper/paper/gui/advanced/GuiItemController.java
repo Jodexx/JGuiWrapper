@@ -6,7 +6,7 @@ import com.jodexindustries.jguiwrapper.paper.api.gui.handler.InventoryHandler;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.HandlerContext;
 import com.jodexindustries.jguiwrapper.paper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
-import com.jodexindustries.jguiwrapper.paper.api.tools.Pair;
+import com.jodexindustries.jguiwrapper.utils.Pair;
 import net.kyori.adventure.key.Key;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;

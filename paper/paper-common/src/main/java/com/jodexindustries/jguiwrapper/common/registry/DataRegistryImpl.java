@@ -3,7 +3,7 @@ package com.jodexindustries.jguiwrapper.common.registry;
 import com.jodexindustries.jguiwrapper.paper.api.registry.DataRegistry;
 import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
-import com.jodexindustries.jguiwrapper.paper.api.tools.Pair;
+import com.jodexindustries.jguiwrapper.utils.Pair;
 import com.jodexindustries.jguiwrapper.utils.ReflectionUtils;
 
 import java.util.*;
