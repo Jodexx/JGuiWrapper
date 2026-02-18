@@ -3,6 +3,7 @@ package com.jodexindustries.jguiwrapper.common.registry;
 import com.jodexindustries.jguiwrapper.paper.api.registry.DataRegistry;
 import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.utils.Pair;
 import com.jodexindustries.jguiwrapper.utils.ReflectionUtils;
 
@@ -11,11 +12,11 @@ import java.util.*;
 @SuppressWarnings("unused")
 public record DataRegistryImpl(String namespace) implements DataRegistry {
 
-    private static final Map<String, GuiDataLoader> LOADERS = new HashMap<>();
+    private static final Map<String, GuiDataLoader<AdvancedGui>> LOADERS = new HashMap<>();
     private static final Map<String, Pair<ItemHandler<?>, Class<?>>> HANDLERS = new HashMap<>();
 
     @Override
-    public void registerLoader(String id, GuiDataLoader loader) {
+    public void registerLoader(String id, GuiDataLoader<AdvancedGui> loader) {
         if (LOADERS.containsKey(id)) {
             throw new IllegalStateException("GuiDataLoader already registered by id: " + id);
         }
@@ -35,7 +36,7 @@ public record DataRegistryImpl(String namespace) implements DataRegistry {
     }
 
     @Override
-    public Optional<GuiDataLoader> getLoader(String id) {
+    public Optional<GuiDataLoader<AdvancedGui>> getLoader(String id) {
         return Optional.ofNullable(LOADERS.get(id));
     }
 
@@ -45,7 +46,7 @@ public record DataRegistryImpl(String namespace) implements DataRegistry {
     }
 
     @Override
-    public Collection<GuiDataLoader> getLoaders() {
+    public Collection<GuiDataLoader<AdvancedGui>> getLoaders() {
         return Collections.unmodifiableCollection(LOADERS.values());
     }
 

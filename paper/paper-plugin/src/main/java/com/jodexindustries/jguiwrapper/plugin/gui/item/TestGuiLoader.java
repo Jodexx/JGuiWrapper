@@ -9,7 +9,7 @@ import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public class TestGuiLoader implements GuiDataLoader {
+public class TestGuiLoader implements GuiDataLoader<AdvancedGui> {
 
     private final PlaceholderEngine<OfflinePlayer> placeholderEngine = PlaceholderEngine.of(OfflinePlayer.class);
 

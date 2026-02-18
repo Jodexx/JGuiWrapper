@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.paper.exception;
+package com.jodexindustries.jguiwrapper.paper.nms;
 
 /**
  * Exception thrown when there is a version incompatibility or unsupported version detected in JGuiWrapper.

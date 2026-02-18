@@ -100,11 +100,11 @@ public final class JGuiPlugin extends JavaPlugin {
                                 }
                             }
 
-                            Collection<GuiDataLoader> loaders = advancedGui.getLoaders();
+                            Collection<GuiDataLoader<AdvancedGui>> loaders = advancedGui.getLoaders();
                             if (!loaders.isEmpty()) {
                                 send(sender, "- Loaders:");
                                 int i = 0;
-                                for (GuiDataLoader loader : loaders) {
+                                for (GuiDataLoader<AdvancedGui> loader : loaders) {
                                     i++;
                                     send(sender, "-- #&a" + i);
                                     send(sender, "--- Class: &6" + loader.getClass().getSimpleName());

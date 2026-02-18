@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
-import com.jodexindustries.jguiwrapper.paper.api.gui.LoadType;
+import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.paper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;

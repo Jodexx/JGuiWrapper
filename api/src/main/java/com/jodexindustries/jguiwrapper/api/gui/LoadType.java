@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.paper.api.gui;
+package com.jodexindustries.jguiwrapper.api.gui;
 
 @SuppressWarnings({"unused"})
 public enum LoadType {

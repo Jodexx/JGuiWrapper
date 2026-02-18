@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.paper.gui.advanced;
 
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
-import com.jodexindustries.jguiwrapper.paper.api.gui.LoadType;
+import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.InventoryHandler;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.HandlerContext;
 import com.jodexindustries.jguiwrapper.paper.api.item.ItemWrapper;
@@ -452,7 +452,7 @@ public class GuiItemController {
         Class<?> b = this.itemHandler.b();
 
         gui.getLoader(b).ifPresent(loader -> {
-            if (b.isInstance(loader)) this.itemHandler.a().load(loader, this, new HandlerContext(loadType, player));
+            if (b.isInstance(loader)) this.itemHandler.a().load(loader, this, new HandlerContext<>(loadType, player));
         });
     }
 

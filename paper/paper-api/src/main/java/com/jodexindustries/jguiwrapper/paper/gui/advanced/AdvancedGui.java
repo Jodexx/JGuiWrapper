@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.paper.gui.advanced;
 
-import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
+import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.paper.gui.SimpleGui;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
@@ -19,7 +19,7 @@ public class AdvancedGui extends SimpleGui {
 
     private final Map<String, GuiItemController> keyMap = new HashMap<>();
     public final Map<Integer, GuiItemController> slotMap = new HashMap<>();
-    private final Map<Class<? extends GuiDataLoader>, GuiDataLoader> loaderMap = new HashMap<>();
+    private final Map<Class<?>, GuiDataLoader<AdvancedGui>> loaderMap = new HashMap<>();
 
     /**
      * Constructs a GUI with the default size (54) and a string title.
@@ -83,22 +83,22 @@ public class AdvancedGui extends SimpleGui {
     }
 
     public void loadData(@NotNull HumanEntity player) {
-        for (GuiDataLoader value : loaderMap.values()) {
+        for (GuiDataLoader<AdvancedGui> value : loaderMap.values()) {
             value.load(this, player);
         }
     }
 
     @NotNull
-    public <T extends GuiDataLoader> Optional<T> getTypedLoader(@NotNull Class<T> clazz) {
+    public <T extends GuiDataLoader<?>> Optional<T> getTypedLoader(@NotNull Class<T> clazz) {
         return Optional.of(clazz.cast(getLoader0(clazz)));
     }
 
     @NotNull
-    public Optional<GuiDataLoader> getLoader(@NotNull Class<?> clazz) {
+    public Optional<GuiDataLoader<?>> getLoader(@NotNull Class<?> clazz) {
         return Optional.of(getLoader0(clazz));
     }
 
-    private GuiDataLoader getLoader0(Class<?> clazz) {
+    private GuiDataLoader<?> getLoader0(Class<?> clazz) {
         return loaderMap.get(clazz);
     }
 
@@ -106,13 +106,13 @@ public class AdvancedGui extends SimpleGui {
         API.getRegistry().getLoader(key).ifPresent(loader -> loaderMap.put(loader.getClass(), loader));
     }
 
-    public void registerLoader(@NotNull GuiDataLoader loader) {
+    public void registerLoader(@NotNull GuiDataLoader<AdvancedGui> loader) {
         loaderMap.put(loader.getClass(), loader);
     }
 
     @UnmodifiableView
     @NotNull
-    public Collection<GuiDataLoader> getLoaders() {
+    public Collection<GuiDataLoader<AdvancedGui>> getLoaders() {
         return Collections.unmodifiableCollection(loaderMap.values());
     }
 

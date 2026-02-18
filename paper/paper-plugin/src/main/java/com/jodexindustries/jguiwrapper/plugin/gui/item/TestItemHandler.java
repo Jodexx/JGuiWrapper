@@ -4,13 +4,14 @@ import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.HandlerContext
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class TestItemHandler implements ItemHandler<TestGuiLoader> {
 
     @Override
-    public void load(@NotNull TestGuiLoader loader, @NotNull GuiItemController controller, @NotNull HandlerContext context) {
+    public void load(@NotNull TestGuiLoader loader, @NotNull GuiItemController controller, @NotNull HandlerContext<HumanEntity> context) {
         controller.defaultClickHandler((e, c) -> {
             e.setCancelled(true);
             loader.click();

@@ -8,7 +8,7 @@ import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
-import com.jodexindustries.jguiwrapper.paper.exception.JGuiWrapperVersionException;
+import com.jodexindustries.jguiwrapper.paper.nms.JGuiWrapperVersionException;
 import com.jodexindustries.jguiwrapper.paper.nms.NMSMatcher;
 import com.jodexindustries.jguiwrapper.paper.utils.GuiUtils;
 import net.kyori.adventure.text.Component;
