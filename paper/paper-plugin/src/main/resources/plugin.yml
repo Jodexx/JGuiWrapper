@@ -3,6 +3,7 @@ name: JGuiWrapper
 version: "${version}"
 author: _Jodex__
 api-version: "1.16"
+load: STARTUP
 commands:
   jguiwrapper:
     permission: jguiwrapper.gui
