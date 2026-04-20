@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * Represents a graphical user interface (GUI) instance.
+ * Provides methods for opening, closing, and updating GUI holders for players.
  */
 public interface Gui {
 
@@ -22,6 +23,11 @@ public interface Gui {
      */
     Set<WeakReference<Gui>> INSTANCES = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
+    /**
+     * Gets the holder for this GUI instance.
+     *
+     * @return the GuiHolder associated with this GUI
+     */
     @NotNull
     GuiHolder holder();
 

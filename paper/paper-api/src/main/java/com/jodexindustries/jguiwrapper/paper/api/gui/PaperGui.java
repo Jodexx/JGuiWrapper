@@ -8,9 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 /**
- * Represents a graphical user interface (GUI) instance.
- * Provides methods for opening, closing, and updating GUI holders for players.
- * Also manages active GUI instances for tracking and mass operations.
+ * Represents a graphical user interface for Paper platforms
  */
 @SuppressWarnings({"unused"})
 public interface PaperGui extends Gui {
