@@ -6,7 +6,7 @@
 [![JGuiWrapper API version](https://jitpack.io/v/Jodexx/JGuiWrapper.svg)](https://jitpack.io/#Jodexx/JGuiWrapper)
 ---
 
-## [Wiki](https://wiki.jodex.xyz/JGuiWrapper/jguiwrapper-start)
+## [Wiki](https://jodexx.github.io/JodexIndustriesWiki/JGuiWrapper/jguiwrapper-start)
 
 ## Requirements
 
