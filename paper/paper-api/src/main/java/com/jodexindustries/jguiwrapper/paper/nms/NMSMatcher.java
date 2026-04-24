@@ -27,9 +27,12 @@ public class NMSMatcher {
         VERSIONS.put("1.21.6", "1_21_R5");
         VERSIONS.put("1.21.7", "1_21_R5");
         VERSIONS.put("1.21.8", "1_21_R5");
+        VERSIONS.put("1.21.9", "1_21_R6");
+        VERSIONS.put("1.21.10", "1_21_R6");
+        VERSIONS.put("1.21.11", "1_21_R6"); // actually R7
     }
 
-    private static final String NEWEST_VERSION = "1_21_R5";
+    private static final String NEWEST_VERSION = "1_21_R6";
 
     private static boolean initialized = false;
     private static NMSWrapper wrapper;
