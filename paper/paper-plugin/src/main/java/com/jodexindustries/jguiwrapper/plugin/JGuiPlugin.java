@@ -3,6 +3,7 @@ package com.jodexindustries.jguiwrapper.plugin;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.common.PaperGuiApiImpl;
 import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGui;
 import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
@@ -21,12 +22,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 @SuppressWarnings({"unused"})
 public final class JGuiPlugin extends JavaPlugin {
 
     public static final Key TEST_LOADER_KEY = Key.key("jguiwrapper", "test");
     public static final Key TEST_HANDLER_KEY = Key.key("jguiwrapper", "test");
+
+    private static final Map<String, Supplier<PaperGui>> TEST_GUIS = Map.of(
+            "abstract", TestAbstractGui::new,
+            "simple", TestSimpleGui::new,
+            "advanced", TestAdvancedGui::new,
+            "paginated", TestPaginatedAdvancedGui::new
+    );
 
     @Override
     public void onEnable() {
@@ -56,15 +65,13 @@ public final class JGuiPlugin extends JavaPlugin {
                     }
 
                     if (args.length >= 2) {
-                        String gui = args[1];
-
-                        switch (gui) {
-                            case "abstract" -> new TestAbstractGui().open(player);
-                            case "simple" -> new TestSimpleGui().open(player);
-                            case "advanced" -> new TestAdvancedGui().open(player);
-                            case "paginated" -> new TestPaginatedAdvancedGui().open(player);
-                            default -> sender.sendMessage("Unknown gui");
+                        PaperGui gui = TEST_GUIS.get(args[1]).get();
+                        if (gui == null) {
+                            sender.sendMessage("Unknown gui");
+                            return false;
                         }
+
+                        gui.open(player);
                     }
                     break;
                 }

@@ -8,6 +8,7 @@ import com.jodexindustries.jguiwrapper.plugin.JGuiPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.inventory.ClickType;
 
 import java.util.Random;
 
@@ -39,6 +40,7 @@ public class TestAdvancedGui extends AdvancedGui {
                 .defaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);
+                    if (event.getClick() == ClickType.DOUBLE_CLICK) return;
 
                     clicks++;
 

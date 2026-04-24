@@ -5,6 +5,7 @@ import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
@@ -14,6 +15,8 @@ public class TestItemHandler implements ItemHandler<TestGuiLoader> {
     public void load(@NotNull TestGuiLoader loader, @NotNull GuiItemController controller, @NotNull HandlerContext<HumanEntity> context) {
         controller.defaultClickHandler((e, c) -> {
             e.setCancelled(true);
+            if (e.getClick() == ClickType.DOUBLE_CLICK) return;
+
             loader.click();
             c.updateItems(itemWrapper -> itemWrapper.update(e.getWhoClicked()));
         });
