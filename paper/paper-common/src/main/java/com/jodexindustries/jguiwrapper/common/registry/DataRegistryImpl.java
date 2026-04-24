@@ -4,8 +4,8 @@ import com.jodexindustries.jguiwrapper.paper.api.registry.DataRegistry;
 import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
-import com.jodexindustries.jguiwrapper.utils.Pair;
-import com.jodexindustries.jguiwrapper.utils.ReflectionUtils;
+import com.jodexindustries.jguiwrapper.api.utils.Pair;
+import com.jodexindustries.jguiwrapper.api.utils.ReflectionUtils;
 
 import java.util.*;
 

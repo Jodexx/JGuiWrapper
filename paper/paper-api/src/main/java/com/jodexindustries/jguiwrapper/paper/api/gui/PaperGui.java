@@ -1,6 +1,7 @@
 package com.jodexindustries.jguiwrapper.paper.api.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
+import com.jodexindustries.jguiwrapper.api.user.User;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
@@ -29,11 +30,8 @@ public interface PaperGui extends Gui {
     void open(@NotNull HumanEntity player);
 
     @Override
-    default void open(@NotNull Object player) {
-        if (!(player instanceof HumanEntity)) {
-            throw new IllegalArgumentException("Expected HumanEntity, got: " + player.getClass().getName());
-        }
-        this.open(((HumanEntity) player));
+    default void open(@NotNull User user) {
+        this.open(user.as(HumanEntity.class));
     }
 
     /**
@@ -45,11 +43,8 @@ public interface PaperGui extends Gui {
     void open(@NotNull HumanEntity player, @NotNull Component title);
 
     @Override
-    default void open(@NotNull Object player, @NotNull Component title) {
-        if (!(player instanceof HumanEntity)) {
-            throw new IllegalArgumentException("Expected HumanEntity, got: " + player.getClass().getName());
-        }
-        this.open(((HumanEntity) player), title);
+    default void open(@NotNull User user, @NotNull Component title) {
+        this.open(user.as(HumanEntity.class), title);
     }
 
     /**
@@ -60,11 +55,8 @@ public interface PaperGui extends Gui {
     void close(@NotNull HumanEntity player);
 
     @Override
-    default void close(@NotNull Object player) {
-        if (!(player instanceof HumanEntity)) {
-            throw new IllegalArgumentException("Expected HumanEntity, got: " + player.getClass().getName());
-        }
-        this.close(((HumanEntity) player));
+    default void close(@NotNull User user) {
+        this.close(user.as(HumanEntity.class));
     }
 
     /**

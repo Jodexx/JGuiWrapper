@@ -1,9 +1,10 @@
 package com.jodexindustries.jguiwrapper.paper.api.item;
 
 import com.google.common.base.Preconditions;
-import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
+import com.jodexindustries.jguiwrapper.api.user.User;
+import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -34,7 +35,7 @@ public class ItemWrapper implements Cloneable {
     private boolean canUpdate = true;
 
     private boolean autoFlushUpdate;
-    private PlaceholderEngine<OfflinePlayer> placeholderEngine;
+    private PlaceholderEngine placeholderEngine;
 
     private boolean updated = true;
 
@@ -73,24 +74,28 @@ public class ItemWrapper implements Cloneable {
     }
 
     public void update(@Nullable OfflinePlayer player) {
+        update(player != null ? PaperGuiApi.get().user(player) : null);
+    }
+
+    public void update(@Nullable User user) {
         if (!canUpdate) return;
 
         ItemMeta meta = this.itemStack.getItemMeta();
-        updateMeta(meta, player);
+        updateMeta(meta, user);
         this.itemStack.setItemMeta(meta);
         this.itemStack.setType(material);
         updated = true;
     }
 
-    protected void updateMeta(ItemMeta meta, @Nullable OfflinePlayer player) {
+    protected void updateMeta(ItemMeta meta, @Nullable User user) {
         if (meta == null) return;
 
         Component tempDisplayName = this.displayName;
         List<Component> tempLore = this.lore;
 
         if (placeholderEngine != null) {
-            if (tempDisplayName != null) tempDisplayName = placeholderEngine.process(tempDisplayName, player);
-            if (tempLore != null) tempLore = placeholderEngine.process(tempLore, player);
+            if (tempDisplayName != null) tempDisplayName = placeholderEngine.process(tempDisplayName, user);
+            if (tempLore != null) tempLore = placeholderEngine.process(tempLore, user);
         }
 
         meta.displayName(tempDisplayName);
@@ -202,11 +207,11 @@ public class ItemWrapper implements Cloneable {
         return this.canUpdate;
     }
 
-    public void placeholderEngine(PlaceholderEngine<OfflinePlayer> placeholderEngine) {
+    public void placeholderEngine(PlaceholderEngine placeholderEngine) {
         this.placeholderEngine = placeholderEngine;
     }
 
-    public PlaceholderEngine<OfflinePlayer> placeholderEngine() {
+    public PlaceholderEngine placeholderEngine() {
         return this.placeholderEngine;
     }
 
@@ -243,7 +248,7 @@ public class ItemWrapper implements Cloneable {
         private Integer customModelData;
         private boolean enchanted;
         private boolean autoFlushUpdate;
-        private PlaceholderEngine<OfflinePlayer> placeholderEngine;
+        private PlaceholderEngine placeholderEngine;
 
         private Builder(@NotNull Material material, @Nullable SerializerType serializer) {
             this.material = material;
@@ -299,7 +304,7 @@ public class ItemWrapper implements Cloneable {
             return this;
         }
 
-        public Builder placeholderEngine(PlaceholderEngine<OfflinePlayer> placeholderEngine) {
+        public Builder placeholderEngine(PlaceholderEngine placeholderEngine) {
             this.placeholderEngine = placeholderEngine;
             return this;
         }

@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.utils;
+package com.jodexindustries.jguiwrapper.api.utils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

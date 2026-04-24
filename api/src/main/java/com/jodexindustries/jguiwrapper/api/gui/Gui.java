@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.gui;
 
+import com.jodexindustries.jguiwrapper.api.user.User;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -40,24 +41,24 @@ public interface Gui {
     /**
      * Opens this GUI for the specified player.
      *
-     * @param player the player to open the GUI for
+     * @param user the player to open the GUI for
      */
-    void open(@NotNull Object player);
+    void open(@NotNull User user);
 
     /**
      * Opens this GUI for the specified player with a custom title.
      *
-     * @param player the player to open the GUI for
+     * @param user the player to open the GUI for
      * @param title  the custom title to use
      */
-    void open(@NotNull Object player, @NotNull Component title);
+    void open(@NotNull User user, @NotNull Component title);
 
     /**
      * Closes this GUI for the specified player.
      *
-     * @param player the player to close the GUI for
+     * @param user the player to close the GUI for
      */
-    void close(@NotNull Object player);
+    void close(@NotNull User user);
 
     /**
      * Closes this GUI for all current viewers.

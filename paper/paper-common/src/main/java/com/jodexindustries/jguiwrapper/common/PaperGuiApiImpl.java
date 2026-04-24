@@ -1,9 +1,11 @@
 package com.jodexindustries.jguiwrapper.common;
 
 import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
+import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.common.gui.GuiListener;
 import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
 import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
+import com.jodexindustries.jguiwrapper.common.user.PaperUser;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
@@ -56,7 +58,7 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
 
         plugin.getServer().getPluginManager().registerEvents(new GuiListener(), plugin);
 
-        PAPI = plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+        PAPI = plugin.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
 
         setInstance(new PaperGuiApiImpl(plugin));
 
@@ -87,8 +89,13 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
     }
 
     @Override
-    public @NotNull PlaceholderEngine<OfflinePlayer> createPlaceholderEngine0() {
+    public @NotNull PlaceholderEngine createPlaceholderEngine() {
         return new PlaceholderEngineImpl();
+    }
+
+    @Override
+    public @NotNull User user(@NotNull OfflinePlayer player) {
+        return PaperUser.of(player);
     }
 
     @Override

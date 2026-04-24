@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.paper.api;
 
 import com.jodexindustries.jguiwrapper.api.GuiApi;
-import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
+import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
 import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
@@ -116,5 +116,5 @@ public abstract class PaperGuiApi extends GuiApi {
     public abstract boolean isPAPI();
 
     @NotNull
-    public abstract PlaceholderEngine<OfflinePlayer> createPlaceholderEngine0();
+    public abstract User user(@NotNull OfflinePlayer player);
 }
