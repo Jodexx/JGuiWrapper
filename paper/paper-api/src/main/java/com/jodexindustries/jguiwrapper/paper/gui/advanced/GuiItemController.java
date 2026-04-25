@@ -1,15 +1,15 @@
 package com.jodexindustries.jguiwrapper.paper.gui.advanced;
 
-import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
+import com.jodexindustries.jguiwrapper.api.utils.Pair;
+import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.InventoryHandler;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.HandlerContext;
-import com.jodexindustries.jguiwrapper.paper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
-import com.jodexindustries.jguiwrapper.api.utils.Pair;
+import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
 import net.kyori.adventure.key.Key;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,10 +29,10 @@ public class GuiItemController {
 
     private final AdvancedGui gui;
 
-    private ItemWrapper defaultItemWrapper;
+    private PaperItemWrapper defaultItemWrapper;
     private AdvancedGuiClickHandler defaultClickHandler;
 
-    private final Map<Integer, ItemWrapper> slotSpecificItems = new HashMap<>();
+    private final Map<Integer, PaperItemWrapper> slotSpecificItems = new HashMap<>();
     private final Map<Integer, AdvancedGuiClickHandler> slotClickHandlers = new HashMap<>();
 
     private final Collection<Integer> defaultSlots;
@@ -50,7 +50,7 @@ public class GuiItemController {
      * @param defaultClickHandler Click handler for all slots
      * @param slots               Collection of slot indexes
      */
-    protected GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
+    protected GuiItemController(@NotNull AdvancedGui gui, @Nullable PaperItemWrapper defaultItemWrapper,
                              AdvancedGuiClickHandler defaultClickHandler, @NotNull Collection<Integer> slots) {
         this.gui = gui;
         this.defaultItemWrapper = defaultItemWrapper;
@@ -66,7 +66,7 @@ public class GuiItemController {
      * @param defaultClickHandler Click handler for all slots
      * @param slots               Array of slot indexes
      */
-    protected GuiItemController(@NotNull AdvancedGui gui, @Nullable ItemWrapper defaultItemWrapper,
+    protected GuiItemController(@NotNull AdvancedGui gui, @Nullable PaperItemWrapper defaultItemWrapper,
                              AdvancedGuiClickHandler defaultClickHandler, int @NotNull ... slots) {
         this(gui, defaultItemWrapper, defaultClickHandler, Arrays.stream(slots).boxed().collect(Collectors.toList()));
     }
@@ -202,7 +202,7 @@ public class GuiItemController {
      * @param itemWrapper Item to set
      * @throws IllegalArgumentException If slot is not managed by this controller
      */
-    public void setItem(int slot, @NotNull ItemWrapper itemWrapper) {
+    public void setItem(int slot, @NotNull PaperItemWrapper itemWrapper) {
         if (!slots.contains(slot)) {
             throw new IllegalArgumentException("Slot " + slot + " is not managed by this controller");
         }
@@ -227,7 +227,7 @@ public class GuiItemController {
      * @param player  Player to placeholder update
      * @param slots   Slot indexes to update
      */
-    public void updateItems(@NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player, int... slots) {
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable OfflinePlayer player, int... slots) {
         for (int slot : slots) {
             if (this.slots.contains(slot)) {
                 updateItem(slot, updater, player);
@@ -241,7 +241,7 @@ public class GuiItemController {
      * @param updater Consumer to modify items
      * @param slots   Slot indexes to update
      */
-    public void updateItems(@NotNull Consumer<ItemWrapper> updater, int... slots) {
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, int... slots) {
         for (int slot : slots) {
             if (this.slots.contains(slot)) {
                 updateItem(slot, updater);
@@ -254,7 +254,7 @@ public class GuiItemController {
      *
      * @param itemWrapper Default item to set
      */
-    public void defaultItem(@NotNull ItemWrapper itemWrapper) {
+    public void defaultItem(@NotNull PaperItemWrapper itemWrapper) {
         this.defaultItemWrapper = itemWrapper;
         redraw();
     }
@@ -265,7 +265,7 @@ public class GuiItemController {
      * @param slot Slot index
      * @return ItemWrapper for the slot or default item if not specified
      */
-    public @Nullable ItemWrapper getItem(int slot) {
+    public @Nullable PaperItemWrapper getItem(int slot) {
         return slotSpecificItems.getOrDefault(slot, defaultItemWrapper);
     }
 
@@ -274,7 +274,7 @@ public class GuiItemController {
      *
      * @return Current default ItemWrapper
      */
-    public @NotNull ItemWrapper defaultItem() {
+    public @NotNull PaperItemWrapper defaultItem() {
         return defaultItemWrapper;
     }
 
@@ -374,7 +374,7 @@ public class GuiItemController {
             gui.removeClickHandlers(slot);
         }
 
-        ItemWrapper item = getItem(slot);
+        PaperItemWrapper item = getItem(slot);
         if (item != null) {
             gui.holder().getInventory().setItem(slot, item.itemStack());
         }
@@ -386,13 +386,13 @@ public class GuiItemController {
      * @param player  Player to placeholder update
      * @param updater Consumer to modify items
      */
-    public void updateItems(@NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player) {
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable OfflinePlayer player) {
         if (defaultItemWrapper != null) {
             updater.accept(defaultItemWrapper);
             if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update(player);
         }
 
-        for (ItemWrapper item : slotSpecificItems.values()) {
+        for (PaperItemWrapper item : slotSpecificItems.values()) {
             updater.accept(item);
             if (!item.isUpdated()) item.update(player);
         }
@@ -405,7 +405,7 @@ public class GuiItemController {
      *
      * @param updater Consumer to modify items
      */
-    public void updateItems(@NotNull Consumer<ItemWrapper> updater) {
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater) {
         updateItems(updater, (OfflinePlayer) null);
     }
 
@@ -415,7 +415,7 @@ public class GuiItemController {
      * @param slot    Slot index
      * @param updater Consumer to modify the item
      */
-    public void updateItem(int slot, @NotNull Consumer<ItemWrapper> updater) {
+    public void updateItem(int slot, @NotNull Consumer<PaperItemWrapper> updater) {
         updateItem(slot, updater, null);
     }
 
@@ -425,8 +425,8 @@ public class GuiItemController {
      * @param slot    Slot index
      * @param updater Consumer to modify the item
      */
-    public void updateItem(int slot, @NotNull Consumer<ItemWrapper> updater, @Nullable OfflinePlayer player) {
-        ItemWrapper item = getItem(slot);
+    public void updateItem(int slot, @NotNull Consumer<PaperItemWrapper> updater, @Nullable OfflinePlayer player) {
+        PaperItemWrapper item = getItem(slot);
         if (item != null) {
             updater.accept(item);
             if (!item.isUpdated()) item.update(player);
@@ -446,7 +446,7 @@ public class GuiItemController {
         loadItemHandler(loadType, null);
     }
 
-    public void loadItemHandler(@NotNull LoadType loadType, @Nullable HumanEntity player) {
+    public void loadItemHandler(@NotNull LoadType loadType, @Nullable Player player) {
         if (this.itemHandler == null) return;
 
         Class<?> b = this.itemHandler.b();
@@ -470,10 +470,10 @@ public class GuiItemController {
 
     public static class Builder {
         private final AdvancedGui gui;
-        private ItemWrapper defaultItemWrapper;
+        private PaperItemWrapper defaultItemWrapper;
         private AdvancedGuiClickHandler defaultClickHandler;
         private final Set<Integer> slots = new LinkedHashSet<>();
-        private final Map<Integer, ItemWrapper> slotSpecificItems = new HashMap<>();
+        private final Map<Integer, PaperItemWrapper> slotSpecificItems = new HashMap<>();
         private final Map<Integer, AdvancedGuiClickHandler> slotClickHandlers = new HashMap<>();
         private Key itemHandlerKey;
 
@@ -492,7 +492,7 @@ public class GuiItemController {
          * @param itemWrapper Default item to set
          * @return this builder for chaining
          */
-        public Builder defaultItem(@Nullable ItemWrapper itemWrapper) {
+        public Builder defaultItem(@Nullable PaperItemWrapper itemWrapper) {
             this.defaultItemWrapper = itemWrapper;
             return this;
         }
@@ -537,7 +537,7 @@ public class GuiItemController {
          * @param itemWrapper Item to set
          * @return this builder for chaining
          */
-        public Builder slotItem(int slot, @NotNull ItemWrapper itemWrapper) {
+        public Builder slotItem(int slot, @NotNull PaperItemWrapper itemWrapper) {
             this.slotSpecificItems.put(slot, itemWrapper);
             this.slots.add(slot);
             return this;

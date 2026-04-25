@@ -1,13 +1,14 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
-import com.jodexindustries.jguiwrapper.paper.api.item.ItemWrapper;
+import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.plugin.JGuiPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import java.util.Random;
@@ -32,19 +33,19 @@ public class TestAdvancedGui extends AdvancedGui {
 
             // refresh item handlers
             for (GuiItemController controller : getControllers()) {
-                controller.loadItemHandler(LoadType.ON_OPEN, player);
+                controller.loadItemHandler(LoadType.ON_OPEN, (Player) player);
             }
         });
 
         registerItem("test", builder -> builder.slots(0, 1, 2, 3, 4, 5, 6, 7, 8)
-                .defaultItem(ItemWrapper.builder(Material.GOLD_BLOCK).build())
+                .defaultItem(PaperItemWrapper.builder(Material.GOLD_BLOCK).build())
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);
                     if (event.getClick() == ClickType.DOUBLE_CLICK) return;
 
                     clicks++;
 
-                    controller.updateItems(itemWrapper -> itemWrapper.displayName(Component.text(clicks)));
+                    controller.updateItems(itemWrapper -> itemWrapper.meta().displayName(Component.text(clicks)));
 
                     title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
                     runTask(() -> updateMenu(true));
@@ -52,7 +53,7 @@ public class TestAdvancedGui extends AdvancedGui {
 
         registerItem("random", builder -> builder.slots(45)
                 .defaultItem(
-                        ItemWrapper.builder(Material.STRUCTURE_VOID)
+                        PaperItemWrapper.builder(Material.STRUCTURE_VOID)
                                 .displayName("&#EC8C8CR&#F6A98Ca&#FFC58Bn&#FFE295d&#FFFF9Eo&#CDFF9Cm &#97CFF5b&#9DB5FAl&#A39AFFo&#C99DFFc&#EEA0FFk").build()
                 )
                 .defaultClickHandler((event, controller) -> {
@@ -60,17 +61,17 @@ public class TestAdvancedGui extends AdvancedGui {
                     controller.updateItems(wrapper -> {
                         Material material = randomMaterial();
                         wrapper.material(material);
-                        wrapper.lore("&7Current material: &6" + material.name());
+                        wrapper.meta().lore("&7Current material: &6" + material.name());
                     });
                 })
         );
 
         registerItem("handled", builder -> builder.slots(52)
-                .defaultItem(ItemWrapper.builder(Material.DIAMOND_BLOCK).build())
+                .defaultItem(PaperItemWrapper.builder(Material.DIAMOND_BLOCK).build())
                 .itemHandler(JGuiPlugin.TEST_HANDLER_KEY));
 
         registerItem("close", builder -> builder.slots(53)
-                .defaultItem(ItemWrapper.builder(Material.BARRIER)
+                .defaultItem(PaperItemWrapper.builder(Material.BARRIER)
                         .displayName(defaultSerializer.deserialize("&cClose")).build())
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);

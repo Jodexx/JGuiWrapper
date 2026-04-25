@@ -1,6 +1,6 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
-import com.jodexindustries.jguiwrapper.paper.api.item.ItemWrapper;
+import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaginatedAdvancedGui;
@@ -17,7 +17,7 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
         super(54, generateTitle(0, 5));
 
         registerItem("prev_page", b -> b.slots(45)
-                .defaultItem(ItemWrapper.builder(Material.ARROW).build())
+                .defaultItem(PaperItemWrapper.builder(Material.ARROW).build())
                 .defaultClickHandler((e, c) -> {
                     e.setCancelled(true);
                     if (previousPage()) {
@@ -27,7 +27,7 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
                 }));
 
         registerItem("next_page", b -> b.slots(53)
-                .defaultItem(ItemWrapper.builder(Material.ARROW).build())
+                .defaultItem(PaperItemWrapper.builder(Material.ARROW).build())
                 .defaultClickHandler((e, c) -> {
                     e.setCancelled(true);
                     if (nextPage()) {
@@ -50,7 +50,7 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
                 ItemStack itemStack = new ItemStack(Material.DIAMOND, Math.min((i + 1), 64));
 
                 Consumer<GuiItemController.Builder> item = (b) -> b.slots(slot)
-                        .defaultItem(new ItemWrapper(itemStack))
+                        .defaultItem(new PaperItemWrapper(itemStack))
                         .defaultClickHandler((e, c) -> {
                             e.setCancelled(true);
                             e.getWhoClicked().sendMessage("Page: " + page + " Item: " + slot);
