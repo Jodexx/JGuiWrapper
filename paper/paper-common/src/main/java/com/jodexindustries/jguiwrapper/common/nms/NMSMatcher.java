@@ -1,5 +1,6 @@
-package com.jodexindustries.jguiwrapper.paper.api.nms;
+package com.jodexindustries.jguiwrapper.common.nms;
 
+import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -7,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public class NMSMatcher {
 
     /**

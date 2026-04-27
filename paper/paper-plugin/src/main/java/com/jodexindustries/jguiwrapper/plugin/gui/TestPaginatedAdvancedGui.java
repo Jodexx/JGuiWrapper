@@ -1,16 +1,18 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
-import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
-import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaginatedAdvancedGui;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced.PaginatedAdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced.PaperAdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
-@SuppressWarnings({"unused", "unchecked"})
 public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
 
     public TestPaginatedAdvancedGui() {
@@ -42,21 +44,22 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
         for (int j = 0; j < pages; j++) {
             final int page = j;
 
-            Consumer<AdvancedGuiItemController.Builder<com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui>>[] consumers = new Consumer[itemsPerPage];
+
+            List<Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>>> consumers = new ArrayList<>(itemsPerPage);
 
             for (int i = 0; i < itemsPerPage; i++) {
                 final int slot = i;
 
                 ItemStack itemStack = new ItemStack(Material.DIAMOND, Math.min((i + 1), 64));
 
-                Consumer<AdvancedGuiItemController.Builder<com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui>> item = (b) -> b.slots(slot)
+                Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>> item = (b) -> b.slots(slot)
                         .defaultItem(new PaperItemWrapper(itemStack))
                         .defaultClickHandler((e, c) -> {
                             e.setCancelled(true);
                             e.user().sendMessage("Page: " + page + " Item: " + slot);
                         });
 
-                consumers[slot] = item;
+                consumers.add(item);
             }
 
             addPage(consumers);

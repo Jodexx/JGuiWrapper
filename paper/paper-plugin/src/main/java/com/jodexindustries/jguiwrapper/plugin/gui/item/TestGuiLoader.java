@@ -4,10 +4,9 @@ import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced.PaperAdvancedGui;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("unused")
 public class TestGuiLoader implements GuiDataLoader<PaperAdvancedGui> {
 
     private final PlaceholderEngine placeholderEngine = PlaceholderEngine.of();

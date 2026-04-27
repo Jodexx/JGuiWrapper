@@ -4,14 +4,14 @@ import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import org.jetbrains.annotations.NotNull;
 
-public class GuiClickEvent<T extends Gui> extends CancellableGuiEvent<T> {
+public class GuiClickEvent extends CancellableGuiEvent {
 
     private final int rawSlot;
     private final boolean playerInventory;
     private final InventoryAction action;
     private final ClickType clickType;
 
-    public GuiClickEvent(@NotNull Object handle, @NotNull T gui, @NotNull User user, int rawSlot, boolean playerInventory, InventoryAction action, ClickType clickType) {
+    public GuiClickEvent(@NotNull Object handle, @NotNull Gui gui, @NotNull User user, int rawSlot, boolean playerInventory, InventoryAction action, ClickType clickType) {
         super(handle, gui, user);
         this.rawSlot = rawSlot;
         this.playerInventory = playerInventory;

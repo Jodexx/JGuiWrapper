@@ -23,11 +23,11 @@ import java.util.stream.IntStream;
  */
 public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
 
-    private final Map<Integer, GuiHandler<GuiClickEvent<T>, T>> slotClickHandlers = new HashMap<>();
+    private final Map<Integer, GuiHandler<GuiClickEvent, T>> slotClickHandlers = new HashMap<>();
 
-    private final List<Consumer<GuiOpenEvent<T>>> openEventConsumers = new ArrayList<>();
-    private final List<Consumer<GuiCloseEvent<T>>> closeEventConsumers = new ArrayList<>();
-    private final List<Consumer<GuiDragEvent<T>>> dragEventConsumers = new ArrayList<>();
+    private final List<Consumer<GuiOpenEvent>> openEventConsumers = new ArrayList<>();
+    private final List<Consumer<GuiCloseEvent>> closeEventConsumers = new ArrayList<>();
+    private final List<Consumer<GuiDragEvent>> dragEventConsumers = new ArrayList<>();
 
     private boolean cancelEmptySlots = true;
 
@@ -52,21 +52,21 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
     }
 
     @Override
-    public void onOpen(@NotNull GuiOpenEvent<T> event) {
-        for (Consumer<GuiOpenEvent<T>> consumer : openEventConsumers) {
+    public void onOpen(@NotNull GuiOpenEvent event) {
+        for (Consumer<GuiOpenEvent> consumer : openEventConsumers) {
             consumer.accept(event);
         }
     }
 
     @Override
-    public void onClose(@NotNull GuiCloseEvent<T> event) {
-        for (Consumer<GuiCloseEvent<T>> consumer : closeEventConsumers) {
+    public void onClose(@NotNull GuiCloseEvent event) {
+        for (Consumer<GuiCloseEvent> consumer : closeEventConsumers) {
             consumer.accept(event);
         }
     }
 
     @Override
-    public void onDrag(@NotNull GuiDragEvent<T> event) {
+    public void onDrag(@NotNull GuiDragEvent event) {
         if (cancelEmptySlots) {
             for (Integer rawSlot : event.rawSlots()) {
                 if (rawSlot < size()) {
@@ -75,13 +75,13 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
             }
         }
 
-        for (Consumer<GuiDragEvent<T>> consumer : dragEventConsumers) {
+        for (Consumer<GuiDragEvent> consumer : dragEventConsumers) {
             consumer.accept(event);
         }
     }
 
     @Override
-    public void onClick(@NotNull GuiClickEvent<T> event) {
+    public void onClick(@NotNull GuiClickEvent event) {
         final int slot = event.rawSlot();
 
         if (slot < 0) return;
@@ -92,7 +92,7 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
             }
         }
 
-        final GuiHandler<GuiClickEvent<T>, T> handler = slotClickHandlers.get(slot);
+        final GuiHandler<GuiClickEvent, T> handler = slotClickHandlers.get(slot);
 
         if (handler != null) {
             handler.handle(event, self());
@@ -101,19 +101,19 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
         }
     }
 
-    public final void onOpen(@NotNull Consumer<GuiOpenEvent<T>> consumer) {
+    public final void onOpen(@NotNull Consumer<GuiOpenEvent> consumer) {
         this.openEventConsumers.add(consumer);
     }
 
-    public final void onClose(@NotNull Consumer<GuiCloseEvent<T>> consumer) {
+    public final void onClose(@NotNull Consumer<GuiCloseEvent> consumer) {
         this.closeEventConsumers.add(consumer);
     }
 
-    public final void onDrag(@NotNull Consumer<GuiDragEvent<T>> consumer) {
+    public final void onDrag(@NotNull Consumer<GuiDragEvent> consumer) {
         this.dragEventConsumers.add(consumer);
     }
 
-    public void setClickHandlers(@NotNull GuiHandler<GuiClickEvent<T>, T> handler, int @NotNull ... slots) {
+    public void setClickHandlers(@NotNull GuiHandler<GuiClickEvent, T> handler, int @NotNull ... slots) {
         if (slots.length == 0) {
             setClickHandlers0(handler, IntStream.range(0, super.size()).toArray());
             return;
@@ -122,7 +122,7 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
         setClickHandlers0(handler, slots);
     }
 
-    private void setClickHandlers0(@NotNull GuiHandler<GuiClickEvent<T>, T> handler, int @NotNull ... slots) {
+    private void setClickHandlers0(@NotNull GuiHandler<GuiClickEvent, T> handler, int @NotNull ... slots) {
         for (int slot : slots) {
             slotClickHandlers.put(slot, handler);
         }

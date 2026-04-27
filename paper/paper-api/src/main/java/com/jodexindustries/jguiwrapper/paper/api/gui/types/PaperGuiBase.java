@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.paper.gui;
+package com.jodexindustries.jguiwrapper.paper.api.gui.types;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.types.SimpleGui;
@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
-@SuppressWarnings({"unused", "UnusedReturnValue"})
 public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implements PaperGui {
 
     public static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
@@ -98,7 +97,7 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
                 player.openInventory(holder.getInventory());
             } else {
                 InventoryOpenEvent event = new InventoryOpenEvent(view);
-                onOpen(new GuiOpenEvent<>(event, self(), user));
+                onOpen(new GuiOpenEvent(event, this, user));
             }
         } catch (Exception e) {
             API.getPlugin().getLogger().log(Level.WARNING, "Error with opening menu for player: " + player.getName(), e);
@@ -111,7 +110,7 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
         player.closeInventory(reason);
 
         InventoryCloseEvent event = new InventoryCloseEvent(player.getOpenInventory());
-        onClose(new GuiCloseEvent<>(event, self(), user));
+        onClose(new GuiCloseEvent(event, this, user));
     }
 
     public final void updateMenu() {

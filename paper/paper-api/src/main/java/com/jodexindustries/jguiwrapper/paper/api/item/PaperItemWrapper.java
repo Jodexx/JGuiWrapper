@@ -16,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class PaperItemWrapper extends ItemWrapper {
 
     private ItemStack itemStack;

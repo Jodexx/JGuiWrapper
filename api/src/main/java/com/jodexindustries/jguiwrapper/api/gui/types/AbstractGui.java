@@ -80,19 +80,19 @@ public abstract class AbstractGui<T extends Gui> implements Gui {
     }
 
     @ApiStatus.Internal
-    public void onOpen(@NotNull GuiOpenEvent<T> event) {
+    public void onOpen(@NotNull GuiOpenEvent event) {
     }
 
     @ApiStatus.Internal
-    public void onClose(@NotNull GuiCloseEvent<T> event) {
+    public void onClose(@NotNull GuiCloseEvent event) {
     }
 
     @ApiStatus.Internal
-    public void onClick(@NotNull GuiClickEvent<T> event) {
+    public void onClick(@NotNull GuiClickEvent event) {
     }
 
     @ApiStatus.Internal
-    public void onDrag(@NotNull GuiDragEvent<T> event) {
+    public void onDrag(@NotNull GuiDragEvent event) {
     }
 
     protected static int adaptSize(int size) {

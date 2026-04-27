@@ -4,14 +4,13 @@ import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced.PaperAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.JGuiPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 
 import java.util.Random;
 
-@SuppressWarnings("unused")
 public class TestAdvancedGui extends PaperAdvancedGui {
 
     private int clicks;

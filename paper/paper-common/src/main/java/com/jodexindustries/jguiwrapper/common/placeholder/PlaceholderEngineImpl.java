@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings({"unused"})
 public class PlaceholderEngineImpl extends AbstractPlaceholderEngine {
 
     @Override

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ItemMeta implements Cloneable {
 
     private ItemWrapper item;
@@ -24,18 +23,6 @@ public class ItemMeta implements Cloneable {
     public ItemMeta(@Nullable ItemWrapper item, @Nullable SerializerType serializer) {
         this.item = item;
         this.serializer = serializer == null ? GuiApi.get().defaultSerializer() : serializer;
-    }
-
-    public ItemMeta(@Nullable ItemWrapper item) {
-        this(item, null);
-    }
-
-    public ItemMeta(@Nullable SerializerType serializer) {
-        this(null, serializer);
-    }
-
-    public ItemMeta() {
-        this(null, null);
     }
 
     @Nullable

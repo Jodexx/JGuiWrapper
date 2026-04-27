@@ -6,7 +6,6 @@ import com.jodexindustries.jguiwrapper.api.gui.types.advanced.item.HandlerContex
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.item.ItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("unused")
 public class TestItemHandler implements ItemHandler<TestGuiLoader> {
 
     @Override

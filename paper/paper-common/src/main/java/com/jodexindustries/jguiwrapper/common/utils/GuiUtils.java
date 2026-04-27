@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.paper.api.utils;
+package com.jodexindustries.jguiwrapper.common.utils;
 
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import org.bukkit.inventory.Inventory;

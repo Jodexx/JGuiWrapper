@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.paper.gui.advanced;
+package com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced;
 
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGui;
@@ -9,7 +9,7 @@ import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.DataRegis
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.api.utils.Pair;
-import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.PaperGuiBase;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
@@ -21,7 +21,6 @@ import org.jetbrains.annotations.UnmodifiableView;
 import java.util.*;
 import java.util.function.Consumer;
 
-@SuppressWarnings({"unused"})
 public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements AdvancedGui<PaperAdvancedGui> {
 
     private final Map<String, AdvancedGuiItemController<PaperAdvancedGui, ?>> keyMap = new HashMap<>();

@@ -3,7 +3,7 @@ package com.jodexindustries.jguiwrapper.api.gui.factory;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("unused")
+
 public interface GuiFactory {
 
     @NotNull

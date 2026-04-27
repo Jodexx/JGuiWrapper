@@ -3,7 +3,7 @@ package com.jodexindustries.jguiwrapper.paper.api.gui;
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
-import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.PaperGuiBase;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
-@SuppressWarnings({"unused"})
 public class PaperGuiHolder implements GuiHolder, InventoryHolder {
 
     private final PaperGuiBase<?> gui;

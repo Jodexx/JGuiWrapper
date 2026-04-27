@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-@SuppressWarnings("unused")
 public class GlobalRegistryImpl implements GlobalRegistry {
 
     private static final Map<String, DataRegistry> REGISTRIES = new ConcurrentHashMap<>();

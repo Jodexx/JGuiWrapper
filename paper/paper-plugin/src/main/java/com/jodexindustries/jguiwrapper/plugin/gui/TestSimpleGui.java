@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
-import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.PaperGuiBase;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class TestSimpleGui extends PaperGuiBase<TestSimpleGui> {
         onDrag(event -> event.user().sendMessage(event.as(InventoryDragEvent.class).getType().name()));
     }
 
-    @SuppressWarnings("unused")
+    
     private static class SizeLooper {
         private int currentSize = 54;
         private boolean increasing = true;

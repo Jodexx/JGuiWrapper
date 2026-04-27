@@ -4,7 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
-@SuppressWarnings("unused")
+
 public class ReflectionUtils {
     public static Class<?> getGenericClass(Class<?> clazz, int index) {
         Class<?> resolved = getGenericClassOrNull(clazz, index);

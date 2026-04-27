@@ -4,9 +4,9 @@ import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import org.jetbrains.annotations.NotNull;
 
-public class GuiCloseEvent<T extends Gui> extends GuiEvent<T> {
+public class GuiCloseEvent extends GuiEvent {
 
-    public GuiCloseEvent(@NotNull Object handle, @NotNull T gui, @NotNull User user) {
+    public GuiCloseEvent(@NotNull Object handle, @NotNull Gui gui, @NotNull User user) {
         super(handle, gui, user);
     }
 }

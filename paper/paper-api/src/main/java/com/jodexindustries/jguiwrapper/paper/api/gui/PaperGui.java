@@ -12,7 +12,6 @@ import java.util.ArrayList;
 /**
  * Represents a graphical user interface for Paper platforms
  */
-@SuppressWarnings({"unused"})
 public interface PaperGui extends Gui {
 
     /**

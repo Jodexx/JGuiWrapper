@@ -10,7 +10,6 @@ import java.util.Map;
 /**
  * Generic options used by GUI factories.
  */
-@SuppressWarnings("unused")
 public final class GuiOptions {
 
     private final int size;

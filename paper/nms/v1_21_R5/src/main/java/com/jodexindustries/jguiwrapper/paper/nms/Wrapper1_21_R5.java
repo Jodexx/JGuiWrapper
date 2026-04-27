@@ -18,7 +18,6 @@ import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("unused")
 public class Wrapper1_21_R5 implements NMSWrapper {
 
     @Override

@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
-import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.PaperGuiBase;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +25,7 @@ public class TestAbstractGui extends PaperGuiBase<TestAbstractGui> {
     }
 
     @Override
-    public void onClick(@NotNull GuiClickEvent<TestAbstractGui> e) {
+    public void onClick(@NotNull GuiClickEvent e) {
         e.user().sendMessage("You just clicked!");
     }
 }

@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@SuppressWarnings("unused")
+
 public class RegistryGuiFactory implements GuiFactory {
 
     private final Map<String, GuiCreator<? extends Gui>> creators = new ConcurrentHashMap<>();

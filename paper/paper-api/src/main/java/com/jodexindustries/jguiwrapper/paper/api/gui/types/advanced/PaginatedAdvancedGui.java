@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.paper.gui.advanced;
+package com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced;
 
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
@@ -16,7 +16,6 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 @ApiStatus.Experimental
-@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class PaginatedAdvancedGui extends PaperAdvancedGui {
 
     protected final List<Page> pages = new ArrayList<>();

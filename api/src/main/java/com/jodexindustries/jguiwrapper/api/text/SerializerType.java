@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
  * while {@link #deserialize(String)} will return {@link Component#empty()}.
  * </p>
  */
-@SuppressWarnings({"unused"})
 public enum SerializerType implements ComponentSerializer<Component, Component, String> {
 
     /**

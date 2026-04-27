@@ -6,8 +6,8 @@ import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemCon
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.common.PaperGuiApiImpl;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGui;
-import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.PaperGuiBase;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced.PaperAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAbstractGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestPaginatedAdvancedGui;
@@ -24,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public final class JGuiPlugin extends JavaPlugin {
 
     public static final Key TEST_LOADER_KEY = Key.key("jguiwrapper", "test");

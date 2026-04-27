@@ -1,24 +1,23 @@
 package com.jodexindustries.jguiwrapper.common;
 
 import com.jodexindustries.jguiwrapper.api.gui.factory.GuiFactory;
+import com.jodexindustries.jguiwrapper.api.gui.factory.GuiType;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.user.User;
-import com.jodexindustries.jguiwrapper.api.gui.factory.GuiType;
-import com.jodexindustries.jguiwrapper.api.gui.factory.GuiOptions;
 import com.jodexindustries.jguiwrapper.common.factory.RegistryGuiFactory;
 import com.jodexindustries.jguiwrapper.common.gui.GuiListener;
+import com.jodexindustries.jguiwrapper.common.nms.JGuiWrapperVersionException;
+import com.jodexindustries.jguiwrapper.common.nms.NMSMatcher;
 import com.jodexindustries.jguiwrapper.common.placeholder.PlaceholderEngineImpl;
 import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
 import com.jodexindustries.jguiwrapper.common.user.PaperUser;
-import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.common.utils.GuiUtils;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced.PaginatedAdvancedGui;
+import com.jodexindustries.jguiwrapper.paper.api.gui.types.advanced.PaperAdvancedGui;
 import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaginatedAdvancedGui;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui;
-import com.jodexindustries.jguiwrapper.paper.api.nms.JGuiWrapperVersionException;
-import com.jodexindustries.jguiwrapper.paper.api.nms.NMSMatcher;
-import com.jodexindustries.jguiwrapper.paper.api.utils.GuiUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -31,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Level;
 
-@SuppressWarnings("unused")
+
 public final class PaperGuiApiImpl extends PaperGuiApi {
 
     private static final GlobalRegistry REGISTRY = new GlobalRegistryImpl();
@@ -56,10 +55,6 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
         super(plugin);
         guiFactory().register(GuiType.ADVANCED, options -> new PaperAdvancedGui(options.size(), options.title()));
         guiFactory().register(GuiType.PAGINATED, options -> new PaginatedAdvancedGui(options.size(), options.title()));
-    }
-
-    private PaperAdvancedGui createAdvancedGui(@NotNull GuiOptions options) {
-        return new PaperAdvancedGui(options.size(), options.title());
     }
 
     public static void init(Plugin plugin) {

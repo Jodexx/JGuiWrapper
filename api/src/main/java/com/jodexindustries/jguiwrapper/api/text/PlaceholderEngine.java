@@ -11,7 +11,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-@SuppressWarnings({"unused"})
 public interface PlaceholderEngine {
 
     void register(@NotNull String placeholder, @NotNull Function<User, @NotNull String> resolver);
