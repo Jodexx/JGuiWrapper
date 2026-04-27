@@ -21,22 +21,36 @@ public class TestSimpleGui extends PaperGuiBase<TestSimpleGui> {
 
         holder().setItem(0, new ItemStack(Material.EMERALD));
 
-        setClickHandlers((e, gui) -> {
-            e.setCancelled(true);
+        setClickHandlers((event, gui) -> {
+            event.setCancelled(true);
 
-            GuiClickEvent.ClickType click = e.clickType();
+            GuiClickEvent.ClickType click = event.clickType();
 
             if (click.isRightClick())
-                runTask(() -> updateMenu(e.user().as(Player.class), type(), looper.nextSize(), Component.text(clicks++), true));
+                runTask(() -> {
+                    // unwrap
+                    Player player = event.user().as(Player.class);
+                    updateMenu(player, type(), looper.nextSize(), Component.text(clicks++), true);
+                });
             else
-                e.user().sendMessage(String.valueOf(e.rawSlot()));
+                event.user().sendMessage(String.valueOf(event.rawSlot()));
         });
 
-        onOpen(event -> event.user().sendMessage(event.as(InventoryOpenEvent.class).getInventory().getType().defaultTitle()));
+        onOpen(event -> {
+            // unwrap
+            InventoryOpenEvent openEvent = event.as(InventoryOpenEvent.class);
+            event.user().sendMessage(openEvent.getInventory().getType().defaultTitle());
+        });
 
-        onClose(event -> event.user().sendMessage(event.as(InventoryCloseEvent.class).getReason().name()));
+        onClose(event -> {
+            InventoryCloseEvent closeEvent = event.as(InventoryCloseEvent.class);
+            event.user().sendMessage(closeEvent.getReason().name());
+        });
 
-        onDrag(event -> event.user().sendMessage(event.as(InventoryDragEvent.class).getType().name()));
+        onDrag(event -> {
+            InventoryDragEvent dragEvent = event.as(InventoryDragEvent.class);
+            event.user().sendMessage(dragEvent.getType().name());
+        });
     }
 
     
