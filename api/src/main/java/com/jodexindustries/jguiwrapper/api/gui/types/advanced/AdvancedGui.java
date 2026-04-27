@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.gui.types.advanced;
 
+import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.api.gui.types.SimpleGui;
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.user.User;
@@ -12,7 +13,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public interface AdvancedGui<G extends SimpleGui<G> & AdvancedGui<G>> {
+public interface AdvancedGui<G extends SimpleGui<G> & AdvancedGui<G>> extends Gui {
 
     void loadData(@NotNull User user);
 
