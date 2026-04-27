@@ -7,7 +7,7 @@ import com.jodexindustries.jguiwrapper.api.gui.event.GuiDragEvent;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
-import com.jodexindustries.jguiwrapper.paper.utils.GuiUtils;
+import com.jodexindustries.jguiwrapper.paper.api.utils.GuiUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;

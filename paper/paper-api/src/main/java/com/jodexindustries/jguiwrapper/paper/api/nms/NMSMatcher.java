@@ -1,6 +1,5 @@
-package com.jodexindustries.jguiwrapper.paper.nms;
+package com.jodexindustries.jguiwrapper.paper.api.nms;
 
-import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
