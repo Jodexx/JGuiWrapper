@@ -1,12 +1,16 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
 import com.jodexindustries.jguiwrapper.paper.gui.SimpleGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.event.inventory.ClickType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class TestSimpleGui extends SimpleGui {
+public class TestSimpleGui extends SimpleGui<TestSimpleGui> {
 
     private final SizeLooper looper = new SizeLooper();
 
@@ -15,24 +19,24 @@ public class TestSimpleGui extends SimpleGui {
     public TestSimpleGui() {
         super(3123, "&cExample");
 
-        holder().getInventory().setItem(0, new ItemStack(Material.EMERALD));
+        holder().setItem(0, new ItemStack(Material.EMERALD));
 
-        setClickHandlers((event, gui) -> {
-            event.setCancelled(true);
+        setClickHandlers((e, gui) -> {
+            e.setCancelled(true);
 
-            ClickType click = event.getClick();
+            GuiClickEvent.ClickType click = e.clickType();
 
             if (click.isRightClick())
-                runTask(() -> updateMenu(event.getWhoClicked(), type(), looper.nextSize(), Component.text(clicks++), true));
+                runTask(() -> updateMenu(e.user().as(Player.class), type(), looper.nextSize(), Component.text(clicks++), true));
             else
-                event.getWhoClicked().sendMessage(String.valueOf(event.getRawSlot()));
+                e.user().sendMessage(String.valueOf(e.rawSlot()));
         });
 
-        onOpen(event -> event.getPlayer().sendMessage(event.getInventory().getType().defaultTitle()));
+        onOpen(event -> event.user().sendMessage(event.as(InventoryOpenEvent.class).getInventory().getType().defaultTitle()));
 
-        onClose(event -> event.getPlayer().sendMessage(event.getReason().name()));
+        onClose(event -> event.user().sendMessage(event.as(InventoryCloseEvent.class).getReason().name()));
 
-        onDrag(event -> event.getWhoClicked().sendMessage(event.getType().name()));
+        onDrag(event -> event.user().sendMessage(event.as(InventoryDragEvent.class).getType().name()));
     }
 
     @SuppressWarnings("unused")

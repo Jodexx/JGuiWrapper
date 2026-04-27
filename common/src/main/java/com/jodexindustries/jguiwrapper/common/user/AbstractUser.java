@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractUser<H> implements User {
 
-    private final H handle;
+    protected final H handle;
 
     protected AbstractUser(@NotNull H handle) {
         this.handle = handle;

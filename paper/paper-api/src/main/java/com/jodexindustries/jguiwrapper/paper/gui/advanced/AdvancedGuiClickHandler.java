@@ -1,20 +1,15 @@
 package com.jodexindustries.jguiwrapper.paper.gui.advanced;
 
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.InventoryHandler;
-import com.jodexindustries.jguiwrapper.paper.gui.SimpleGui;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import com.jodexindustries.jguiwrapper.api.gui.GuiHandler;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public interface AdvancedGuiClickHandler extends InventoryHandler<InventoryClickEvent> {
+public interface AdvancedGuiClickHandler extends GuiHandler<GuiClickEvent<AdvancedGui>, AdvancedGui> {
 
     @Override
-    default void handle(@NotNull InventoryClickEvent event, @NotNull SimpleGui gui) {
-        if (gui instanceof AdvancedGui) {
-            ((AdvancedGui) gui).getController(event.getRawSlot()).ifPresent(controller -> this.handle(event, controller));
-        } else {
-            this.handle(event, (GuiItemController) null);
-        }
+    default void handle(@NotNull GuiClickEvent<AdvancedGui> event, @NotNull AdvancedGui gui) {
+        gui.getController(event.rawSlot()).ifPresent(controller -> this.handle(event, controller));
     }
 
-    void handle(@NotNull InventoryClickEvent event, GuiItemController controller);
+    void handle(@NotNull GuiClickEvent<AdvancedGui> event, GuiItemController controller);
 }

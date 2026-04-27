@@ -1,10 +1,12 @@
 package com.jodexindustries.jguiwrapper.paper.gui;
 
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.InventoryHandler;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiCloseEvent;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiDragEvent;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiOpenEvent;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
-import org.bukkit.event.inventory.*;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,13 +24,13 @@ import java.util.stream.IntStream;
  * Designed for easy extension and use in plugin GUI development.
  */
 @SuppressWarnings({"unused"})
-public abstract class SimpleGui extends AbstractGui {
+public abstract class SimpleGui<T extends AbstractGui<T>> extends AbstractGui<T> {
 
-    private final Map<Integer, InventoryHandler<InventoryClickEvent>> slotClickHandlers = new HashMap<>();
+    private final Map<Integer, com.jodexindustries.jguiwrapper.api.gui.GuiHandler<GuiClickEvent<T>, T>> slotClickHandlers = new HashMap<>();
 
-    private final List<Consumer<InventoryOpenEvent>> openEventConsumers = new ArrayList<>();
-    private final List<Consumer<InventoryCloseEvent>> closeEventConsumers = new ArrayList<>();
-    private final List<Consumer<InventoryDragEvent>> dragEventConsumers = new ArrayList<>();
+    private final List<Consumer<GuiOpenEvent<T>>> openEventConsumers = new ArrayList<>();
+    private final List<Consumer<GuiCloseEvent<T>>> closeEventConsumers = new ArrayList<>();
+    private final List<Consumer<GuiDragEvent<T>>> dragEventConsumers = new ArrayList<>();
 
     private boolean cancelEmptySlots = true;
 
@@ -94,52 +96,51 @@ public abstract class SimpleGui extends AbstractGui {
     }
 
     @Override
-    public final void onOpen(@NotNull InventoryOpenEvent event) {
-        for (Consumer<InventoryOpenEvent> consumer : openEventConsumers) {
+    public final void onOpen(@NotNull GuiOpenEvent<T> event) {
+        for (Consumer<GuiOpenEvent<T>> consumer : openEventConsumers) {
             consumer.accept(event);
         }
     }
 
     @Override
-    public final void onClose(@NotNull InventoryCloseEvent event) {
-        for (Consumer<InventoryCloseEvent> consumer : closeEventConsumers) {
+    public final void onClose(@NotNull GuiCloseEvent<T> event) {
+        for (Consumer<GuiCloseEvent<T>> consumer : closeEventConsumers) {
             consumer.accept(event);
         }
     }
 
     @Override
-    public final void onDrag(@NotNull InventoryDragEvent event) {
+    public final void onDrag(@NotNull GuiDragEvent<T> event) {
         if (cancelEmptySlots) {
-            for (Integer rawSlot : event.getRawSlots()) {
+            for (Integer rawSlot : event.rawSlots()) {
                 if (rawSlot < size()) {
                     event.setCancelled(true);
                 }
             }
         }
 
-        for (Consumer<InventoryDragEvent> consumer : dragEventConsumers) {
+        for (Consumer<GuiDragEvent<T>> consumer : dragEventConsumers) {
             consumer.accept(event);
         }
     }
 
     @Override
-    public final void onClick(@NotNull InventoryClickEvent event) {
-        final int slot = event.getRawSlot();
+    public final void onClick(@NotNull GuiClickEvent<T> event) {
+        final int slot = event.rawSlot();
 
         // do not need to handle undefined slot (outside the window)
         if (slot < 0) return;
 
-        if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-            final Inventory clickedInventory = event.getClickedInventory();
-            if (clickedInventory != null && clickedInventory.getType() == InventoryType.PLAYER && cancelEmptySlots) {
+        if (event.action() == GuiClickEvent.InventoryAction.MOVE_TO_OTHER_INVENTORY || event.action() == GuiClickEvent.InventoryAction.COLLECT_TO_CURSOR) {
+            if (event.playerInventory() && cancelEmptySlots) {
                 event.setCancelled(true);
             }
         }
 
-        final InventoryHandler<InventoryClickEvent> handler = slotClickHandlers.get(slot);
+        final com.jodexindustries.jguiwrapper.api.gui.GuiHandler<GuiClickEvent<T>, T> handler = slotClickHandlers.get(slot);
 
         if (handler != null) {
-            handler.handle(event, this);
+            handler.handle(event, self());
         } else if (slot < size() && cancelEmptySlots) {
             // cancel for gui slots, do not touch player inventory
             event.setCancelled(true);
@@ -149,27 +150,27 @@ public abstract class SimpleGui extends AbstractGui {
     /**
      * Registers a consumer to be called when the GUI is opened.
      *
-     * @param consumer the consumer to handle InventoryOpenEvent
+     * @param consumer the consumer to handle GuiOpenEvent
      */
-    public final void onOpen(@NotNull Consumer<InventoryOpenEvent> consumer) {
+    public final void onOpen(@NotNull Consumer<GuiOpenEvent<T>> consumer) {
         this.openEventConsumers.add(consumer);
     }
 
     /**
      * Registers a consumer to be called when the GUI is closed.
      *
-     * @param consumer the consumer to handle InventoryCloseEvent
+     * @param consumer the consumer to handle GuiCloseEvent
      */
-    public final void onClose(@NotNull Consumer<InventoryCloseEvent> consumer) {
+    public final void onClose(@NotNull Consumer<GuiCloseEvent<T>> consumer) {
         this.closeEventConsumers.add(consumer);
     }
 
     /**
      * Registers a consumer to be called when the GUI is dragged in.
      *
-     * @param consumer the consumer to handle InventoryDragEvent
+     * @param consumer the consumer to handle GuiDragEvent
      */
-    public final void onDrag(@NotNull Consumer<InventoryDragEvent> consumer) {
+    public final void onDrag(@NotNull Consumer<GuiDragEvent<T>> consumer) {
         this.dragEventConsumers.add(consumer);
     }
 
@@ -179,7 +180,7 @@ public abstract class SimpleGui extends AbstractGui {
      * @param handler the handler to manage slot clicks
      * @param slots   the slots to assign the handler to
      */
-    public void setClickHandlers(@NotNull InventoryHandler<InventoryClickEvent> handler, int @NotNull ... slots) {
+    public void setClickHandlers(@NotNull com.jodexindustries.jguiwrapper.api.gui.GuiHandler<GuiClickEvent<T>, T> handler, int @NotNull ... slots) {
         if (slots.length == 0) {
             setClickHandlers0(handler, IntStream.range(0, super.size()).toArray());
             return;
@@ -188,7 +189,7 @@ public abstract class SimpleGui extends AbstractGui {
         setClickHandlers0(handler, slots);
     }
 
-    private void setClickHandlers0(@NotNull InventoryHandler<InventoryClickEvent> handler, int @NotNull ... slots) {
+    private void setClickHandlers0(@NotNull com.jodexindustries.jguiwrapper.api.gui.GuiHandler<GuiClickEvent<T>, T> handler, int @NotNull ... slots) {
         for (int slot : slots) {
             slotClickHandlers.put(slot, handler);
         }

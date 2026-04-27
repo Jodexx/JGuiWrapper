@@ -1,27 +1,26 @@
 package com.jodexindustries.jguiwrapper.plugin.gui.item;
 
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.HandlerContext;
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.HandlerContext;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.ItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class TestItemHandler implements ItemHandler<TestGuiLoader> {
 
     @Override
-    public void load(@NotNull TestGuiLoader loader, @NotNull GuiItemController controller, @NotNull HandlerContext<Player> context) {
+    public void load(@NotNull TestGuiLoader loader, @NotNull GuiItemController controller, @NotNull HandlerContext context) {
         controller.defaultClickHandler((e, c) -> {
             e.setCancelled(true);
-            if (e.getClick() == ClickType.DOUBLE_CLICK) return;
+            if (e.clickType() == GuiClickEvent.ClickType.DOUBLE_CLICK) return;
 
             loader.click();
-            c.updateItems(itemWrapper -> itemWrapper.update(e.getWhoClicked()));
+            c.updateItems(itemWrapper -> itemWrapper.update(e.user()));
         });
 
         controller.updateItems(wrapper -> wrapper.meta()
                         .displayName("&b&lDiamond Block")
-                        .lore("&cPlayer: &6%player_name%", "&cOpen count: &6%open_count%", "&cClick count: &6%click_count%"), context.player());
+                        .lore("&cPlayer: &6%player_name%", "&cOpen count: &6%open_count%", "&cClick count: &6%click_count%"), context.user());
     }
 }

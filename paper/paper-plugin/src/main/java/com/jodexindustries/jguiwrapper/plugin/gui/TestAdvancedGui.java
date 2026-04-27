@@ -1,15 +1,14 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
+import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
 import com.jodexindustries.jguiwrapper.plugin.JGuiPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 
 import java.util.Random;
 
@@ -23,25 +22,25 @@ public class TestAdvancedGui extends AdvancedGui {
 
         registerLoader(JGuiPlugin.TEST_LOADER_KEY);
 
-        onClose(event -> event.getPlayer().sendMessage("Closed"));
+        onClose(event -> event.user().sendMessage("Closed"));
 
         onOpen(event -> {
-            HumanEntity player = event.getPlayer();
-            player.sendMessage("Opened");
+            User user = event.user();
+            user.sendMessage("Opened");
 
-            loadData(player);
+            loadData(user);
 
             // refresh item handlers
             for (GuiItemController controller : getControllers()) {
-                controller.loadItemHandler(LoadType.ON_OPEN, (Player) player);
+                controller.loadItemHandler(LoadType.ON_OPEN, user);
             }
         });
 
         registerItem("test", builder -> builder.slots(0, 1, 2, 3, 4, 5, 6, 7, 8)
                 .defaultItem(PaperItemWrapper.builder(Material.GOLD_BLOCK).build())
-                .defaultClickHandler((event, controller) -> {
-                    event.setCancelled(true);
-                    if (event.getClick() == ClickType.DOUBLE_CLICK) return;
+                .defaultClickHandler((e, controller) -> {
+                    e.setCancelled(true);
+                    if (e.clickType() == GuiClickEvent.ClickType.DOUBLE_CLICK) return;
 
                     clicks++;
 
@@ -76,7 +75,7 @@ public class TestAdvancedGui extends AdvancedGui {
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);
 
-                    close(event.getWhoClicked());
+                    close(event.user());
                 }));
 
     }

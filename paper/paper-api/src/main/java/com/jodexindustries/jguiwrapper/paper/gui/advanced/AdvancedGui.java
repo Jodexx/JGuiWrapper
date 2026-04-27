@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.paper.gui.advanced;
 
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
-import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.paper.gui.SimpleGui;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
@@ -15,11 +15,11 @@ import java.util.*;
 import java.util.function.Consumer;
 
 @SuppressWarnings({"unused"})
-public class AdvancedGui extends SimpleGui {
+public class AdvancedGui extends SimpleGui<AdvancedGui> {
 
     private final Map<String, GuiItemController> keyMap = new HashMap<>();
     public final Map<Integer, GuiItemController> slotMap = new HashMap<>();
-    private final Map<Class<?>, GuiDataLoader<AdvancedGui>> loaderMap = new HashMap<>();
+    private final Map<Class<?>, GuiDataLoader> loaderMap = new HashMap<>();
 
     /**
      * Constructs a GUI with the default size (54) and a string title.
@@ -83,22 +83,27 @@ public class AdvancedGui extends SimpleGui {
     }
 
     public void loadData(@NotNull HumanEntity player) {
-        for (GuiDataLoader<AdvancedGui> value : loaderMap.values()) {
-            value.load(this, player);
+        loadData(API.user(player));
+    }
+
+    public void loadData(@NotNull User user) {
+        for (GuiDataLoader value : loaderMap.values()) {
+            value.load(this, user);
         }
     }
 
+
     @NotNull
-    public <T extends GuiDataLoader<?>> Optional<T> getTypedLoader(@NotNull Class<T> clazz) {
+    public <T extends GuiDataLoader> Optional<T> getTypedLoader(@NotNull Class<T> clazz) {
         return Optional.of(clazz.cast(getLoader0(clazz)));
     }
 
     @NotNull
-    public Optional<GuiDataLoader<?>> getLoader(@NotNull Class<?> clazz) {
+    public Optional<GuiDataLoader> getLoader(@NotNull Class<?> clazz) {
         return Optional.of(getLoader0(clazz));
     }
 
-    private GuiDataLoader<?> getLoader0(Class<?> clazz) {
+    private GuiDataLoader getLoader0(Class<?> clazz) {
         return loaderMap.get(clazz);
     }
 
@@ -106,13 +111,13 @@ public class AdvancedGui extends SimpleGui {
         API.getRegistry().getLoader(key).ifPresent(loader -> loaderMap.put(loader.getClass(), loader));
     }
 
-    public void registerLoader(@NotNull GuiDataLoader<AdvancedGui> loader) {
+    public void registerLoader(@NotNull GuiDataLoader loader) {
         loaderMap.put(loader.getClass(), loader);
     }
 
     @UnmodifiableView
     @NotNull
-    public Collection<GuiDataLoader<AdvancedGui>> getLoaders() {
+    public Collection<GuiDataLoader> getLoaders() {
         return Collections.unmodifiableCollection(loaderMap.values());
     }
 

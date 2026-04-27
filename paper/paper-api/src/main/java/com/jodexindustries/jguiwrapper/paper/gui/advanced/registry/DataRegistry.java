@@ -1,9 +1,8 @@
-package com.jodexindustries.jguiwrapper.paper.api.registry;
+package com.jodexindustries.jguiwrapper.paper.gui.advanced.registry;
 
-import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.api.utils.Pair;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.ItemHandler;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collection;
@@ -14,16 +13,16 @@ public interface DataRegistry {
 
     String namespace();
 
-    void registerLoader(String id, GuiDataLoader<AdvancedGui> loader);
+    void registerLoader(String id, GuiDataLoader loader);
 
     void registerHandler(String id, ItemHandler<?> handler);
 
-    Optional<GuiDataLoader<AdvancedGui>> getLoader(String id);
+    Optional<GuiDataLoader> getLoader(String id);
 
     Optional<Pair<ItemHandler<?>, Class<?>>> getHandler(String id);
 
     @UnmodifiableView
-    Collection<GuiDataLoader<AdvancedGui>> getLoaders();
+    Collection<GuiDataLoader> getLoaders();
 
     @UnmodifiableView
     Collection<Pair<ItemHandler<?>, Class<?>>> getHandlers();

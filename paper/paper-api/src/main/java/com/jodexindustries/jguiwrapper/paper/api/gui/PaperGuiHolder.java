@@ -1,34 +1,32 @@
 package com.jodexindustries.jguiwrapper.paper.api.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
+import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
 @SuppressWarnings({"unused"})
-public class PaperGuiHolder implements GuiHolder, InventoryHolder {
+public class PaperGuiHolder implements GuiHolder<PaperItemWrapper>, InventoryHolder {
 
-    private final AbstractGui gui;
-
-    private final int size;
-    private final Component title;
-
+    private final AbstractGui<?> gui;
     private final Inventory inventory;
 
-    public PaperGuiHolder(@NotNull AbstractGui gui) {
+    public PaperGuiHolder(@NotNull AbstractGui<?> gui) {
         this(gui, null);
     }
 
-    public PaperGuiHolder(@NotNull AbstractGui gui, @Nullable InventoryType type) {
+    public PaperGuiHolder(@NotNull AbstractGui<?> gui, @Nullable InventoryType type) {
         this.gui = gui;
-        this.size = gui.size();
-        this.title = gui.title();
+        int size = gui.size();
+        Component title = gui.title();
         this.inventory = type != null ? Bukkit.createInventory(this, type, title) : Bukkit.createInventory(this, size, title);
     }
 
@@ -37,18 +35,23 @@ public class PaperGuiHolder implements GuiHolder, InventoryHolder {
         return this.inventory;
     }
 
-    public @NotNull AbstractGui gui() {
+    @Override
+    public @NotNull AbstractGui<?> gui() {
         return gui;
     }
 
     @Override
-    public @NotNull Component title() {
-        return title;
+    public void setItem(int slot, @NotNull PaperItemWrapper itemWrapper) {
+        setItem(slot, itemWrapper.itemStack());
+    }
+
+    public void setItem(int slot, @NotNull ItemStack itemStack) {
+        this.inventory.setItem(slot, itemStack);
     }
 
     @Override
-    @Range(from = 0L, to = 54L)
-    public int size() {
-        return size;
+    public void clear(@Range(from = 0L, to = 53L) int slot) {
+        this.inventory.clear(slot);
     }
+
 }

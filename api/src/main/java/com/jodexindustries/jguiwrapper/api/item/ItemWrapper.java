@@ -7,6 +7,7 @@ import com.jodexindustries.jguiwrapper.api.user.User;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -110,7 +111,7 @@ public class ItemWrapper implements Cloneable {
         this.placeholderEngine = placeholderEngine;
     }
 
-    @Nullable
+    @UnknownNullability
     public PlaceholderEngine placeholderEngine() {
         return this.placeholderEngine;
     }

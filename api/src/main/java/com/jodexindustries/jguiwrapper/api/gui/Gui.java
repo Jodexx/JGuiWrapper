@@ -4,6 +4,7 @@ import com.jodexindustries.jguiwrapper.api.user.User;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Range;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
@@ -64,6 +65,12 @@ public interface Gui {
      * Closes this GUI for all current viewers.
      */
     void close();
+
+    @NotNull
+    Component title();
+
+    @Range(from = 0L, to = 54L)
+    int size();
 
     /**
      * Returns a set of all currently active GUI instances.

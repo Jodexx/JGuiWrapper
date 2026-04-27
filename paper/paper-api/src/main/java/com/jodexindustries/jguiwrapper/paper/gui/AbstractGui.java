@@ -1,13 +1,21 @@
 package com.jodexindustries.jguiwrapper.paper.gui;
 
+import com.jodexindustries.jguiwrapper.api.gui.Gui;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiCloseEvent;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiDragEvent;
+import com.jodexindustries.jguiwrapper.api.gui.event.GuiOpenEvent;
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
+import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGui;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
-import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.inventory.*;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
@@ -28,7 +36,7 @@ import java.util.logging.Level;
  * Handles registration of GUI instances and provides utility for legacy component serialization.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public abstract class AbstractGui implements PaperGui {
+public abstract class AbstractGui<T extends Gui> implements PaperGui {
 
     public static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
 
@@ -124,6 +132,7 @@ public abstract class AbstractGui implements PaperGui {
      *
      * @return the inventory size
      */
+    @Override
     public final int size() {
         return size;
     }
@@ -142,6 +151,7 @@ public abstract class AbstractGui implements PaperGui {
      *
      * @return the GUI title
      */
+    @Override
     public final @NotNull Component title() {
         return title;
     }
@@ -189,19 +199,20 @@ public abstract class AbstractGui implements PaperGui {
     }
 
     @Override
-    public final void open(@NotNull HumanEntity player) {
-        open(player, title);
+    public void open(@NotNull HumanEntity player, @NotNull User user) {
+        open(player, user, title);
     }
 
     @Override
-    public final void open(@NotNull HumanEntity player, @NotNull Component title) {
+    public void open(@NotNull HumanEntity player, @NotNull User user, @NotNull Component title) {
         try {
             InventoryView view = API.getNMSWrapper().openInventory(player, holder.getInventory(), type, size, title);
 
             if (view == null) {
                 player.openInventory(holder.getInventory());
             } else {
-                onOpen(new InventoryOpenEvent(view));
+                InventoryOpenEvent event = new InventoryOpenEvent(view);
+                onOpen(new GuiOpenEvent<>(event, self(), user));
             }
         } catch (Exception e) {
             API.getPlugin().getLogger().log(Level.WARNING, "Error with opening menu for player: " + player.getName(), e);
@@ -209,46 +220,55 @@ public abstract class AbstractGui implements PaperGui {
     }
 
     @Override
-    public final void close(@NotNull HumanEntity player) {
-        InventoryCloseEvent.Reason reason = InventoryCloseEvent.Reason.PLUGIN;
+    public void close(@NotNull HumanEntity player, @NotNull User user) {
+        InventoryCloseEvent.Reason reason = InventoryCloseEvent.Reason.PLUGIN; // preventing double handling
         player.closeInventory(reason);
-        onClose(new InventoryCloseEvent(player.getOpenInventory(), reason));
+
+        InventoryCloseEvent event = new InventoryCloseEvent(player.getOpenInventory());
+        onClose(new GuiCloseEvent<>(event, self(), user));
+    }
+
+    @SuppressWarnings("unchecked")
+    @NotNull
+    protected T self() {
+        return (T) this;
     }
 
     /**
      * Called when the GUI is opened for a player.
      *
-     * @param event the InventoryOpenEvent
+     * @param event the GuiOpenEvent
      */
     @ApiStatus.Internal
-    public void onOpen(@NotNull InventoryOpenEvent event) {
+    public void onOpen(@NotNull GuiOpenEvent<T> event) {
+
     }
 
     /**
      * Called when the GUI is closed for a player.
      *
-     * @param event the InventoryCloseEvent
+     * @param event the GuiCloseEvent
      */
     @ApiStatus.Internal
-    public void onClose(@NotNull InventoryCloseEvent event) {
+    public void onClose(@NotNull GuiCloseEvent<T> event) {
     }
 
     /**
      * Called when a player clicks in the GUI.
      *
-     * @param event the InventoryClickEvent
+     * @param event the GuiClickEvent
      */
     @ApiStatus.Internal
-    public void onClick(@NotNull InventoryClickEvent event) {
+    public void onClick(@NotNull GuiClickEvent<T> event) {
     }
 
     /**
      * Called when a player drags items in the GUI.
      *
-     * @param event the InventoryDragEvent
+     * @param event the GuiDragEvent
      */
     @ApiStatus.Internal
-    public void onDrag(@NotNull InventoryDragEvent event) {
+    public void onDrag(@NotNull GuiDragEvent<T> event) {
     }
 
     /**

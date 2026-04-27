@@ -6,9 +6,9 @@ import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -49,11 +49,11 @@ public class PaperItemWrapper extends ItemWrapper {
         this(material, 1);
     }
 
-    public void update(@Nullable  final HumanEntity entity) {
-        update(((OfflinePlayer) entity));
+    public void update(@Nullable final HumanEntity entity) {
+        update(((Player) entity));
     }
 
-    public void update(@Nullable final OfflinePlayer player) {
+    public void update(@Nullable final Player player) {
         update(player != null ? PaperGuiApi.get().user(player) : null);
     }
 

@@ -9,12 +9,11 @@ import com.jodexindustries.jguiwrapper.common.user.PaperUser;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
-import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.paper.nms.JGuiWrapperVersionException;
 import com.jodexindustries.jguiwrapper.paper.nms.NMSMatcher;
 import com.jodexindustries.jguiwrapper.paper.utils.GuiUtils;
 import net.kyori.adventure.text.Component;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -94,7 +93,12 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
     }
 
     @Override
-    public @NotNull User user(@NotNull OfflinePlayer player) {
+    public @NotNull User user(@NotNull Player player) {
+        return PaperUser.of(player);
+    }
+
+    @Override
+    public @NotNull User user(@NotNull HumanEntity player) {
         return PaperUser.of(player);
     }
 

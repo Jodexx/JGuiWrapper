@@ -1,14 +1,15 @@
 package com.jodexindustries.jguiwrapper.api.gui;
 
-import net.kyori.adventure.text.Component;
+import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
-public interface GuiHolder {
+public interface GuiHolder<T extends ItemWrapper> {
 
     @NotNull
-    Component title();
+    Gui gui();
 
-    @Range(from = 0L, to = 54L)
-    int size();
+    void setItem(@Range(from = 0L, to = 53L) int slot, @NotNull T itemWrapper);
+
+    void clear(@Range(from = 0L, to = 53L) int slot);
 }

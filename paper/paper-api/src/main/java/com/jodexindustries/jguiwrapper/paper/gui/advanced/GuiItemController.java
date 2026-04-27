@@ -1,16 +1,14 @@
 package com.jodexindustries.jguiwrapper.paper.gui.advanced;
 
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
+import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.api.utils.Pair;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.InventoryHandler;
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.HandlerContext;
-import com.jodexindustries.jguiwrapper.paper.api.gui.handler.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.HandlerContext;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.ItemHandler;
 import net.kyori.adventure.key.Key;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
@@ -192,7 +190,7 @@ public class GuiItemController {
 
     public void clear(int slot) {
         gui.removeClickHandlers(slot);
-        gui.holder().getInventory().clear(slot);
+        gui.holder().clear(slot);
     }
 
     /**
@@ -220,17 +218,21 @@ public class GuiItemController {
         redraw(slot);
     }
 
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable Player player, int... slots) {
+        updateItems(updater, player != null ? PaperGuiApi.get().user(player) : null, slots);
+    }
+
     /**
      * Updates items in specific slots with player
      *
      * @param updater Consumer to modify items
-     * @param player  Player to placeholder update
+     * @param user  Player to placeholder update
      * @param slots   Slot indexes to update
      */
-    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable OfflinePlayer player, int... slots) {
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable User user, int... slots) {
         for (int slot : slots) {
             if (this.slots.contains(slot)) {
-                updateItem(slot, updater, player);
+                updateItem(slot, updater, user);
             }
         }
     }
@@ -304,7 +306,7 @@ public class GuiItemController {
      * @param slot Slot index
      * @return Click handler for the slot or default handler if not specified
      */
-    public @Nullable InventoryHandler<InventoryClickEvent> getClickHandler(int slot) {
+    public @Nullable AdvancedGuiClickHandler getClickHandler(int slot) {
         return slotClickHandlers.getOrDefault(slot, defaultClickHandler);
     }
 
@@ -346,7 +348,7 @@ public class GuiItemController {
      *
      * @return The click handler or null if not set
      */
-    public @Nullable InventoryHandler<InventoryClickEvent> defaultClickHandler() {
+    public @Nullable AdvancedGuiClickHandler defaultClickHandler() {
         return defaultClickHandler;
     }
 
@@ -367,7 +369,7 @@ public class GuiItemController {
     }
 
     private void redraw(int slot) {
-        InventoryHandler<InventoryClickEvent> handler = getClickHandler(slot);
+        AdvancedGuiClickHandler handler = getClickHandler(slot);
         if (handler != null) {
             gui.setClickHandlers(handler, slot);
         } else {
@@ -376,25 +378,29 @@ public class GuiItemController {
 
         PaperItemWrapper item = getItem(slot);
         if (item != null) {
-            gui.holder().getInventory().setItem(slot, item.itemStack());
+            gui.holder().setItem(slot, item);
         }
+    }
+
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable Player player) {
+        updateItems(updater, player != null ? PaperGuiApi.get().user(player) : null);
     }
 
     /**
      * Updates all items (default and slot-specific) with player
      *
-     * @param player  Player to placeholder update
+     * @param user  Player to placeholder update
      * @param updater Consumer to modify items
      */
-    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable OfflinePlayer player) {
+    public void updateItems(@NotNull Consumer<PaperItemWrapper> updater, @Nullable User user) {
         if (defaultItemWrapper != null) {
             updater.accept(defaultItemWrapper);
-            if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update(player);
+            if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update(user);
         }
 
         for (PaperItemWrapper item : slotSpecificItems.values()) {
             updater.accept(item);
-            if (!item.isUpdated()) item.update(player);
+            if (!item.isUpdated()) item.update(user);
         }
 
         redraw();
@@ -406,7 +412,7 @@ public class GuiItemController {
      * @param updater Consumer to modify items
      */
     public void updateItems(@NotNull Consumer<PaperItemWrapper> updater) {
-        updateItems(updater, (OfflinePlayer) null);
+        updateItems(updater, (Player) null);
     }
 
     /**
@@ -416,7 +422,11 @@ public class GuiItemController {
      * @param updater Consumer to modify the item
      */
     public void updateItem(int slot, @NotNull Consumer<PaperItemWrapper> updater) {
-        updateItem(slot, updater, null);
+        updateItem(slot, updater, (User) null);
+    }
+
+    public void updateItem(int slot, @NotNull Consumer<PaperItemWrapper> updater, @Nullable Player player) {
+        updateItem(slot, updater, player != null ? PaperGuiApi.get().user(player) : null);
     }
 
     /**
@@ -425,11 +435,11 @@ public class GuiItemController {
      * @param slot    Slot index
      * @param updater Consumer to modify the item
      */
-    public void updateItem(int slot, @NotNull Consumer<PaperItemWrapper> updater, @Nullable OfflinePlayer player) {
+    public void updateItem(int slot, @NotNull Consumer<PaperItemWrapper> updater, @Nullable User user) {
         PaperItemWrapper item = getItem(slot);
         if (item != null) {
             updater.accept(item);
-            if (!item.isUpdated()) item.update(player);
+            if (!item.isUpdated()) item.update(user);
             redraw(slot);
         }
     }
@@ -443,16 +453,20 @@ public class GuiItemController {
     }
 
     public void loadItemHandler(@NotNull LoadType loadType) {
-        loadItemHandler(loadType, null);
+        loadItemHandler(loadType, (User) null);
     }
 
     public void loadItemHandler(@NotNull LoadType loadType, @Nullable Player player) {
+        loadItemHandler(loadType, player != null ? PaperGuiApi.get().user(player) : null);
+    }
+
+    public void loadItemHandler(@NotNull LoadType loadType, @Nullable User user) {
         if (this.itemHandler == null) return;
 
         Class<?> b = this.itemHandler.b();
 
         gui.getLoader(b).ifPresent(loader -> {
-            if (b.isInstance(loader)) this.itemHandler.a().load(loader, this, new HandlerContext<>(loadType, player));
+            if (b.isInstance(loader)) this.itemHandler.a().load(loader, this, new HandlerContext(loadType, user));
         });
     }
 

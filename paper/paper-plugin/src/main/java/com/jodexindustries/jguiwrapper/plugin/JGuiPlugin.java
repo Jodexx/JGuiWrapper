@@ -2,9 +2,9 @@ package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
 import com.jodexindustries.jguiwrapper.common.PaperGuiApiImpl;
-import com.jodexindustries.jguiwrapper.paper.api.gui.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGui;
-import com.jodexindustries.jguiwrapper.paper.api.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
@@ -107,11 +107,11 @@ public final class JGuiPlugin extends JavaPlugin {
                                 }
                             }
 
-                            Collection<GuiDataLoader<AdvancedGui>> loaders = advancedGui.getLoaders();
+                            Collection<GuiDataLoader> loaders = advancedGui.getLoaders();
                             if (!loaders.isEmpty()) {
                                 send(sender, "- Loaders:");
                                 int i = 0;
-                                for (GuiDataLoader<AdvancedGui> loader : loaders) {
+                                for (GuiDataLoader loader : loaders) {
                                     i++;
                                     send(sender, "-- #&a" + i);
                                     send(sender, "--- Class: &6" + loader.getClass().getSimpleName());

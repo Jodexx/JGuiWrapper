@@ -53,7 +53,7 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
                         .defaultItem(new PaperItemWrapper(itemStack))
                         .defaultClickHandler((e, c) -> {
                             e.setCancelled(true);
-                            e.getWhoClicked().sendMessage("Page: " + page + " Item: " + slot);
+                            e.user().sendMessage("Page: " + page + " Item: " + slot);
                         });
 
                 consumers[slot] = item;
