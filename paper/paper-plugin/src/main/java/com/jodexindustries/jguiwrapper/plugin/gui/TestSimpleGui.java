@@ -1,7 +1,7 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
-import com.jodexindustries.jguiwrapper.paper.gui.SimpleGui;
+import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class TestSimpleGui extends SimpleGui<TestSimpleGui> {
+public class TestSimpleGui extends PaperGuiBase<TestSimpleGui> {
 
     private final SizeLooper looper = new SizeLooper();
 

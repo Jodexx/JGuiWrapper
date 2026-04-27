@@ -4,8 +4,7 @@ import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.JGuiPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -13,7 +12,7 @@ import org.bukkit.Material;
 import java.util.Random;
 
 @SuppressWarnings("unused")
-public class TestAdvancedGui extends AdvancedGui {
+public class TestAdvancedGui extends PaperAdvancedGui {
 
     private int clicks;
 
@@ -29,11 +28,7 @@ public class TestAdvancedGui extends AdvancedGui {
             user.sendMessage("Opened");
 
             loadData(user);
-
-            // refresh item handlers
-            for (GuiItemController controller : getControllers()) {
-                controller.loadItemHandler(LoadType.ON_OPEN, user);
-            }
+            loadItemHandlers(LoadType.ON_OPEN, user);
         });
 
         registerItem("test", builder -> builder.slots(0, 1, 2, 3, 4, 5, 6, 7, 8)
@@ -59,8 +54,10 @@ public class TestAdvancedGui extends AdvancedGui {
                     event.setCancelled(true);
                     controller.updateItems(wrapper -> {
                         Material material = randomMaterial();
-                        wrapper.material(material);
-                        wrapper.meta().lore("&7Current material: &6" + material.name());
+                        if (wrapper instanceof PaperItemWrapper paper) {
+                            paper.material(material);
+                            paper.meta().lore("&7Current material: &6" + material.name());
+                        }
                     });
                 })
         );

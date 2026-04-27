@@ -1,13 +1,13 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.common.PaperGuiApiImpl;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGui;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.registry.GlobalRegistry;
-import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAbstractGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestAdvancedGui;
 import com.jodexindustries.jguiwrapper.plugin.gui.TestPaginatedAdvancedGui;
@@ -87,19 +87,19 @@ public final class JGuiPlugin extends JavaPlugin {
                     int index = 0;
 
                     for (Gui gui : activeInstances) {
-                        AbstractGui abstractGui = (AbstractGui) gui;
+                        PaperGuiBase<?> abstractGui = (PaperGuiBase<?>) gui;
                         send(sender, "Index: &6" + index);
                         send(sender, "Class: &6" + abstractGui.getClass().getName());
                         send(sender, "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName());
                         send(sender, "Title: " + PaperGuiApiImpl.get().defaultSerializer().serialize(abstractGui.title()));
                         send(sender, "Size: &6" + abstractGui.size());
                         send(sender, "Type: &6" + abstractGui.type());
-                        if (abstractGui instanceof AdvancedGui advancedGui) {
-                            Collection<GuiItemController> controllers = advancedGui.getControllers();
+                        if (abstractGui instanceof PaperAdvancedGui advancedGui) {
+                            Collection<AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers = advancedGui.getControllers();
                             if (!controllers.isEmpty()) {
                                 send(sender, "- Controllers:");
                                 int i = 0;
-                                for (GuiItemController controller : controllers) {
+                                for (AdvancedGuiItemController<PaperAdvancedGui, ?> controller : controllers) {
                                     i++;
                                     send(sender, "-- #&a" + i);
                                     send(sender, "--- Slots: &6" + controller.slots());
@@ -107,11 +107,11 @@ public final class JGuiPlugin extends JavaPlugin {
                                 }
                             }
 
-                            Collection<GuiDataLoader> loaders = advancedGui.getLoaders();
+                            Collection<GuiDataLoader<PaperAdvancedGui>> loaders = advancedGui.getLoaders();
                             if (!loaders.isEmpty()) {
                                 send(sender, "- Loaders:");
                                 int i = 0;
-                                for (GuiDataLoader loader : loaders) {
+                                for (GuiDataLoader<PaperAdvancedGui> loader : loaders) {
                                     i++;
                                     send(sender, "-- #&a" + i);
                                     send(sender, "--- Class: &6" + loader.getClass().getSimpleName());

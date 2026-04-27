@@ -1,8 +1,9 @@
 package com.jodexindustries.jguiwrapper.paper.api.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
+import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
-import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
+import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
@@ -14,16 +15,16 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
 @SuppressWarnings({"unused"})
-public class PaperGuiHolder implements GuiHolder<PaperItemWrapper>, InventoryHolder {
+public class PaperGuiHolder implements GuiHolder, InventoryHolder {
 
-    private final AbstractGui<?> gui;
+    private final PaperGuiBase<?> gui;
     private final Inventory inventory;
 
-    public PaperGuiHolder(@NotNull AbstractGui<?> gui) {
+    public PaperGuiHolder(@NotNull PaperGuiBase<?> gui) {
         this(gui, null);
     }
 
-    public PaperGuiHolder(@NotNull AbstractGui<?> gui, @Nullable InventoryType type) {
+    public PaperGuiHolder(@NotNull PaperGuiBase<?> gui, @Nullable InventoryType type) {
         this.gui = gui;
         int size = gui.size();
         Component title = gui.title();
@@ -36,13 +37,13 @@ public class PaperGuiHolder implements GuiHolder<PaperItemWrapper>, InventoryHol
     }
 
     @Override
-    public @NotNull AbstractGui<?> gui() {
+    public @NotNull PaperGuiBase<?> gui() {
         return gui;
     }
 
     @Override
-    public void setItem(int slot, @NotNull PaperItemWrapper itemWrapper) {
-        setItem(slot, itemWrapper.itemStack());
+    public void setItem(int slot, @NotNull ItemWrapper item) {
+        setItem(slot, PaperItemWrapper.wrap(item).itemStack());
     }
 
     public void setItem(int slot, @NotNull ItemStack itemStack) {

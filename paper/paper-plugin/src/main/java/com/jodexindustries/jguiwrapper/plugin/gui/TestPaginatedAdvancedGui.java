@@ -2,7 +2,7 @@ package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.paper.api.item.PaperItemWrapper;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
 import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaginatedAdvancedGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -42,14 +42,14 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
         for (int j = 0; j < pages; j++) {
             final int page = j;
 
-            Consumer<GuiItemController.Builder>[] consumers = new Consumer[itemsPerPage];
+            Consumer<AdvancedGuiItemController.Builder<com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui>>[] consumers = new Consumer[itemsPerPage];
 
             for (int i = 0; i < itemsPerPage; i++) {
                 final int slot = i;
 
                 ItemStack itemStack = new ItemStack(Material.DIAMOND, Math.min((i + 1), 64));
 
-                Consumer<GuiItemController.Builder> item = (b) -> b.slots(slot)
+                Consumer<AdvancedGuiItemController.Builder<com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui>> item = (b) -> b.slots(slot)
                         .defaultItem(new PaperItemWrapper(itemStack))
                         .defaultClickHandler((e, c) -> {
                             e.setCancelled(true);

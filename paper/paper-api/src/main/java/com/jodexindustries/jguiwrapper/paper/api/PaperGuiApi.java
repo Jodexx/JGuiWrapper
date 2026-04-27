@@ -1,10 +1,10 @@
 package com.jodexindustries.jguiwrapper.paper.api;
 
 import com.jodexindustries.jguiwrapper.api.GuiApi;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
 import com.jodexindustries.jguiwrapper.paper.api.nms.NMSWrapper;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.registry.GlobalRegistry;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

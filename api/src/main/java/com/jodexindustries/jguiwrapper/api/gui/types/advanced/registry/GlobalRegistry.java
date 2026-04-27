@@ -1,7 +1,7 @@
-package com.jodexindustries.jguiwrapper.paper.gui.advanced.registry;
+package com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry;
 
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.ItemHandler;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.item.ItemHandler;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
@@ -9,19 +9,18 @@ import org.jetbrains.annotations.UnmodifiableView;
 import java.util.Collection;
 import java.util.Optional;
 
-@SuppressWarnings({"unused"})
 public interface GlobalRegistry {
 
     @NotNull
     DataRegistry register(@NotNull String namespace);
 
-    void registerLoader(@NotNull Key key, GuiDataLoader loader);
+    void registerLoader(@NotNull Key key, GuiDataLoader<?> loader);
 
     void registerHandler(@NotNull Key key, ItemHandler<?> handler);
 
     void unregister(@NotNull String namespace);
 
-    Optional<GuiDataLoader> getLoader(@NotNull Key key);
+    Optional<GuiDataLoader<?>> getLoader(@NotNull Key key);
 
     Optional<DataRegistry> getRegistry(@NotNull String namespace);
 
@@ -29,3 +28,4 @@ public interface GlobalRegistry {
     @NotNull
     Collection<DataRegistry> getRegistries();
 }
+

@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api;
 
+import com.jodexindustries.jguiwrapper.api.gui.factory.GuiFactory;
 import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import org.jetbrains.annotations.ApiStatus;
@@ -98,4 +99,12 @@ public abstract class GuiApi {
     }
 
     public abstract PlaceholderEngine createPlaceholderEngine();
+
+    /**
+     * Gets the GUI factory bound to the current platform API instance.
+     *
+     * @return GUI factory
+     */
+    public abstract GuiFactory guiFactory();
+
 }

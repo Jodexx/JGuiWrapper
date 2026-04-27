@@ -1,14 +1,14 @@
 package com.jodexindustries.jguiwrapper.plugin.gui;
 
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
-import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
+import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-public class TestAbstractGui extends AbstractGui<TestAbstractGui> {
+public class TestAbstractGui extends PaperGuiBase<TestAbstractGui> {
 
     public TestAbstractGui() {
         super("&cTest abstract gui");

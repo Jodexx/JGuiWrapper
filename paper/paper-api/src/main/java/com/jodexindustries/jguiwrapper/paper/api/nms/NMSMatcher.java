@@ -60,7 +60,7 @@ public class NMSMatcher {
                 ? craftBukkitPackage.split("\\.")[3].substring(1)
                 : VERSIONS.getOrDefault(Bukkit.getBukkitVersion().split("-")[0], NEWEST_VERSION);
 
-        String className = NMSMatcher.class.getPackage().getName() + ".Wrapper" + version;
+        String className = "com.jodexindustries.jguiwrapper.paper.nms.Wrapper" + version;
 
         if (log) plugin.getLogger().info("Using " + version + " NMS");
 

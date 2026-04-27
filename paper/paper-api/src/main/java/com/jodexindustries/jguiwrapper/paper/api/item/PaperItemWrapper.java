@@ -99,6 +99,26 @@ public class PaperItemWrapper extends ItemWrapper {
         return builder(material, null);
     }
 
+    @NotNull
+    public static PaperItemWrapper wrap(@NotNull ItemWrapper itemWrapper) {
+        if (itemWrapper instanceof PaperItemWrapper paperItemWrapper) {
+            return paperItemWrapper;
+        }
+
+        Material material = Material.matchMaterial(itemWrapper.id());
+        if (material == null) {
+            throw new IllegalArgumentException("Cannot adapt ItemWrapper to PaperItemWrapper: unknown material id '" + itemWrapper.id() + "'");
+        }
+
+        PaperItemWrapper adapted = new PaperItemWrapper(material, itemWrapper.amount());
+        adapted.meta(itemWrapper.meta());
+        adapted.placeholderEngine(itemWrapper.placeholderEngine());
+        adapted.canUpdate(itemWrapper.canUpdate());
+        adapted.autoFlushUpdate(itemWrapper.autoFlushUpdate());
+        adapted.update();
+        return adapted;
+    }
+
     public static Builder builder(@NotNull final Material material, @Nullable final SerializerType serializer) {
         Preconditions.checkArgument(material != null, "Material cannot be null");
         return new Builder(material, serializer);

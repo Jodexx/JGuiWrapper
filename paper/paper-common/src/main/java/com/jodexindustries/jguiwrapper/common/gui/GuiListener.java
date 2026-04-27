@@ -6,7 +6,7 @@ import com.jodexindustries.jguiwrapper.api.gui.event.GuiCloseEvent;
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiDragEvent;
 import com.jodexindustries.jguiwrapper.paper.api.PaperGuiApi;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGuiHolder;
-import com.jodexindustries.jguiwrapper.paper.gui.AbstractGui;
+import com.jodexindustries.jguiwrapper.paper.gui.PaperGuiBase;
 import com.jodexindustries.jguiwrapper.paper.api.utils.GuiUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +25,7 @@ public class GuiListener implements Listener {
 
         boolean playerInventory = e.getClickedInventory() != null && e.getClickedInventory().getType() == InventoryType.PLAYER;
 
-        AbstractGui<Gui> gui = (AbstractGui<Gui>) holder.gui();
+        PaperGuiBase<Gui> gui = (PaperGuiBase<Gui>) holder.gui();
 
         GuiClickEvent<Gui> event = new GuiClickEvent<>(
                 e, gui,
@@ -46,7 +46,7 @@ public class GuiListener implements Listener {
         PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
         if (holder == null) return;
 
-        AbstractGui<Gui> gui = (AbstractGui<Gui>) holder.gui();
+        PaperGuiBase<Gui> gui = (PaperGuiBase<Gui>) holder.gui();
 
         GuiCloseEvent<Gui> event = new GuiCloseEvent<>(e, gui, PaperGuiApi.get().user(e.getPlayer()));
         gui.onClose(event);
@@ -57,7 +57,7 @@ public class GuiListener implements Listener {
         PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
         if (holder == null) return;
 
-        AbstractGui<Gui> gui = (AbstractGui<Gui>) holder.gui();
+        PaperGuiBase<Gui> gui = (PaperGuiBase<Gui>) holder.gui();
 
         GuiDragEvent<Gui> event = new GuiDragEvent<>(e, gui, PaperGuiApi.get().user(e.getWhoClicked()), e.getRawSlots());
         gui.onDrag(event);

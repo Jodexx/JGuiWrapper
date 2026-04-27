@@ -1,9 +1,9 @@
 package com.jodexindustries.jguiwrapper.common.registry;
 
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.ItemHandler;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.registry.DataRegistry;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.registry.GlobalRegistry;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.item.ItemHandler;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.DataRegistry;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.GlobalRegistry;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +30,7 @@ public class GlobalRegistryImpl implements GlobalRegistry {
     }
 
     @Override
-    public void registerLoader(@NotNull Key key, GuiDataLoader loader) {
+    public void registerLoader(@NotNull Key key, GuiDataLoader<?> loader) {
         Optional<DataRegistry> optionalRegistry = getRegistry(key.namespace());
         if (optionalRegistry.isPresent()) {
             optionalRegistry.get().registerLoader(key.value(), loader);
@@ -57,7 +57,7 @@ public class GlobalRegistryImpl implements GlobalRegistry {
     }
 
     @Override
-    public Optional<GuiDataLoader> getLoader(@NotNull Key key) {
+    public Optional<GuiDataLoader<?>> getLoader(@NotNull Key key) {
         Optional<DataRegistry> registry = getRegistry(key.namespace());
         return registry.flatMap(dataRegistry -> dataRegistry.getLoader(key.value()));
     }

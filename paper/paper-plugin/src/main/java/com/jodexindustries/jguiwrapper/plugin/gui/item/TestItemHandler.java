@@ -1,16 +1,16 @@
 package com.jodexindustries.jguiwrapper.plugin.gui.item;
 
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.HandlerContext;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.item.ItemHandler;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.item.HandlerContext;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.item.ItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class TestItemHandler implements ItemHandler<TestGuiLoader> {
 
     @Override
-    public void load(@NotNull TestGuiLoader loader, @NotNull GuiItemController controller, @NotNull HandlerContext context) {
+    public void load(@NotNull TestGuiLoader loader, @NotNull AdvancedGuiItemController<?, ?> controller, @NotNull HandlerContext context) {
         controller.defaultClickHandler((e, c) -> {
             e.setCancelled(true);
             if (e.clickType() == GuiClickEvent.ClickType.DOUBLE_CLICK) return;

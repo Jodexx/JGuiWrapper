@@ -2,13 +2,13 @@ package com.jodexindustries.jguiwrapper.plugin.gui.item;
 
 import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.user.User;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiDataLoader;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.AdvancedGui;
-import com.jodexindustries.jguiwrapper.paper.gui.advanced.GuiItemController;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
+import com.jodexindustries.jguiwrapper.paper.gui.advanced.PaperAdvancedGui;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public class TestGuiLoader implements GuiDataLoader {
+public class TestGuiLoader implements GuiDataLoader<PaperAdvancedGui> {
 
     private final PlaceholderEngine placeholderEngine = PlaceholderEngine.of();
 
@@ -25,10 +25,10 @@ public class TestGuiLoader implements GuiDataLoader {
     }
 
     @Override
-    public void load(@NotNull AdvancedGui gui, @NotNull User user) {
+    public void load(@NotNull PaperAdvancedGui gui, @NotNull User user) {
         openCount++;
 
-        for (GuiItemController controller : gui.getControllers()) {
+        for (AdvancedGuiItemController<PaperAdvancedGui, ?> controller : gui.getControllers()) {
             controller.updateItems(itemWrapper -> {
                 if (itemWrapper.placeholderEngine() == null) {
                     itemWrapper.placeholderEngine(placeholderEngine);

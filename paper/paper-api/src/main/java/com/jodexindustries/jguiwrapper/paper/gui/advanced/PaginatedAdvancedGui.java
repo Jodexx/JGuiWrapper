@@ -1,6 +1,7 @@
 package com.jodexindustries.jguiwrapper.paper.gui.advanced;
 
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.ApiStatus;
@@ -16,7 +17,7 @@ import java.util.stream.Stream;
 
 @ApiStatus.Experimental
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class PaginatedAdvancedGui extends AdvancedGui {
+public class PaginatedAdvancedGui extends PaperAdvancedGui {
 
     protected final List<Page> pages = new ArrayList<>();
 
@@ -94,11 +95,11 @@ public class PaginatedAdvancedGui extends AdvancedGui {
     }
 
     @SafeVarargs
-    public final void addPage(@NotNull Consumer<GuiItemController.@NotNull Builder> @NotNull ... builderConsumers) {
+    public final void addPage(@NotNull Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>> @NotNull ... builderConsumers) {
         addPage(new Page(this, Arrays.stream(builderConsumers)));
     }
 
-    public final void addPage(@NotNull List<Consumer<GuiItemController.@NotNull Builder>> builderConsumers) {
+    public final void addPage(@NotNull List<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>> builderConsumers) {
         addPage(new Page(this, builderConsumers));
     }
 
@@ -134,32 +135,32 @@ public class PaginatedAdvancedGui extends AdvancedGui {
         this.currentPage = page;
     }
 
-    protected record Page(@NotNull List<GuiItemController> controllers) {
+    protected record Page(@NotNull List<? extends AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers) {
 
         public static final String ITEM_KEY = "paged_item_";
 
-        public Page(@NotNull AdvancedGui gui, @NotNull List<Consumer<GuiItemController.@NotNull Builder>> builderConsumers) {
+        public Page(@NotNull PaperAdvancedGui gui, @NotNull List<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>> builderConsumers) {
             this(gui, builderConsumers.stream());
         }
 
-        public Page(@NotNull AdvancedGui gui, @NotNull Stream<Consumer<GuiItemController.@NotNull Builder>> builderStream) {
+        public Page(@NotNull PaperAdvancedGui gui, @NotNull Stream<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>> builderStream) {
             this(builderStream.map(builderConsumer -> {
-                GuiItemController.Builder builder = new GuiItemController.Builder(gui);
+                AdvancedGuiItemController.Builder<PaperAdvancedGui> builder = new AdvancedGuiItemController.Builder<>(gui);
                 builderConsumer.accept(builder);
-                return builder.build();
+                return (AdvancedGuiItemController<PaperAdvancedGui, ?>) builder.build();
             }).toList());
         }
 
         public void register() {
             for (int i = 0; i < controllers.size(); i++) {
-                GuiItemController controller = controllers.get(i);
+                AdvancedGuiItemController<PaperAdvancedGui, ?> controller = controllers.get(i);
                 controller.gui().registerItem(Page.ITEM_KEY + i, controller);
             }
         }
 
         public void unregister() {
             for (int i = 0; i < controllers.size(); i++) {
-                GuiItemController controller = controllers.get(i);
+                AdvancedGuiItemController<PaperAdvancedGui, ?> controller = controllers.get(i);
                 controller.gui().unregister(ITEM_KEY + i);
             }
         }
