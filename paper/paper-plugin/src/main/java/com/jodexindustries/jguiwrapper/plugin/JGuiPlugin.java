@@ -1,8 +1,10 @@
 package com.jodexindustries.jguiwrapper.plugin;
 
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
-import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
+import com.jodexindustries.jguiwrapper.api.gui.factory.GuiOptions;
+import com.jodexindustries.jguiwrapper.api.gui.factory.GuiType;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
+import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.GlobalRegistry;
 import com.jodexindustries.jguiwrapper.common.PaperGuiApiImpl;
 import com.jodexindustries.jguiwrapper.paper.api.gui.PaperGui;
@@ -29,11 +31,13 @@ public final class JGuiPlugin extends JavaPlugin {
     public static final Key TEST_LOADER_KEY = Key.key("jguiwrapper", "test");
     public static final Key TEST_HANDLER_KEY = Key.key("jguiwrapper", "test");
 
-    private static final Map<String, Supplier<PaperGui>> TEST_GUIS = Map.of(
+    private static final Map<String, Supplier<Gui>> TEST_GUIS = Map.of(
             "abstract", TestAbstractGui::new,
             "simple", TestSimpleGui::new,
             "advanced", TestAdvancedGui::new,
-            "paginated", TestPaginatedAdvancedGui::new
+            "paginated", TestPaginatedAdvancedGui::new,
+            "default_advanced", () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.ADVANCED, GuiOptions.builder().size(9).build()),
+            "default_paginated", () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.PAGINATED, GuiOptions.builder().size(18).build())
     );
 
     @Override
@@ -64,7 +68,7 @@ public final class JGuiPlugin extends JavaPlugin {
                     }
 
                     if (args.length >= 2) {
-                        PaperGui gui = TEST_GUIS.get(args[1]).get();
+                        PaperGui gui = (PaperGui) TEST_GUIS.get(args[1]).get();
                         if (gui == null) {
                             sender.sendMessage("Unknown gui");
                             return false;
