@@ -5,11 +5,13 @@ import com.jodexindustries.jguiwrapper.api.text.PlaceholderEngine;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.Optional;
 
 public abstract class GuiApi {
 
+    @UnknownNullability
     protected static volatile GuiApi instance = null;
 
     private static SerializerType DEFAULT_SERIALIZER = SerializerType.LEGACY_AMPERSAND;
