@@ -60,8 +60,8 @@ public class PaperItemWrapper extends ItemWrapper {
     protected void updateMeta(final @Nullable Component displayName, @Nullable final List<Component> lore) {
         ItemMeta meta = this.itemStack.getItemMeta();
         if (meta != null) {
-            meta.displayName(displayName);
-            meta.lore(lore);
+            if (displayName != null) meta.displayName(displayName);
+            if (lore != null) meta.lore(lore);
             meta.setCustomModelData(this.meta().customModelData());
             if (this.meta().enchanted()) {
                 meta.addEnchant(Enchantment.LURE, 1, true);
