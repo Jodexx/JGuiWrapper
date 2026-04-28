@@ -4,7 +4,7 @@ plugins {
 }
 
 var excludedProjects = listOf("paper")
-var publishProjects = listOf("api", "common", "paper-common", "paper-api", "nms")
+var publishProjects = listOf("api", "common", "paper-common", "paper-api", "nms", "minestom")
 
 subprojects {
 

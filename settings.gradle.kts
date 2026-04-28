@@ -40,3 +40,4 @@ include(
 
     ":paper:paper-common"
 )
+include("minestom")
