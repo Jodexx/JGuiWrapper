@@ -107,10 +107,10 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
     @Override
     public void close(@NotNull HumanEntity player, @NotNull User user) {
         InventoryCloseEvent.Reason reason = InventoryCloseEvent.Reason.PLUGIN;
-        player.closeInventory(reason);
 
         InventoryCloseEvent event = new InventoryCloseEvent(player.getOpenInventory());
         onClose(new GuiCloseEvent(event, this, user));
+        player.closeInventory(reason);
     }
 
     public final void updateMenu() {
