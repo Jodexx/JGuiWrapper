@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +38,7 @@ public class PaperItemWrapper extends ItemWrapper {
     }
 
     public PaperItemWrapper(@NotNull final Material material, final int amount) {
-        this(new ItemStack(material, amount));
+        this(material, amount, null);
     }
 
     public PaperItemWrapper(@NotNull final Material material, @Nullable final SerializerType serializer) {
@@ -45,7 +46,7 @@ public class PaperItemWrapper extends ItemWrapper {
     }
 
     public PaperItemWrapper(@NotNull final Material material) {
-        this(material, 1);
+        this(material, null);
     }
 
     public void update(@Nullable final HumanEntity entity) {
@@ -64,6 +65,7 @@ public class PaperItemWrapper extends ItemWrapper {
             if (lore != null) meta.lore(lore);
             meta.setCustomModelData(this.meta().customModelData());
             if (this.meta().enchanted()) {
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 meta.addEnchant(Enchantment.LURE, 1, true);
             } else {
                 meta.removeEnchant(Enchantment.LURE);
@@ -114,7 +116,7 @@ public class PaperItemWrapper extends ItemWrapper {
         adapted.placeholderEngine(itemWrapper.placeholderEngine());
         adapted.canUpdate(itemWrapper.canUpdate());
         adapted.autoFlushUpdate(itemWrapper.autoFlushUpdate());
-        adapted.update();
+        if(itemWrapper.isUpdated()) adapted.update();
         return adapted;
     }
 
