@@ -22,63 +22,10 @@ public class PaginatedAdvancedGui extends PaperAdvancedGui {
 
     private int currentPage = 0;
 
-    /**
-     * Constructs a GUI with the default size (54) and a string title.
-     *
-     * @param title The GUI title as a string
-     */
-    public PaginatedAdvancedGui(@NotNull String title) {
-        super(title);
+    public PaginatedAdvancedGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(size, title, defaultSerializer);
     }
 
-    /**
-     * Constructs a GUI with a specific size and string title.
-     *
-     * @param size  The inventory size
-     * @param title The GUI title as a string
-     */
-    public PaginatedAdvancedGui(int size, @NotNull String title) {
-        super(size, title);
-    }
-
-    /**
-     * Constructs a GUI with the default CHEST type and a component title.
-     *
-     * @param title The GUI title as a Component
-     */
-    public PaginatedAdvancedGui(@NotNull Component title) {
-        super(title);
-    }
-
-    /**
-     * Constructs a GUI with a specific inventory type and component title.
-     *
-     * @param type  The inventory type
-     * @param title The GUI title as a Component
-     */
-    public PaginatedAdvancedGui(@NotNull InventoryType type, @NotNull Component title) {
-        super(type, title);
-    }
-
-    /**
-     * Constructs a GUI with a specific size, optional type, and component title.
-     *
-     * @param size  The inventory size
-     * @param title The GUI title as a Component
-     */
-    public PaginatedAdvancedGui(int size, @NotNull Component title) {
-        super(size, title);
-    }
-
-    /**
-     * Constructs a GUI with a specific inventory type and component title with serializer.
-     *
-     * @param type              The inventory type.
-     * @param title             The GUI title as a {@link Component}.
-     * @param defaultSerializer The default serializer used for converting between plain strings and {@link Component}
-     *                          instances. If {@code null}, the
-     *                          {@link #defaultSerializer} will be used.
-     */
     public PaginatedAdvancedGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         super(type, title, defaultSerializer);
     }

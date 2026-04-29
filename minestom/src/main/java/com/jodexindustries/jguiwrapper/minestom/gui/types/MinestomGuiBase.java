@@ -20,55 +20,21 @@ import java.util.Set;
 
 public abstract class MinestomGuiBase<T extends Gui> extends SimpleGui<T> implements MinestomGui {
 
-    private InventoryType type;
+    public MinestomGuiBase(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(size, title, defaultSerializer);
 
-    private MinestomGuiHolder holder;
-
-    public MinestomGuiBase(@NotNull String title) {
-        super(title);
-        init(null);
-    }
-
-    public MinestomGuiBase(int size, @NotNull String title) {
-        super(size, title);
-        init(null);
-    }
-
-    public MinestomGuiBase(@NotNull Component title) {
-        this(InventoryType.CHEST_3_ROW, title);
-    }
-
-    public MinestomGuiBase(@NotNull InventoryType type, @NotNull Component title) {
-        this(type, title, null);
+        this.holder = new MinestomGuiHolder(this);
     }
 
     public MinestomGuiBase(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         super(type.getSize(), title, defaultSerializer);
-        init(type);
-    }
 
-    public MinestomGuiBase(int size, @NotNull Component title) {
-        super(size, title);
-        init(null);
-    }
-
-    private void init(@Nullable InventoryType inventoryType) {
-        this.holder = new MinestomGuiHolder(this, inventoryType);
-        this.type = holder.getInventory().getInventoryType();
-    }
-
-    public final void type(@NotNull InventoryType type) {
-        this.type = type;
-    }
-
-    @NotNull
-    public final InventoryType type() {
-        return type;
+        this.holder = new MinestomGuiHolder(this, type);
     }
 
     @Override
     public @NotNull MinestomGuiHolder holder() {
-        return this.holder;
+        return (MinestomGuiHolder) this.holder;
     }
 
     @Override
@@ -78,7 +44,7 @@ public abstract class MinestomGuiBase<T extends Gui> extends SimpleGui<T> implem
 
     @Override
     public void open(@NotNull Player player, @NotNull User user, @NotNull Component title) {
-        Inventory inventory = holder.getInventory();
+        Inventory inventory = holder().getInventory();
         player.openInventory(inventory);
 
         player.sendPacket(new OpenWindowPacket(inventory.getWindowId(), inventory.getInventoryType().getWindowType(), title));
@@ -87,7 +53,7 @@ public abstract class MinestomGuiBase<T extends Gui> extends SimpleGui<T> implem
 
     @Override
     public void close(@NotNull Player player, @NotNull User user) {
-        InventoryCloseEvent event = new InventoryCloseEvent(this.holder.getInventory(), player, false);
+        InventoryCloseEvent event = new InventoryCloseEvent(this.holder().getInventory(), player, false);
 
         onClose(new GuiCloseEvent(event, this, user));
         player.closeInventory();
@@ -95,7 +61,7 @@ public abstract class MinestomGuiBase<T extends Gui> extends SimpleGui<T> implem
 
     @Override
     public void updateHolder() {
-        Set<Player> viewers = this.holder.getInventory().getViewers();
+        Set<Player> viewers = this.holder().getInventory().getViewers();
 
         close();
 

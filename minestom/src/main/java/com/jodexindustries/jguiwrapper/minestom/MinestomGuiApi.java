@@ -10,8 +10,8 @@ import com.jodexindustries.jguiwrapper.common.registry.GlobalRegistryImpl;
 import com.jodexindustries.jguiwrapper.minestom.user.MinestomUser;
 import com.jodexindustries.jguiwrapper.minestom.gui.GuiListener;
 import com.jodexindustries.jguiwrapper.minestom.placeholder.PlaceholderEngineImpl;
-import com.jodexindustries.jguiwrapper.minestom.gui.types.MinestomAdvancedGui;
-import com.jodexindustries.jguiwrapper.minestom.gui.types.MinestomPaginatedGui;
+import com.jodexindustries.jguiwrapper.minestom.gui.types.advanced.MinestomAdvancedGui;
+import com.jodexindustries.jguiwrapper.minestom.gui.types.advanced.MinestomPaginatedGui;
 import net.minestom.server.ServerProcess;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -28,8 +28,8 @@ public class MinestomGuiApi extends GuiApi {
     private MinestomGuiApi(Logger logger, ServerProcess server) {
         super(() -> logger);
         this.server = server;
-        guiFactory().register(GuiType.ADVANCED, options -> new MinestomAdvancedGui(options.size(), options.title()));
-        guiFactory().register(GuiType.PAGINATED, options -> new MinestomPaginatedGui(options.size(), options.title()));
+        guiFactory().register(GuiType.ADVANCED, options -> new MinestomAdvancedGui(options.size(), options.title(), options.serializer()));
+        guiFactory().register(GuiType.PAGINATED, options -> new MinestomPaginatedGui(options.size(), options.title(), options.serializer()));
     }
 
     /**

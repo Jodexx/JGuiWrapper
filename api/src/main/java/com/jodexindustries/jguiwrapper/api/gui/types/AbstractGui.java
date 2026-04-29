@@ -2,6 +2,7 @@ package com.jodexindustries.jguiwrapper.api.gui.types;
 
 import com.jodexindustries.jguiwrapper.api.GuiApi;
 import com.jodexindustries.jguiwrapper.api.gui.Gui;
+import com.jodexindustries.jguiwrapper.api.gui.GuiHolder;
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent;
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiCloseEvent;
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiDragEvent;
@@ -24,22 +25,7 @@ public abstract class AbstractGui<T extends Gui> implements Gui {
 
     private int size;
     private Component title;
-
-    public AbstractGui(@NotNull String title) {
-        this(54, title);
-    }
-
-    public AbstractGui(int size, @NotNull String title) {
-        this(size, GuiApi.get().defaultSerializer().deserialize(title));
-    }
-
-    public AbstractGui(@NotNull Component title) {
-        this(54, title, null);
-    }
-
-    public AbstractGui(int size, @NotNull Component title) {
-        this(size, title, null);
-    }
+    protected GuiHolder holder;
 
     public AbstractGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         this.size = adaptSize(size);
@@ -71,6 +57,11 @@ public abstract class AbstractGui<T extends Gui> implements Gui {
 
     public final void title(@NotNull String title) {
         this.title = defaultSerializer.deserialize(title);
+    }
+
+    @Override
+    public @NotNull GuiHolder holder() {
+        return this.holder;
     }
 
     @SuppressWarnings("unchecked")

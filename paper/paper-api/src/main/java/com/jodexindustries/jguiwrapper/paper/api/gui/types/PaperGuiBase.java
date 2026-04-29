@@ -32,55 +32,26 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
 
     protected static final PaperGuiApi API = PaperGuiApi.get();
 
-    private InventoryType type;
+    public PaperGuiBase(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(size, title, defaultSerializer);
 
-    private PaperGuiHolder holder;
-
-    public PaperGuiBase(@NotNull String title) {
-        super(title);
-        init(null);
-    }
-
-    public PaperGuiBase(int size, @NotNull String title) {
-        super(size, title);
-        init(null);
-    }
-
-    public PaperGuiBase(@NotNull Component title) {
-        this(InventoryType.CHEST, title);
-    }
-
-    public PaperGuiBase(@NotNull InventoryType type, @NotNull Component title) {
-        this(type, title, null);
+        this.holder = new PaperGuiHolder(this);
     }
 
     public PaperGuiBase(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         super(type.getDefaultSize(), title, defaultSerializer);
-        init(type);
-    }
 
-    public PaperGuiBase(int size, @NotNull Component title) {
-        super(size, title);
-        init(null);
-    }
-
-    private void init(@Nullable InventoryType inventoryType) {
-        this.holder = new PaperGuiHolder(this, inventoryType);
-        this.type = holder.getInventory().getType();
-    }
-
-    public final void type(@NotNull InventoryType type) {
-        this.type = type;
+        this.holder = new PaperGuiHolder(this, type);
     }
 
     @NotNull
     public final InventoryType type() {
-        return type;
+        return holder().getInventory().getType();
     }
 
     @Override
     public final @NotNull PaperGuiHolder holder() {
-        return holder;
+        return (PaperGuiHolder) this.holder;
     }
 
     @Override
@@ -91,10 +62,10 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
     @Override
     public void open(@NotNull HumanEntity player, @NotNull User user, @NotNull Component title) {
         try {
-            InventoryView view = API.getNMSWrapper().openInventory(player, holder.getInventory(), type, size(), title);
+            InventoryView view = API.getNMSWrapper().openInventory(player, holder().getInventory(), type(), size(), title);
 
             if (view == null) {
-                player.openInventory(holder.getInventory());
+                player.openInventory(holder().getInventory());
             } else {
                 InventoryOpenEvent event = new InventoryOpenEvent(view);
                 onOpen(new GuiOpenEvent(event, this, user));
@@ -114,15 +85,15 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
     }
 
     public final void updateMenu() {
-        updateMenu(this.type, size(), title());
+        updateMenu(type(), size(), title());
     }
 
     public final void updateMenu(boolean refreshData) {
-        updateMenu(this.type, size(), title(), refreshData);
+        updateMenu(type(), size(), title(), refreshData);
     }
 
     public final boolean updateMenu(@NotNull HumanEntity player) {
-        return updateMenu(player, this.type, size(), title());
+        return updateMenu(player, type(), size(), title());
     }
 
     public final void updateMenu(@Nullable Component title) {
@@ -138,11 +109,11 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
     }
 
     public final void updateMenu(@Nullable InventoryType type, int size, @Nullable Component title) {
-        this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title));
+        this.holder().getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title));
     }
 
     public final void updateMenu(@Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
-        this.holder.getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title, refreshData));
+        this.holder().getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title, refreshData));
     }
 
     public final boolean updateMenu(@NotNull HumanEntity player, @Nullable Component title) {
@@ -172,11 +143,11 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
 
     @Override
     public final void updateHolder() {
-        List<HumanEntity> viewers = new ArrayList<>(this.holder.getInventory().getViewers());
+        List<HumanEntity> viewers = new ArrayList<>(this.holder().getInventory().getViewers());
 
         close();
 
-        this.holder = new PaperGuiHolder(this, type);
+        this.holder = new PaperGuiHolder(this, type());
 
         viewers.forEach(this::open);
     }

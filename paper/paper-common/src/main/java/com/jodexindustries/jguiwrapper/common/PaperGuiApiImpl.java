@@ -53,8 +53,8 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
 
     private PaperGuiApiImpl(Plugin plugin) {
         super(plugin);
-        guiFactory().register(GuiType.ADVANCED, options -> new PaperAdvancedGui(options.size(), options.title()));
-        guiFactory().register(GuiType.PAGINATED, options -> new PaginatedAdvancedGui(options.size(), options.title()));
+        guiFactory().register(GuiType.ADVANCED, options -> new PaperAdvancedGui(options.size(), options.title(), options.serializer()));
+        guiFactory().register(GuiType.PAGINATED, options -> new PaginatedAdvancedGui(options.size(), options.title(), options.serializer()));
     }
 
     public static void init(Plugin plugin) {

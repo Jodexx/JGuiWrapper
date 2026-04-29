@@ -31,22 +31,6 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
 
     private boolean cancelEmptySlots = true;
 
-    public SimpleGui(@NotNull String title) {
-        super(title);
-    }
-
-    public SimpleGui(int size, @NotNull String title) {
-        super(size, title);
-    }
-
-    public SimpleGui(@NotNull Component title) {
-        super(title);
-    }
-
-    public SimpleGui(int size, @NotNull Component title) {
-        super(size, title);
-    }
-
     public SimpleGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         super(size, title, defaultSerializer);
     }

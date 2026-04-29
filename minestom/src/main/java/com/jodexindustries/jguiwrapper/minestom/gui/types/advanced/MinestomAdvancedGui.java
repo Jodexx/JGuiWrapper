@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.minestom.gui.types;
+package com.jodexindustries.jguiwrapper.minestom.gui.types.advanced;
 
 import com.jodexindustries.jguiwrapper.api.gui.LoadType;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGui;
@@ -10,6 +10,7 @@ import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import com.jodexindustries.jguiwrapper.api.user.User;
 import com.jodexindustries.jguiwrapper.api.utils.Pair;
 import com.jodexindustries.jguiwrapper.minestom.MinestomGuiApi;
+import com.jodexindustries.jguiwrapper.minestom.gui.types.MinestomGuiBase;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
@@ -30,28 +31,12 @@ public class MinestomAdvancedGui extends MinestomGuiBase<MinestomAdvancedGui> im
     private final Map<Integer, AdvancedGuiItemController<MinestomAdvancedGui, ?>> slotMap = new HashMap<>();
     private final Map<Class<?>, GuiDataLoader<MinestomAdvancedGui>> loaderMap = new HashMap<>();
 
-    public MinestomAdvancedGui(@NotNull String title) {
-        super(title);
-    }
-
-    public MinestomAdvancedGui(int size, @NotNull String title) {
-        super(size, title);
-    }
-
-    public MinestomAdvancedGui(@NotNull Component title) {
-        super(title);
-    }
-
-    public MinestomAdvancedGui(@NotNull InventoryType type, @NotNull Component title) {
-        super(type, title);
+    public MinestomAdvancedGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(size, title, defaultSerializer);
     }
 
     public MinestomAdvancedGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
         super(type, title, defaultSerializer);
-    }
-
-    public MinestomAdvancedGui(int size, @NotNull Component title) {
-        super(size, title);
     }
 
     @Override

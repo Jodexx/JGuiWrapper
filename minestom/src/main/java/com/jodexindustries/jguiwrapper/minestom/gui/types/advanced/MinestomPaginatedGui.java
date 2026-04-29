@@ -1,4 +1,4 @@
-package com.jodexindustries.jguiwrapper.minestom.gui.types;
+package com.jodexindustries.jguiwrapper.minestom.gui.types.advanced;
 
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.AdvancedGuiItemController;
 import com.jodexindustries.jguiwrapper.api.text.SerializerType;
@@ -22,24 +22,8 @@ public class MinestomPaginatedGui extends MinestomAdvancedGui {
 
     private int currentPage = 0;
 
-    public MinestomPaginatedGui(@NotNull String title) {
-        super(title);
-    }
-
-    public MinestomPaginatedGui(int size, @NotNull String title) {
-        super(size, title);
-    }
-
-    public MinestomPaginatedGui(@NotNull Component title) {
-        super(title);
-    }
-
-    public MinestomPaginatedGui(@NotNull InventoryType type, @NotNull Component title) {
-        super(type, title);
-    }
-
-    public MinestomPaginatedGui(int size, @NotNull Component title) {
-        super(size, title);
+    public MinestomPaginatedGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(size, title, defaultSerializer);
     }
 
     public MinestomPaginatedGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {

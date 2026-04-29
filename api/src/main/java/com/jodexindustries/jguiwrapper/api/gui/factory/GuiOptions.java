@@ -1,5 +1,6 @@
 package com.jodexindustries.jguiwrapper.api.gui.factory;
 
+import com.jodexindustries.jguiwrapper.api.text.SerializerType;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,11 +15,13 @@ public final class GuiOptions {
 
     private final int size;
     private final Component title;
+    private final SerializerType serializer;
     private final Map<String, Object> attributes;
 
-    private GuiOptions(int size, @NotNull Component title, @NotNull Map<String, Object> attributes) {
+    private GuiOptions(int size, @NotNull Component title, @NotNull SerializerType serializer, @NotNull Map<String, Object> attributes) {
         this.size = size;
         this.title = title;
+        this.serializer = serializer;
         this.attributes = Map.copyOf(attributes);
     }
 
@@ -29,6 +32,11 @@ public final class GuiOptions {
     @NotNull
     public Component title() {
         return title;
+    }
+
+    @Nullable
+    public SerializerType serializer() {
+        return serializer;
     }
 
     @NotNull
@@ -50,6 +58,7 @@ public final class GuiOptions {
 
         private int size = 54;
         private Component title = Component.empty();
+        private SerializerType serializer; // nullable
         private final Map<String, Object> attributes = new HashMap<>();
 
         private Builder() {
@@ -67,6 +76,11 @@ public final class GuiOptions {
             return this;
         }
 
+        public Builder serializer(@Nullable SerializerType serializer) {
+            this.serializer = serializer;
+            return this;
+        }
+
         @NotNull
         public Builder attribute(@NotNull String key, @Nullable Object value) {
             if (value == null) {
@@ -79,7 +93,7 @@ public final class GuiOptions {
 
         @NotNull
         public GuiOptions build() {
-            return new GuiOptions(size, title, attributes);
+            return new GuiOptions(size, title, serializer, attributes);
         }
     }
 }

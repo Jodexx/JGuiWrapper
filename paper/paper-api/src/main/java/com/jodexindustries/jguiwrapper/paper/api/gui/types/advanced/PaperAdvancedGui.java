@@ -27,24 +27,8 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
     private final Map<Integer, AdvancedGuiItemController<PaperAdvancedGui, ?>> slotMap = new HashMap<>();
     private final Map<Class<?>, GuiDataLoader<PaperAdvancedGui>> loaderMap = new HashMap<>();
 
-    public PaperAdvancedGui(@NotNull String title) {
-        super(title);
-    }
-
-    public PaperAdvancedGui(int size, @NotNull String title) {
-        super(size, title);
-    }
-
-    public PaperAdvancedGui(@NotNull Component title) {
-        super(title);
-    }
-
-    public PaperAdvancedGui(@NotNull InventoryType type, @NotNull Component title) {
-        super(type, title);
-    }
-
-    public PaperAdvancedGui(int size, @NotNull Component title) {
-        super(size, title);
+    public PaperAdvancedGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+        super(size, title, defaultSerializer);
     }
 
     public PaperAdvancedGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {

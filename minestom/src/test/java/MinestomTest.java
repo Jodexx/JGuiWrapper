@@ -2,7 +2,7 @@ import com.jodexindustries.jguiwrapper.api.gui.factory.GuiOptions;
 import com.jodexindustries.jguiwrapper.api.gui.factory.GuiType;
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.minestom.MinestomGuiApi;
-import com.jodexindustries.jguiwrapper.minestom.gui.types.MinestomPaginatedGui;
+import com.jodexindustries.jguiwrapper.minestom.gui.types.advanced.MinestomPaginatedGui;
 import com.jodexindustries.jguiwrapper.minestom.item.MinestomItemWrapper;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
