@@ -1,132 +1,146 @@
 # JGuiWrapper
 
-> A library for creating customizable GUIs on **PaperMC 1.16.5–1.21.11** servers
+**A professional library for building customizable inventory GUIs on PaperMC and Minestom servers.**
 
 [![Release](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/Jodexx/JGuiWrapper/actions/workflows/gradle-publish.yml)
 [![JGuiWrapper API version](https://jitpack.io/v/Jodexx/JGuiWrapper.svg)](https://jitpack.io/#Jodexx/JGuiWrapper)
+[![License](https://img.shields.io/github/license/Jodexx/JGuiWrapper)](LICENSE)
+
 ---
 
-## [Wiki](https://jodexx.github.io/JodexIndustriesWiki/JGuiWrapper/jguiwrapper-start)
+## Overview
 
-## Requirements
+JGuiWrapper provides a unified API for creating and managing inventory-based GUIs across multiple Minecraft server platforms. It supports both standalone plugin deployment and direct embedding into your project.
 
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="16" width="16" alt="Java icon"> <b>Java 16</b> or higher
-- <img src="https://assets.papermc.io/brand/papermc_logo.min.svg" height="16" width="16" alt="PaperMC icon"> <b>Paper 1.16.5</b> or higher
+> **Note:** The [Wiki](https://jodexx.github.io/JodexIndustriesWiki/JGuiWrapper/jguiwrapper-start) is currently outdated. Refer to this document for accurate setup instructions.
 
-## Installation and Usage
+---
 
-Snippets are available for Maven, Gradle Groovy, and Gradle Kotlin DSL.
+## Platform Support
 
-There are **two ways** to use the library depending on your project structure:
+| Platform                                                                                                                                       | Version             | Java     |
+|------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|----------|
+| <img src="https://assets.papermc.io/brand/papermc_logo.min.svg" height="16" width="16" alt="PaperMC icon"> [PaperMC](https://papermc.io)       | 1.16.5 – 1.21.11    | Java 16+ |
+| <img src="https://minestom.net/minestom-logo.png" height="16" width="16" alt="Minestom icon"> [Minestom](https://github.com/minestom/Minestom) | 2026.04.13-1.21.11+ | Java 25+ |
 
-### 1. Using as a standalone plugin (`api` module)
+---
 
-* JGuiWrapper is installed as a separate plugin on the server.
-* Your plugin simply connects to its API **without shading**.
+## Repository Setup
 
-##### Maven
+Add the JitPack repository to your build configuration.
 
-```xml
-<repository>
-    <id>jitpack.io</id>
-  <url>https://jitpack.io</url>
-</repository>
-
-<dependency>
-  <groupId>com.github.Jodexx.JGuiWrapper</groupId>
-  <artifactId>api</artifactId>
-  <version>v1.0.0.9-beta</version>
-</dependency>
-```
-
-##### Gradle (Groovy DSL)
-
-```groovy
-repositories {
-    maven { url = 'https://jitpack.io' }
-}
-
-dependencies {
-    compileOnly 'com.github.Jodexx.JGuiWrapper:v1.0.0.9-beta'
-}
-```
-
-##### Gradle (Kotlin DSL)
-
-```kotlin
-repositories {
-    maven("https://jitpack.io")
-}
-
-dependencies {
-    compileOnly("com.github.Jodexx.JGuiWrapper:api:v1.0.0.9-beta")
-}
-```
-
-### 2. Embedding into your project (`common` module)
-
-* You directly include the library and **shade** it into the final jar using `shade` (or `shadowJar`).
-* No need to install JGuiWrapper as a separate plugin.
-
-##### Maven
-
+**Maven**
 ```xml
 <repository>
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
 </repository>
-
-<dependency>
-  <groupId>com.github.Jodexx.JGuiWrapper</groupId>
-  <artifactId>common</artifactId>
-  <version>v1.0.0.9-beta</version>
-</dependency>
-<!-- if you want to include nms logic for title management -->
-<dependency>
-  <groupId>com.github.Jodexx.JGuiWrapper</groupId>
-  <artifactId>nms</artifactId>
-  <version>v1.0.0.9-beta</version>
-</dependency>
 ```
 
-##### Gradle (Groovy DSL)
-
-```groovy
-repositories {
-    maven { url = 'https://jitpack.io' }
-}
-
-dependencies {
-    implementation 'com.github.Jodexx.JGuiWrapper:common:v1.0.0.9-beta'
-    implementation 'com.github.Jodexx.JGuiWrapper:nms:v1.0.0.9-beta' // if you want to include nms logic for title management 
-}
-```
-
-##### Gradle (Kotlin DSL)
-
+**Gradle (Kotlin DSL)**
 ```kotlin
 repositories {
     maven("https://jitpack.io")
 }
+```
 
+---
+
+## Installation
+
+### Paper
+
+JGuiWrapper offers two integration modes for Paper-based servers.
+
+#### Mode 1 — Standalone Plugin (`api` module)
+
+JGuiWrapper is installed as a separate plugin on the server. Your plugin references the API without shading.
+
+**Maven**
+```xml
+<dependency>
+    <groupId>com.github.Jodexx.JGuiWrapper</groupId>
+    <artifactId>api</artifactId>
+    <version>v1.0.0.9</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+**Gradle (Kotlin DSL)**
+```kotlin
 dependencies {
-    implementation("com.github.Jodexx.JGuiWrapper:common:v1.0.0.9-beta")
-    implementation("com.github.Jodexx.JGuiWrapper:nms:v1.0.0.9-beta") // if you want to include nms logic for title management 
+    compileOnly("com.github.Jodexx.JGuiWrapper:api:v1.0.0.9")
 }
 ```
 
-#### General Initialization
+#### Mode 2 — Embedded (`common` module)
+
+The library is shaded directly into your plugin jar. No separate JGuiWrapper plugin is required on the server.
+
+**Maven**
+```xml
+<dependency>
+    <groupId>com.github.Jodexx.JGuiWrapper</groupId>
+    <artifactId>common</artifactId>
+    <version>v1.0.0.9</version>
+</dependency>
+
+<!-- Optional: NMS support for advanced title management -->
+<dependency>
+    <groupId>com.github.Jodexx.JGuiWrapper</groupId>
+    <artifactId>nms</artifactId>
+    <version>v1.0.0.9</version>
+</dependency>
+```
+
+**Gradle (Kotlin DSL)**
+```kotlin
+dependencies {
+    implementation("com.github.Jodexx.JGuiWrapper:common:v1.0.0.9")
+    implementation("com.github.Jodexx.JGuiWrapper:nms:v1.0.0.9") // optional: NMS title support
+}
+```
+
+#### Initialization
 
 > [!WARNING]
-> Using the library without the standalone JGuiWrapper plugin requires you to initialize the listeners in your main plugin class.
+> When using the embedded (`common`) module, you must manually register the library's listeners in your plugin's main class.
 
 ```java
 @Override
 public void onEnable() {
-    JGuiInitializer.init(this); // registers all listeners
+    PaperGuiApiImpl.init(this); // registers all required listeners
 }
 ```
 
-After calling `init`, you can create and open GUIs for any player.
+---
+
+### Minestom
+
+**Gradle (Kotlin DSL)**
+```kotlin
+dependencies {
+    implementation("com.github.Jodexx.JGuiWrapper:minestom:v1.0.0.9")
+}
+```
+
+#### Initialization
+
+```java
+void main() {
+    MinestomGuiApi.init(MinecraftServer.process());
+}
+```
+
+---
+
+## Module Reference
+
+| Module     | Purpose                                      | Deployment                |
+|------------|----------------------------------------------|---------------------------|
+| `api`      | Compile-time API for standalone plugin usage | Plugin on server          |
+| `common`   | Full library for shaded embedding            | Shaded into your jar      |
+| `nms`      | NMS-based title management (optional)        | Shaded alongside `common` |
+| `minestom` | Full library for Minestom servers            | Shaded into your jar      |
 
 ---
