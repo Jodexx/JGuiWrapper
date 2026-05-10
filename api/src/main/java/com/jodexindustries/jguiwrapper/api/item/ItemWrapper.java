@@ -24,7 +24,11 @@ public class ItemWrapper implements Cloneable {
 
     private transient boolean updated = true;
 
-    public ItemWrapper(@NotNull final String id, final int amount, @Nullable final SerializerType serializer) {
+    public ItemWrapper(
+            @NotNull final String id,
+            final int amount,
+            @Nullable final SerializerType serializer
+    ) {
         this.id = id;
         this.amount = amount;
         this.meta = new ItemMeta(this, serializer);
@@ -138,7 +142,10 @@ public class ItemWrapper implements Cloneable {
         return builder(id, null);
     }
 
-    public static Builder builder(@NotNull final String id, @Nullable final SerializerType serializer) {
+    public static Builder builder(
+            @NotNull final String id,
+            @Nullable final SerializerType serializer
+    ) {
         return new Builder(id, serializer);
     }
 
@@ -183,7 +190,8 @@ public class ItemWrapper implements Cloneable {
         protected PlaceholderEngine placeholderEngine;
 
         protected BuilderBase(@Nullable SerializerType serializer) {
-            this.serializer = serializer == null ? GuiApi.get().defaultSerializer() : serializer;
+            this.serializer =
+                    serializer == null ? GuiApi.get().defaultSerializer() : serializer;
         }
 
         public B amount(int amount) {

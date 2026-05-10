@@ -6,7 +6,11 @@ import com.jodexindustries.jguiwrapper.api.gui.types.advanced.GuiDataLoader;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.item.ItemHandler;
 import com.jodexindustries.jguiwrapper.api.gui.types.advanced.registry.DataRegistry;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public record DataRegistryImpl(String namespace) implements DataRegistry {
 
@@ -28,7 +32,8 @@ public record DataRegistryImpl(String namespace) implements DataRegistry {
             throw new IllegalStateException("ItemHandler already registered by id: " + id);
         }
 
-        Pair<ItemHandler<?>, Class<?>> pair = new Pair<>(handler, ReflectionUtils.getGenericClass(handler.getClass(), 0));
+        Pair<ItemHandler<?>, Class<?>> pair =
+                new Pair<>(handler, ReflectionUtils.getGenericClass(handler.getClass(), 0));
 
         HANDLERS.put(id, pair);
     }

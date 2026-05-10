@@ -27,7 +27,11 @@ public abstract class AbstractGui<T extends Gui> implements Gui {
     private Component title;
     protected GuiHolder holder;
 
-    public AbstractGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public AbstractGui(
+            int size,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         this.size = adaptSize(size);
         this.title = title;
         if (defaultSerializer != null) {

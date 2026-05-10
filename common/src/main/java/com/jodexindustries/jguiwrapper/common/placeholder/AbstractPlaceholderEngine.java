@@ -19,11 +19,16 @@ public abstract class AbstractPlaceholderEngine implements PlaceholderEngine {
 
     public static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("%([^%]+)%");
 
-    private final Map<Pattern, @NotNull Function<@Nullable User, String>> literalPlaceholders = new LinkedHashMap<>();
-    private final Map<Pattern, @NotNull BiFunction<String, @Nullable User, String>> regexPlaceholders = new LinkedHashMap<>();
+    private final Map<Pattern, @NotNull Function<@Nullable User, String>> literalPlaceholders =
+            new LinkedHashMap<>();
+    private final Map<Pattern, @NotNull BiFunction<String, @Nullable User, String>>
+            regexPlaceholders = new LinkedHashMap<>();
 
     @Override
-    public void register(@NotNull String placeholder, @NotNull Function<@Nullable User, @NotNull String> resolver) {
+    public void register(
+            @NotNull String placeholder,
+            @NotNull Function<@Nullable User, @NotNull String> resolver
+    ) {
         literalPlaceholders.put(Pattern.compile(placeholder, Pattern.LITERAL), resolver);
     }
 
@@ -38,12 +43,18 @@ public abstract class AbstractPlaceholderEngine implements PlaceholderEngine {
     }
 
     @Override
-    public void registerRegex(@NotNull String pattern, @NotNull BiFunction<String, @Nullable User, @NotNull String> resolver) {
+    public void registerRegex(
+            @NotNull String pattern,
+            @NotNull BiFunction<String, @Nullable User, @NotNull String> resolver
+    ) {
         registerRegex(Pattern.compile(pattern), resolver);
     }
 
     @Override
-    public void registerRegex(@NotNull Pattern pattern, @NotNull BiFunction<@NotNull String, @Nullable User, @NotNull String> resolver) {
+    public void registerRegex(
+            @NotNull Pattern pattern,
+            @NotNull BiFunction<@NotNull String, @Nullable User, @NotNull String> resolver
+    ) {
         regexPlaceholders.put(pattern, resolver);
     }
 
@@ -57,7 +68,9 @@ public abstract class AbstractPlaceholderEngine implements PlaceholderEngine {
 
     @Override
     public @NotNull List<Component> process(@NotNull List<Component> input, @Nullable User user) {
-        return input.stream().map(component -> process(component, user)).collect(Collectors.toList());
+        return input.stream()
+                .map(component -> process(component, user))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -78,17 +91,20 @@ public abstract class AbstractPlaceholderEngine implements PlaceholderEngine {
             }
         }
 
-        for (Map.Entry<Pattern, BiFunction<String, User, String>> entry : regexPlaceholders.entrySet()) {
+        for (Map.Entry<Pattern, BiFunction<String, User, String>> entry
+                : regexPlaceholders.entrySet()) {
             Pattern pattern = entry.getKey();
             BiFunction<String, User, String> value = entry.getValue();
 
-            current = current.replaceText(TextReplacementConfig.builder()
-                    .match(pattern)
-                    .replacement(match -> {
-                        match.content(value.apply(match.content(), user));
-                        return match;
-                    })
-                    .build());
+            current = current.replaceText(
+                    TextReplacementConfig.builder()
+                            .match(pattern)
+                            .replacement(match -> {
+                                match.content(value.apply(match.content(), user));
+                                return match;
+                            })
+                            .build()
+            );
         }
 
         return process0(current, user);

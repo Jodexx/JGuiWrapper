@@ -44,14 +44,16 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
         for (int j = 0; j < pages; j++) {
             final int page = j;
 
-            List<Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>>> consumers = new ArrayList<>(itemsPerPage);
+            List<Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>>> consumers =
+                    new ArrayList<>(itemsPerPage);
 
             for (int i = 0; i < itemsPerPage; i++) {
                 final int slot = i;
 
                 ItemStack itemStack = new ItemStack(Material.DIAMOND, Math.min((i + 1), 64));
 
-                Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>> item = (b) -> b.slots(slot)
+                Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>> item =
+                        (b) -> b.slots(slot)
                         .defaultItem(new PaperItemWrapper(itemStack))
                         .defaultClickHandler((e, c) -> {
                             e.setCancelled(true);
@@ -73,6 +75,8 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
     }
 
     private static Component generateTitle(int currentPage, int max) {
-        return SerializerType.LEGACY_AMPERSAND.deserialize("Page: &c" + (currentPage + 1) + "&0/&c" + max);
+        return SerializerType.LEGACY_AMPERSAND.deserialize(
+                "Page: &c" + (currentPage + 1) + "&0/&c" + max
+        );
     }
 }

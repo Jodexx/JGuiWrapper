@@ -19,9 +19,15 @@ public interface PlaceholderEngine {
 
     void register(@NotNull String placeholder, @NotNull Object resolver);
 
-    void registerRegex(@NotNull String pattern, @NotNull BiFunction<@NotNull String, @Nullable User, @NotNull String> resolver);
+    void registerRegex(
+            @NotNull String pattern,
+            @NotNull BiFunction<@NotNull String, @Nullable User, @NotNull String> resolver
+    );
 
-    void registerRegex(@NotNull Pattern pattern, @NotNull BiFunction<@NotNull String, @Nullable User, @NotNull String> resolver);
+    void registerRegex(
+            @NotNull Pattern pattern,
+            @NotNull BiFunction<@NotNull String, @Nullable User, @NotNull String> resolver
+    );
 
     void addAll(@NotNull PlaceholderEngine placeholderEngine);
 

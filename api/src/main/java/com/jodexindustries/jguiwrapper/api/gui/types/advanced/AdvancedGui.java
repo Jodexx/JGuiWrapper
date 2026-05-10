@@ -31,9 +31,15 @@ public interface AdvancedGui<G extends SimpleGui<G> & AdvancedGui<G>> extends Gu
     @NotNull
     Collection<GuiDataLoader<G>> getLoaders();
 
-    void registerItem(@NotNull String key, @NotNull Consumer<AdvancedGuiItemController.Builder<G>> builderConsumer);
+    void registerItem(
+            @NotNull String key,
+            @NotNull Consumer<AdvancedGuiItemController.Builder<G>> builderConsumer
+    );
 
-    void registerItem(@NotNull String key, @NotNull AdvancedGuiItemController<G, ?> controller) throws IllegalArgumentException;
+    void registerItem(
+            @NotNull String key,
+            @NotNull AdvancedGuiItemController<G, ?> controller
+    ) throws IllegalArgumentException;
 
     @NotNull
     AdvancedGuiItemController.Builder<G> createController();

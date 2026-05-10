@@ -16,7 +16,8 @@ import java.lang.reflect.Method;
  * <p>
  * Each constant corresponds to a particular Adventure serializer implementation.
  * If the underlying serializer class cannot be found on the classpath,
- * the serializer will be {@code null} and calls to {@link #serialize(Component)} will return {@code null},
+ * the serializer will be {@code null} and calls to {@link #serialize(Component)} will
+ * return {@code null},
  * while {@link #deserialize(String)} will return {@link Component#empty()}.
  * </p>
  */
@@ -28,7 +29,10 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
      * Uses {@code LegacyComponentSerializer.legacyAmpersand()}.
      * </p>
      */
-    LEGACY_AMPERSAND("net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer", "legacyAmpersand"),
+    LEGACY_AMPERSAND(
+            "net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer",
+            "legacyAmpersand"
+    ),
 
     /**
      * Legacy serializer using the {@code §}-based formatting codes.
@@ -36,7 +40,10 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
      * Uses {@code LegacyComponentSerializer.legacySection()}.
      * </p>
      */
-    LEGACY_SECTION("net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer", "legacySection"),
+    LEGACY_SECTION(
+            "net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer",
+            "legacySection"
+    ),
 
     /**
      * MiniMessage serializer.
@@ -75,8 +82,10 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
         try {
             Class<?> clazz = Class.forName(name);
             Method declaredMethod = clazz.getDeclaredMethod(method);
-            serializer = (ComponentSerializer<Component, Component, String>) declaredMethod.invoke(null);
-        } catch (NoSuchMethodException | ClassNotFoundException | IllegalAccessException | ClassCastException |
+            serializer =
+                    (ComponentSerializer<Component, Component, String>) declaredMethod.invoke(null);
+        } catch (NoSuchMethodException | ClassNotFoundException | IllegalAccessException
+                 | ClassCastException |
                  InvocationTargetException ignored) {
         }
     }
@@ -89,7 +98,8 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
      * Deserializes a string into a {@link Component}.
      *
      * @param string the string to deserialize
-     * @return the deserialized component, or {@link Component#empty()} if the serializer is unavailable
+     * @return the deserialized component, or {@link Component#empty()} if the serializer is
+     *     unavailable
      */
     @NotNull
     @Override
@@ -98,7 +108,8 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
             warnOnce(string);
             return Component.empty();
         }
-        return serializer.deserialize(string).decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+        return serializer.deserialize(string)
+                .decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 
     /**
@@ -131,7 +142,9 @@ public enum SerializerType implements ComponentSerializer<Component, Component, 
     private void warnOnce(Object input) {
         if (!informed) {
             GuiApi.getOptional().ifPresent(api -> {
-                api.getModule().getLogger().warning("Serializer: '" + name() + "' not found! Couldn't serialize: " + input);
+                api.getModule().getLogger().warning(
+                        "Serializer: '" + name() + "' not found! Couldn't serialize: " + input
+                );
                 informed = true;
             });
         }

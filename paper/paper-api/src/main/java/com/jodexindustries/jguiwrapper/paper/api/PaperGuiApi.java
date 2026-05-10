@@ -17,7 +17,8 @@ import java.util.Optional;
 /**
  * Main entry point for the JGuiWrapper API.
  * <p>
- * Provides access to core components such as the global registry, plugin instance, NMS wrapper, and GUI management utilities.
+ * Provides access to core components such as the global registry, plugin instance,
+ * NMS wrapper, and GUI management utilities.
  * This class is intended to be used as a singleton and should be accessed via {@link #get()}.
  */
 public abstract class PaperGuiApi extends GuiApi {

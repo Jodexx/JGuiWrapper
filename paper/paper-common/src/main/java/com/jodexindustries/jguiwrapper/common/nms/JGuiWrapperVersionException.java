@@ -1,10 +1,12 @@
 package com.jodexindustries.jguiwrapper.common.nms;
 
 /**
- * Exception thrown when there is a version incompatibility or unsupported version detected in JGuiWrapper.
+ * Exception thrown when there is a version incompatibility or unsupported version
+ * detected in JGuiWrapper.
  * <p>
- * This exception is typically used to indicate that the current environment or dependency version does not meet
- * the requirements for running JGuiWrapper, or when a version conflict is encountered during runtime.
+ * This exception is typically used to indicate that the current environment or
+ * dependency version does not meet the requirements for running JGuiWrapper, or
+ * when a version conflict is encountered during runtime.
  */
 public class JGuiWrapperVersionException extends RuntimeException {
     /**

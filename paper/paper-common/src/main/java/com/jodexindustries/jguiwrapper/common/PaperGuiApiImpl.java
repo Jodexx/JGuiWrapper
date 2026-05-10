@@ -37,12 +37,24 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
     private static NMSWrapper NMS_WRAPPER;
     private static final NMSWrapper EMPTY_WRAPPER = new NMSWrapper() {
         @Override
-        public boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, Component title, boolean refreshData) {
+        public boolean updateMenu(
+                @NotNull HumanEntity player,
+                @Nullable InventoryType type,
+                int size,
+                Component title,
+                boolean refreshData
+        ) {
             return false;
         }
 
         @Override
-        public InventoryView openInventory(@NotNull HumanEntity player, @NotNull Inventory inventory, @NotNull InventoryType type, int size, @NotNull Component title) {
+        public InventoryView openInventory(
+                @NotNull HumanEntity player,
+                @NotNull Inventory inventory,
+                @NotNull InventoryType type,
+                int size,
+                @NotNull Component title
+        ) {
             return null;
         }
     };
@@ -55,11 +67,19 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
         super(plugin);
         guiFactory().register(
                 GuiType.ADVANCED,
-                options -> new PaperAdvancedGui(options.size(), options.title(), options.serializer())
+                options -> new PaperAdvancedGui(
+                        options.size(),
+                        options.title(),
+                        options.serializer()
+                )
         );
         guiFactory().register(
                 GuiType.PAGINATED,
-                options -> new PaginatedAdvancedGui(options.size(), options.title(), options.serializer())
+                options -> new PaginatedAdvancedGui(
+                        options.size(),
+                        options.title(),
+                        options.serializer()
+                )
         );
     }
 

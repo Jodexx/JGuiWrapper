@@ -18,7 +18,12 @@ public final class GuiOptions {
     private final SerializerType serializer;
     private final Map<String, Object> attributes;
 
-    private GuiOptions(int size, @NotNull Component title, @NotNull SerializerType serializer, @NotNull Map<String, Object> attributes) {
+    private GuiOptions(
+            int size,
+            @NotNull Component title,
+            @NotNull SerializerType serializer,
+            @NotNull Map<String, Object> attributes
+    ) {
         this.size = size;
         this.title = title;
         this.serializer = serializer;

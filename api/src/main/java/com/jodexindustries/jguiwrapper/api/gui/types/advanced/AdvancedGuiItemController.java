@@ -12,10 +12,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 
-public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, I extends ItemWrapper> {
+public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>,
+        I extends ItemWrapper> {
 
     private final G gui;
 
@@ -77,9 +85,12 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
         }
 
         for (int slot : newSlots) {
-            Optional<? extends AdvancedGuiItemController<?, ?>> existingController = gui.getController(slot);
+            Optional<? extends AdvancedGuiItemController<?, ?>> existingController =
+                    gui.getController(slot);
             if (existingController.isPresent() && !existingController.get().equals(this)) {
-                throw new IllegalArgumentException("Slot " + slot + " is already occupied by another controller");
+                throw new IllegalArgumentException(
+                        "Slot " + slot + " is already occupied by another controller"
+                );
             }
         }
 
@@ -100,7 +111,9 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
 
     private void validateSlot(int slot) {
         if (slot < 0 || slot >= gui.size()) {
-            throw new IndexOutOfBoundsException("Slot " + slot + " is out of inventory bounds");
+            throw new IndexOutOfBoundsException(
+                    "Slot " + slot + " is out of inventory bounds"
+            );
         }
     }
 
@@ -125,7 +138,9 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
 
     public void setItem(int slot, @NotNull I itemWrapper) {
         if (!slots.contains(slot)) {
-            throw new IllegalArgumentException("Slot " + slot + " is not managed by this controller");
+            throw new IllegalArgumentException(
+                    "Slot " + slot + " is not managed by this controller"
+            );
         }
         slotSpecificItems.put(slot, itemWrapper);
         redraw(slot);
@@ -151,7 +166,9 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
 
     public void setClickHandler(int slot, @Nullable AdvancedGuiClickHandler<G> clickHandler) {
         if (!slots.contains(slot)) {
-            throw new IllegalArgumentException("Slot " + slot + " is not managed by this controller");
+            throw new IllegalArgumentException(
+                    "Slot " + slot + " is not managed by this controller"
+            );
         }
 
         if (clickHandler != null) {
@@ -255,7 +272,9 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
         return itemHandlerKey;
     }
 
-    public void attachResolvedHandler(@Nullable Pair<ItemHandler<?>, Class<?>> resolved) {
+    public void attachResolvedHandler(
+            @Nullable Pair<ItemHandler<?>, Class<?>> resolved
+    ) {
         this.itemHandler = resolved;
     }
 
@@ -314,7 +333,10 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
             return this;
         }
 
-        public Builder<G> slotClickHandler(int slot, @Nullable AdvancedGuiClickHandler<G> clickHandler) {
+        public Builder<G> slotClickHandler(
+                int slot,
+                @Nullable AdvancedGuiClickHandler<G> clickHandler
+        ) {
             this.slotClickHandlers.put(slot, clickHandler);
             this.slots.add(slot);
             return this;

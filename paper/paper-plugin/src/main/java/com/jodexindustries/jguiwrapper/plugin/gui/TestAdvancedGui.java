@@ -40,7 +40,9 @@ public class TestAdvancedGui extends PaperAdvancedGui {
 
                     clicks++;
 
-                    controller.updateItems(itemWrapper -> itemWrapper.meta().displayName(Component.text(clicks)));
+                    controller.updateItems(
+                            itemWrapper -> itemWrapper.meta().displayName(Component.text(clicks))
+                    );
 
                     title("&cAdvanced gui clicked: &a" + clicks + " &ctimes");
                     runTask(() -> updateMenu(true));
@@ -49,7 +51,11 @@ public class TestAdvancedGui extends PaperAdvancedGui {
         registerItem("random", builder -> builder.slots(45)
                 .defaultItem(
                         PaperItemWrapper.builder(Material.STRUCTURE_VOID)
-                                .displayName("&#EC8C8CR&#F6A98Ca&#FFC58Bn&#FFE295d&#FFFF9Eo&#CDFF9Cm &#97CFF5b&#9DB5FAl&#A39AFFo&#C99DFFc&#EEA0FFk").build()
+                                .displayName(
+                                        "&#EC8C8CR&#F6A98Ca&#FFC58Bn&#FFE295d&#FFFF9Eo"
+                                                + "&#CDFF9Cm &#97CFF5b&#9DB5FAl&#A39AFFo"
+                                                + "&#C99DFFc&#EEA0FFk"
+                                ).build()
                 )
                 .defaultClickHandler((event, controller) -> {
                     event.setCancelled(true);

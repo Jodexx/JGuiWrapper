@@ -22,11 +22,19 @@ public class PaginatedAdvancedGui extends PaperAdvancedGui {
 
     private int currentPage = 0;
 
-    public PaginatedAdvancedGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public PaginatedAdvancedGui(
+            int size,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         super(size, title, defaultSerializer);
     }
 
-    public PaginatedAdvancedGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public PaginatedAdvancedGui(
+            @NotNull InventoryType type,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         super(type, title, defaultSerializer);
     }
 
@@ -41,11 +49,17 @@ public class PaginatedAdvancedGui extends PaperAdvancedGui {
     }
 
     @SafeVarargs
-    public final void addPage(@NotNull Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>> @NotNull ... builderConsumers) {
+    public final void addPage(
+            @NotNull Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>
+                    @NotNull ... builderConsumers
+    ) {
         addPage(new Page(this, Arrays.stream(builderConsumers)));
     }
 
-    public final void addPage(@NotNull List<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>> builderConsumers) {
+    public final void addPage(
+            @NotNull List<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>>
+                    builderConsumers
+    ) {
         addPage(new Page(this, builderConsumers));
     }
 
@@ -83,15 +97,27 @@ public class PaginatedAdvancedGui extends PaperAdvancedGui {
         this.currentPage = page;
     }
 
-    protected record Page(@NotNull List<? extends AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers) {
+    protected record Page(
+            @NotNull List<? extends AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers
+    ) {
 
         public static final String ITEM_KEY = "paged_item_";
 
-        public Page(@NotNull PaperAdvancedGui gui, @NotNull List<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>> builderConsumers) {
+        public Page(
+                @NotNull PaperAdvancedGui gui,
+                @NotNull
+                List<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>>
+                        builderConsumers
+        ) {
             this(gui, builderConsumers.stream());
         }
 
-        public Page(@NotNull PaperAdvancedGui gui, @NotNull Stream<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>> builderStream) {
+        public Page(
+                @NotNull PaperAdvancedGui gui,
+                @NotNull Stream<
+                        Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>>
+                        builderStream
+        ) {
             this(
                     builderStream.map(builderConsumer -> {
                         AdvancedGuiItemController.Builder<PaperAdvancedGui> builder =

@@ -32,13 +32,21 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
 
     protected static final PaperGuiApi API = PaperGuiApi.get();
 
-    public PaperGuiBase(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public PaperGuiBase(
+            int size,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         super(size, title, defaultSerializer);
 
         this.holder = new PaperGuiHolder(this);
     }
 
-    public PaperGuiBase(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public PaperGuiBase(
+            @NotNull InventoryType type,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         super(type.getDefaultSize(), title, defaultSerializer);
 
         this.holder = new PaperGuiHolder(this, type);
@@ -62,7 +70,13 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
     @Override
     public void open(@NotNull HumanEntity player, @NotNull User user, @NotNull Component title) {
         try {
-            InventoryView view = API.getNMSWrapper().openInventory(player, holder().getInventory(), type(), size(), title);
+            InventoryView view = API.getNMSWrapper().openInventory(
+                    player,
+                    holder().getInventory(),
+                    type(),
+                    size(),
+                    title
+            );
 
             if (view == null) {
                 player.openInventory(holder().getInventory());
@@ -71,7 +85,11 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
                 onOpen(new GuiOpenEvent(event, this, user));
             }
         } catch (Exception e) {
-            API.getPlugin().getLogger().log(Level.WARNING, "Error with opening menu for player: " + player.getName(), e);
+            API.getPlugin().getLogger().log(
+                    Level.WARNING,
+                    "Error with opening menu for player: " + player.getName(),
+                    e
+            );
         }
     }
 
@@ -108,12 +126,25 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
         updateMenu(type, size, null);
     }
 
-    public final void updateMenu(@Nullable InventoryType type, int size, @Nullable Component title) {
-        this.holder().getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title));
+    public final void updateMenu(
+            @Nullable InventoryType type,
+            int size,
+            @Nullable Component title
+    ) {
+        this.holder().getInventory().getViewers().forEach(
+                humanEntity -> updateMenu(humanEntity, type, size, title)
+        );
     }
 
-    public final void updateMenu(@Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
-        this.holder().getInventory().getViewers().forEach(humanEntity -> updateMenu(humanEntity, type, size, title, refreshData));
+    public final void updateMenu(
+            @Nullable InventoryType type,
+            int size,
+            @Nullable Component title,
+            boolean refreshData
+    ) {
+        this.holder().getInventory().getViewers().forEach(
+                humanEntity -> updateMenu(humanEntity, type, size, title, refreshData)
+        );
     }
 
     public final boolean updateMenu(@NotNull HumanEntity player, @Nullable Component title) {
@@ -124,19 +155,38 @@ public abstract class PaperGuiBase<T extends Gui> extends SimpleGui<T> implement
         return updateMenu(player, type, size(), null);
     }
 
-    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size) {
+    public final boolean updateMenu(
+            @NotNull HumanEntity player,
+            @Nullable InventoryType type,
+            int size
+    ) {
         return updateMenu(player, type, size, null);
     }
 
-    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title) {
+    public final boolean updateMenu(
+            @NotNull HumanEntity player,
+            @Nullable InventoryType type,
+            int size,
+            @Nullable Component title
+    ) {
         return updateMenu(player, type, size, title, false);
     }
 
-    public final boolean updateMenu(@NotNull HumanEntity player, @Nullable InventoryType type, int size, @Nullable Component title, boolean refreshData) {
+    public final boolean updateMenu(
+            @NotNull HumanEntity player,
+            @Nullable InventoryType type,
+            int size,
+            @Nullable Component title,
+            boolean refreshData
+    ) {
         try {
             return API.getNMSWrapper().updateMenu(player, type, size, title, refreshData);
         } catch (Exception e) {
-            API.getPlugin().getLogger().log(Level.WARNING, "Error with updating menu for player: " + player.getName(), e);
+            API.getPlugin().getLogger().log(
+                    Level.WARNING,
+                    "Error with updating menu for player: " + player.getName(),
+                    e
+            );
             return false;
         }
     }

@@ -23,7 +23,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public final class JGuiPlugin extends JavaPlugin {
@@ -37,9 +43,13 @@ public final class JGuiPlugin extends JavaPlugin {
             "advanced", TestAdvancedGui::new,
             "paginated", TestPaginatedAdvancedGui::new,
             "default_advanced",
-            () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.ADVANCED, GuiOptions.builder().size(9).build()),
+            () -> PaperGuiApiImpl.get()
+                    .guiFactory()
+                    .create(GuiType.ADVANCED, GuiOptions.builder().size(9).build()),
             "default_paginated",
-            () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.PAGINATED, GuiOptions.builder().size(18).build())
+            () -> PaperGuiApiImpl.get()
+                    .guiFactory()
+                    .create(GuiType.PAGINATED, GuiOptions.builder().size(18).build())
     );
 
     @Override
@@ -54,7 +64,12 @@ public final class JGuiPlugin extends JavaPlugin {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
+    public boolean onCommand(
+            @NotNull CommandSender sender,
+            @NotNull Command command,
+            @NotNull String label,
+            String @NotNull [] args
+    ) {
         if (args.length == 0) {
             sender.sendMessage("/jguiwrapper test (abstract/simple/advanced/paginated)");
             sender.sendMessage("/jguiwrapper list");
@@ -96,16 +111,27 @@ public final class JGuiPlugin extends JavaPlugin {
                     PaperGuiBase<?> abstractGui = (PaperGuiBase<?>) gui;
                     send(sender, "Index: &6" + index);
                     send(sender, "Class: &6" + abstractGui.getClass().getName());
-                    send(sender, "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName());
-                    send(sender, "Title: " + PaperGuiApiImpl.get().defaultSerializer().serialize(abstractGui.title()));
+                    send(
+                            sender,
+                            "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName()
+                    );
+                    send(
+                            sender,
+                            "Title: "
+                                    + PaperGuiApiImpl.get()
+                                            .defaultSerializer()
+                                            .serialize(abstractGui.title())
+                    );
                     send(sender, "Size: &6" + abstractGui.size());
                     send(sender, "Type: &6" + abstractGui.type());
                     if (abstractGui instanceof PaperAdvancedGui advancedGui) {
-                        Collection<AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers = advancedGui.getControllers();
+                        Collection<AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers =
+                                advancedGui.getControllers();
                         if (!controllers.isEmpty()) {
                             send(sender, "- Controllers:");
                             int i = 0;
-                            for (AdvancedGuiItemController<PaperAdvancedGui, ?> controller : controllers) {
+                            for (AdvancedGuiItemController<PaperAdvancedGui, ?> controller
+                                    : controllers) {
                                 i++;
                                 send(sender, "-- #&a" + i);
                                 send(sender, "--- Slots: &6" + controller.slots());
@@ -113,7 +139,8 @@ public final class JGuiPlugin extends JavaPlugin {
                             }
                         }
 
-                        Collection<GuiDataLoader<PaperAdvancedGui>> loaders = advancedGui.getLoaders();
+                        Collection<GuiDataLoader<PaperAdvancedGui>> loaders =
+                                advancedGui.getLoaders();
                         if (!loaders.isEmpty()) {
                             send(sender, "- Loaders:");
                             int i = 0;
@@ -136,7 +163,12 @@ public final class JGuiPlugin extends JavaPlugin {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+    public List<String> onTabComplete(
+            @NotNull CommandSender sender,
+            @NotNull Command command,
+            @NotNull String alias,
+            @NotNull String[] args
+    ) {
         if (args.length == 1) {
             return Arrays.asList("test", "list");
         }

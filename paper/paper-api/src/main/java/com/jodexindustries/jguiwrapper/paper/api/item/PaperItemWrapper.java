@@ -22,7 +22,10 @@ public class PaperItemWrapper extends ItemWrapper {
     private ItemStack itemStack;
     private Material material;
 
-    public PaperItemWrapper(@NotNull final ItemStack itemStack, @Nullable final SerializerType serializer) {
+    public PaperItemWrapper(
+            @NotNull final ItemStack itemStack,
+            @Nullable final SerializerType serializer
+    ) {
         super(itemStack.getType().name(), itemStack.getAmount(), serializer);
 
         this.itemStack = itemStack;
@@ -33,7 +36,11 @@ public class PaperItemWrapper extends ItemWrapper {
         this(itemStack, null);
     }
 
-    public PaperItemWrapper(@NotNull final Material material, final int amount, @Nullable final SerializerType serializer) {
+    public PaperItemWrapper(
+            @NotNull final Material material,
+            final int amount,
+            @Nullable final SerializerType serializer
+    ) {
         this(new ItemStack(material, amount), serializer);
     }
 
@@ -41,7 +48,10 @@ public class PaperItemWrapper extends ItemWrapper {
         this(material, amount, null);
     }
 
-    public PaperItemWrapper(@NotNull final Material material, @Nullable final SerializerType serializer) {
+    public PaperItemWrapper(
+            @NotNull final Material material,
+            @Nullable final SerializerType serializer
+    ) {
         this(material, 1, serializer);
     }
 
@@ -58,7 +68,10 @@ public class PaperItemWrapper extends ItemWrapper {
     }
 
     @Override
-    protected void updateMeta(final @Nullable Component displayName, @Nullable final List<Component> lore) {
+    protected void updateMeta(
+            final @Nullable Component displayName,
+            @Nullable final List<Component> lore
+    ) {
         ItemMeta meta = this.itemStack.getItemMeta();
         if (meta != null) {
             if (displayName != null) {
@@ -112,7 +125,11 @@ public class PaperItemWrapper extends ItemWrapper {
 
         Material material = Material.matchMaterial(itemWrapper.id());
         if (material == null) {
-            throw new IllegalArgumentException("Cannot adapt ItemWrapper to PaperItemWrapper: unknown material id '" + itemWrapper.id() + "'");
+            throw new IllegalArgumentException(
+                    "Cannot adapt ItemWrapper to PaperItemWrapper: unknown material id '"
+                            + itemWrapper.id()
+                            + "'"
+            );
         }
 
         PaperItemWrapper adapted = new PaperItemWrapper(material, itemWrapper.amount());
@@ -126,7 +143,10 @@ public class PaperItemWrapper extends ItemWrapper {
         return adapted;
     }
 
-    public static Builder builder(@NotNull final Material material, @Nullable final SerializerType serializer) {
+    public static Builder builder(
+            @NotNull final Material material,
+            @Nullable final SerializerType serializer
+    ) {
         Preconditions.checkArgument(material != null, "Material cannot be null");
         return new Builder(material, serializer);
     }
@@ -141,7 +161,10 @@ public class PaperItemWrapper extends ItemWrapper {
     public static class Builder extends BuilderBase<Builder, PaperItemWrapper> {
         private final Material material;
 
-        private Builder(@NotNull final Material material, @Nullable final SerializerType serializer) {
+        private Builder(
+                @NotNull final Material material,
+                @Nullable final SerializerType serializer
+        ) {
             super(serializer);
 
             this.material = material;

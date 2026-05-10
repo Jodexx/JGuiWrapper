@@ -10,7 +10,12 @@ public class GuiDragEvent extends CancellableGuiEvent {
 
     private final Collection<Integer> rawSlots;
 
-    public GuiDragEvent(@NotNull Object handle, @NotNull Gui gui, @NotNull User user, @NotNull Collection<Integer> rawSlots) {
+    public GuiDragEvent(
+            @NotNull Object handle,
+            @NotNull Gui gui,
+            @NotNull User user,
+            @NotNull Collection<Integer> rawSlots
+    ) {
         super(handle, gui, user);
 
         this.rawSlots = rawSlots;

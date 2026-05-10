@@ -7,10 +7,18 @@ import org.jetbrains.annotations.NotNull;
 public interface ItemHandler<T> {
 
     @SuppressWarnings("unchecked")
-    default void load(@NotNull GuiDataLoader<?> loader, @NotNull AdvancedGuiItemController<?, ?> controller, @NotNull HandlerContext context) {
+    default void load(
+            @NotNull GuiDataLoader<?> loader,
+            @NotNull AdvancedGuiItemController<?, ?> controller,
+            @NotNull HandlerContext context
+    ) {
         load(((T) loader), controller, context);
     }
 
-    void load(@NotNull T loader, @NotNull AdvancedGuiItemController<?, ?> controller, @NotNull HandlerContext context);
+    void load(
+            @NotNull T loader,
+            @NotNull AdvancedGuiItemController<?, ?> controller,
+            @NotNull HandlerContext context
+    );
 }
 

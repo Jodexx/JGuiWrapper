@@ -31,7 +31,11 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
 
     private boolean cancelEmptySlots = true;
 
-    public SimpleGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public SimpleGui(
+            int size,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         super(size, title, defaultSerializer);
     }
 
@@ -72,7 +76,8 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
             return;
         }
 
-        if (event.action() == GuiClickEvent.InventoryAction.MOVE_TO_OTHER_INVENTORY || event.action() == GuiClickEvent.InventoryAction.COLLECT_TO_CURSOR) {
+        if (event.action() == GuiClickEvent.InventoryAction.MOVE_TO_OTHER_INVENTORY
+                || event.action() == GuiClickEvent.InventoryAction.COLLECT_TO_CURSOR) {
             if (event.playerInventory() && cancelEmptySlots) {
                 event.setCancelled(true);
             }
@@ -99,7 +104,10 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
         this.dragEventConsumers.add(consumer);
     }
 
-    public void setClickHandlers(@NotNull GuiHandler<GuiClickEvent, T> handler, int @NotNull ... slots) {
+    public void setClickHandlers(
+            @NotNull GuiHandler<GuiClickEvent, T> handler,
+            int @NotNull ... slots
+    ) {
         if (slots.length == 0) {
             setClickHandlers0(handler, IntStream.range(0, super.size()).toArray());
             return;
@@ -108,7 +116,10 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
         setClickHandlers0(handler, slots);
     }
 
-    private void setClickHandlers0(@NotNull GuiHandler<GuiClickEvent, T> handler, int @NotNull ... slots) {
+    private void setClickHandlers0(
+            @NotNull GuiHandler<GuiClickEvent, T> handler,
+            int @NotNull ... slots
+    ) {
         for (int slot : slots) {
             slotClickHandlers.put(slot, handler);
         }

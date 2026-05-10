@@ -25,7 +25,8 @@ public class GuiListener implements Listener {
 
         PaperGuiBase<?> gui = holder.gui();
 
-        boolean playerInventory = e.getClickedInventory() != null && e.getClickedInventory().getType() == InventoryType.PLAYER;
+        boolean playerInventory = e.getClickedInventory() != null
+                && e.getClickedInventory().getType() == InventoryType.PLAYER;
 
         GuiClickEvent event = new GuiClickEvent(
                 e, gui,
@@ -67,7 +68,12 @@ public class GuiListener implements Listener {
 
         PaperGuiBase<?> gui = holder.gui();
 
-        GuiDragEvent event = new GuiDragEvent(e, gui, PaperGuiApi.get().user(e.getWhoClicked()), e.getRawSlots());
+        GuiDragEvent event = new GuiDragEvent(
+                e,
+                gui,
+                PaperGuiApi.get().user(e.getWhoClicked()),
+                e.getRawSlots()
+        );
         gui.onDrag(event);
         if (event.isCancelled()) {
             e.setCancelled(true);

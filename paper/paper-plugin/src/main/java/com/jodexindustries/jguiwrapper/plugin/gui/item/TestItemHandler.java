@@ -9,7 +9,11 @@ import org.jetbrains.annotations.NotNull;
 public class TestItemHandler implements ItemHandler<TestGuiLoader> {
 
     @Override
-    public void load(@NotNull TestGuiLoader loader, @NotNull AdvancedGuiItemController<?, ?> controller, @NotNull HandlerContext context) {
+    public void load(
+            @NotNull TestGuiLoader loader,
+            @NotNull AdvancedGuiItemController<?, ?> controller,
+            @NotNull HandlerContext context
+    ) {
         controller.defaultClickHandler((e, c) -> {
             e.setCancelled(true);
             if (e.clickType() == GuiClickEvent.ClickType.DOUBLE_CLICK) {
@@ -23,7 +27,11 @@ public class TestItemHandler implements ItemHandler<TestGuiLoader> {
         controller.updateItems(
                 wrapper -> wrapper.meta()
                         .displayName("&b&lDiamond Block")
-                        .lore("&cPlayer: &6%player_name%", "&cOpen count: &6%open_count%", "&cClick count: &6%click_count%"),
+                        .lore(
+                                "&cPlayer: &6%player_name%",
+                                "&cOpen count: &6%open_count%",
+                                "&cClick count: &6%click_count%"
+                        ),
                 context.user()
         );
     }

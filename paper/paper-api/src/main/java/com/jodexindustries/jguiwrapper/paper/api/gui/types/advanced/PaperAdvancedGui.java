@@ -18,20 +18,35 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
-public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements AdvancedGui<PaperAdvancedGui> {
+public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui>
+        implements AdvancedGui<PaperAdvancedGui> {
 
-    private final Map<String, AdvancedGuiItemController<PaperAdvancedGui, ?>> keyMap = new HashMap<>();
-    private final Map<Integer, AdvancedGuiItemController<PaperAdvancedGui, ?>> slotMap = new HashMap<>();
+    private final Map<String, AdvancedGuiItemController<PaperAdvancedGui, ?>> keyMap =
+            new HashMap<>();
+    private final Map<Integer, AdvancedGuiItemController<PaperAdvancedGui, ?>> slotMap =
+            new HashMap<>();
     private final Map<Class<?>, GuiDataLoader<PaperAdvancedGui>> loaderMap = new HashMap<>();
 
-    public PaperAdvancedGui(int size, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public PaperAdvancedGui(
+            int size,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         super(size, title, defaultSerializer);
     }
 
-    public PaperAdvancedGui(@NotNull InventoryType type, @NotNull Component title, @Nullable SerializerType defaultSerializer) {
+    public PaperAdvancedGui(
+            @NotNull InventoryType type,
+            @NotNull Component title,
+            @Nullable SerializerType defaultSerializer
+    ) {
         super(type, title, defaultSerializer);
     }
 
@@ -48,7 +63,9 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
 
     @NotNull
     @Override
-    public <T extends GuiDataLoader<PaperAdvancedGui>> Optional<T> getTypedLoader(@NotNull Class<T> clazz) {
+    public <T extends GuiDataLoader<PaperAdvancedGui>> Optional<T> getTypedLoader(
+            @NotNull Class<T> clazz
+    ) {
         GuiDataLoader<PaperAdvancedGui> loader = getLoader0(clazz);
         return loader == null ? Optional.empty() : Optional.of(clazz.cast(loader));
     }
@@ -67,7 +84,12 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
     public void registerLoader(@NotNull Key key) {
         API.getRegistry()
                 .getLoader(key)
-                .ifPresent(loader -> loaderMap.put(loader.getClass(), (GuiDataLoader<PaperAdvancedGui>) loader));
+                .ifPresent(
+                        loader -> loaderMap.put(
+                                loader.getClass(),
+                                (GuiDataLoader<PaperAdvancedGui>) loader
+                        )
+                );
     }
 
     @Override
@@ -83,14 +105,21 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
     }
 
     @Override
-    public void registerItem(@NotNull String key, @NotNull Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>> builderConsumer) {
-        AdvancedGuiItemController.Builder<PaperAdvancedGui> builder = new AdvancedGuiItemController.Builder<>(this);
+    public void registerItem(
+            @NotNull String key,
+            @NotNull Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>> builderConsumer
+    ) {
+        AdvancedGuiItemController.Builder<PaperAdvancedGui> builder =
+                new AdvancedGuiItemController.Builder<>(this);
         builderConsumer.accept(builder);
         registerItem(key, builder.build());
     }
 
     @Override
-    public void registerItem(@NotNull String key, @NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller) throws IllegalArgumentException {
+    public void registerItem(
+            @NotNull String key,
+            @NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller
+    ) throws IllegalArgumentException {
         if (keyMap.containsKey(key)) {
             return;
         }
@@ -121,7 +150,9 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
 
     @NotNull
     @Override
-    public Optional<AdvancedGuiItemController<PaperAdvancedGui, ?>> getController(@NotNull String key) {
+    public Optional<AdvancedGuiItemController<PaperAdvancedGui, ?>> getController(
+            @NotNull String key
+    ) {
         return Optional.ofNullable(keyMap.get(key));
     }
 
@@ -139,7 +170,10 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
     }
 
     @Override
-    public void attach(@NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller, int slot) {
+    public void attach(
+            @NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller,
+            int slot
+    ) {
         slotMap.put(slot, controller);
     }
 
@@ -148,7 +182,9 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
         slotMap.remove(slot);
     }
 
-    private void resolveControllerHandler(@NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller) {
+    private void resolveControllerHandler(
+            @NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller
+    ) {
         Key key = controller.itemHandlerKey();
         if (key == null) {
             return;

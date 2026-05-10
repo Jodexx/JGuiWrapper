@@ -22,7 +22,10 @@ public class PlaceholderEngineImpl extends AbstractPlaceholderEngine {
                         .match(PLACEHOLDER_PATTERN)
                         .replacement(match -> {
                             String placeholder = match.content();
-                            String parsed = PlaceholderAPI.setPlaceholders(player.as(Player.class), placeholder);
+                            String parsed = PlaceholderAPI.setPlaceholders(
+                                    player.as(Player.class),
+                                    placeholder
+                            );
 
                             match.content(parsed);
                             return match;
