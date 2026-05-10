@@ -24,7 +24,10 @@ public abstract class GuiApi {
 
     @ApiStatus.Internal
     protected static synchronized void setInstance(@NotNull GuiApi api) {
-        if (GuiApi.instance != null) throw new IllegalStateException("GuiApi instance is already set.");
+        if (GuiApi.instance != null) {
+            throw new IllegalStateException("GuiApi instance is already set.");
+        }
+
         GuiApi.instance = api;
     }
 
@@ -36,7 +39,10 @@ public abstract class GuiApi {
      */
     @NotNull
     public static GuiApi get() {
-        if (GuiApi.instance == null) throw new IllegalStateException("GuiApi instance has not been set yet.");
+        if (GuiApi.instance == null) {
+            throw new IllegalStateException("GuiApi instance has not been set yet.");
+        }
+
         return instance;
     }
 

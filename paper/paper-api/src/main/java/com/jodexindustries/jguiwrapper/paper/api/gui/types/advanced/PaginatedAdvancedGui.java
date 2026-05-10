@@ -70,7 +70,9 @@ public class PaginatedAdvancedGui extends PaperAdvancedGui {
     }
 
     public void openPage(int page) {
-        if (page < 0 || page >= pages.size()) return;
+        if (page < 0 || page >= pages.size()) {
+            return;
+        }
 
         Page currentPage = pages.get(this.currentPage);
         currentPage.unregister();
@@ -90,11 +92,14 @@ public class PaginatedAdvancedGui extends PaperAdvancedGui {
         }
 
         public Page(@NotNull PaperAdvancedGui gui, @NotNull Stream<Consumer<AdvancedGuiItemController.@NotNull Builder<PaperAdvancedGui>>> builderStream) {
-            this(builderStream.map(builderConsumer -> {
-                AdvancedGuiItemController.Builder<PaperAdvancedGui> builder = new AdvancedGuiItemController.Builder<>(gui);
-                builderConsumer.accept(builder);
-                return (AdvancedGuiItemController<PaperAdvancedGui, ?>) builder.build();
-            }).toList());
+            this(
+                    builderStream.map(builderConsumer -> {
+                        AdvancedGuiItemController.Builder<PaperAdvancedGui> builder =
+                                new AdvancedGuiItemController.Builder<>(gui);
+                        builderConsumer.accept(builder);
+                        return (AdvancedGuiItemController<PaperAdvancedGui, ?>) builder.build();
+                    }).toList()
+            );
         }
 
         public void register() {

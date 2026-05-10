@@ -17,7 +17,9 @@ public class TestGuiLoader implements GuiDataLoader<PaperAdvancedGui> {
     public TestGuiLoader() {
         placeholderEngine.register("%open_count%", (player) -> String.valueOf(openCount));
         placeholderEngine.register("%click_count%", (player) -> {
-            if (clickCount >= 100) return ">= 100";
+            if (clickCount >= 100) {
+                return ">= 100";
+            }
 
             return String.valueOf(clickCount);
         });

@@ -6,7 +6,9 @@ import net.minestom.server.inventory.AbstractInventory;
 public class GuiUtils {
 
     public static MinestomGuiHolder getHolder(AbstractInventory inventory) {
-        if (inventory == null || !inventory.hasTag(MinestomGuiHolder.GUI_HOLDER_TAG)) return null;
+        if (inventory == null || !inventory.hasTag(MinestomGuiHolder.GUI_HOLDER_TAG)) {
+            return null;
+        }
 
         return inventory.getTag(MinestomGuiHolder.GUI_HOLDER_TAG);
     }

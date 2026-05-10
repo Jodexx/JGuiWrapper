@@ -47,7 +47,13 @@ public abstract class MinestomGuiBase<T extends Gui> extends SimpleGui<T> implem
         Inventory inventory = holder().getInventory();
         player.openInventory(inventory);
 
-        player.sendPacket(new OpenWindowPacket(inventory.getWindowId(), inventory.getInventoryType().getWindowType(), title));
+        player.sendPacket(
+                new OpenWindowPacket(
+                        inventory.getWindowId(),
+                        inventory.getInventoryType().getWindowType(),
+                        title
+                )
+        );
         inventory.update(player);
     }
 

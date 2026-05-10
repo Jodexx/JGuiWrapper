@@ -68,7 +68,9 @@ public abstract class SimpleGui<T extends Gui> extends AbstractGui<T> {
     public void onClick(@NotNull GuiClickEvent event) {
         final int slot = event.rawSlot();
 
-        if (slot < 0) return;
+        if (slot < 0) {
+            return;
+        }
 
         if (event.action() == GuiClickEvent.InventoryAction.MOVE_TO_OTHER_INVENTORY || event.action() == GuiClickEvent.InventoryAction.COLLECT_TO_CURSOR) {
             if (event.playerInventory() && cancelEmptySlots) {

@@ -9,10 +9,14 @@ public class GuiUtils {
 
     @Nullable
     public static PaperGuiHolder getHolder(Inventory inventory) {
-        if (inventory == null) return null;
+        if (inventory == null) {
+            return null;
+        }
 
         InventoryHolder holder = inventory.getHolder();
-        if (holder == null) return null;
+        if (holder == null) {
+            return null;
+        }
 
         return holder instanceof PaperGuiHolder ? ((PaperGuiHolder) holder) : null;
     }

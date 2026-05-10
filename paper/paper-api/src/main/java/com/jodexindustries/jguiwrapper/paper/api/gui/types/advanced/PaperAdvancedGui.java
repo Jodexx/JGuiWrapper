@@ -65,7 +65,9 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
 
     @Override
     public void registerLoader(@NotNull Key key) {
-        API.getRegistry().getLoader(key).ifPresent(loader -> loaderMap.put(loader.getClass(), (GuiDataLoader<PaperAdvancedGui>) loader));
+        API.getRegistry()
+                .getLoader(key)
+                .ifPresent(loader -> loaderMap.put(loader.getClass(), (GuiDataLoader<PaperAdvancedGui>) loader));
     }
 
     @Override
@@ -89,7 +91,9 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
 
     @Override
     public void registerItem(@NotNull String key, @NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller) throws IllegalArgumentException {
-        if (keyMap.containsKey(key)) return;
+        if (keyMap.containsKey(key)) {
+            return;
+        }
 
         if (!controller.gui().equals(this)) {
             throw new IllegalArgumentException("Controller belongs to a different GUI instance");
@@ -146,7 +150,9 @@ public class PaperAdvancedGui extends PaperGuiBase<PaperAdvancedGui> implements 
 
     private void resolveControllerHandler(@NotNull AdvancedGuiItemController<PaperAdvancedGui, ?> controller) {
         Key key = controller.itemHandlerKey();
-        if (key == null) return;
+        if (key == null) {
+            return;
+        }
 
         Optional<DataRegistry> registry = API.getRegistry().getRegistry(key.namespace());
         Optional<Pair<ItemHandler<?>, Class<?>>> pair =

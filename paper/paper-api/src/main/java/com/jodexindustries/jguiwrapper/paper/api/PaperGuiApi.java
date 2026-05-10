@@ -38,7 +38,10 @@ public abstract class PaperGuiApi extends GuiApi {
      */
     @NotNull
     public static PaperGuiApi get() {
-        if (instance == null || !(instance instanceof PaperGuiApi)) throw new IllegalStateException("GuiApi instance has not been set yet.");
+        if (instance == null || !(instance instanceof PaperGuiApi)) {
+            throw new IllegalStateException("GuiApi instance has not been set yet.");
+        }
+
         return (PaperGuiApi) instance;
     }
 
@@ -62,7 +65,9 @@ public abstract class PaperGuiApi extends GuiApi {
      */
     @NotNull
     public static Optional<PaperGuiApi> getOptional() {
-        if (!(instance instanceof PaperGuiApi)) return Optional.empty();
+        if (!(instance instanceof PaperGuiApi)) {
+            return Optional.empty();
+        }
 
         return Optional.ofNullable(((PaperGuiApi) instance));
     }

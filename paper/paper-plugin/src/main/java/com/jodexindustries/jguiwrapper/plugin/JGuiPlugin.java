@@ -36,8 +36,10 @@ public final class JGuiPlugin extends JavaPlugin {
             "simple", TestSimpleGui::new,
             "advanced", TestAdvancedGui::new,
             "paginated", TestPaginatedAdvancedGui::new,
-            "default_advanced", () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.ADVANCED, GuiOptions.builder().size(9).build()),
-            "default_paginated", () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.PAGINATED, GuiOptions.builder().size(18).build())
+            "default_advanced",
+            () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.ADVANCED, GuiOptions.builder().size(9).build()),
+            "default_paginated",
+            () -> PaperGuiApiImpl.get().guiFactory().create(GuiType.PAGINATED, GuiOptions.builder().size(18).build())
     );
 
     @Override
@@ -57,79 +59,78 @@ public final class JGuiPlugin extends JavaPlugin {
             sender.sendMessage("/jguiwrapper test (abstract/simple/advanced/paginated)");
             sender.sendMessage("/jguiwrapper list");
             return true;
-        } else {
-            String sub = args[0].toLowerCase();
+        }
 
-            switch (sub) {
-                case "test": {
-                    if (!(sender instanceof Player player)) {
-                        sender.sendMessage("It is impossible to test from the console!");
+        String sub = args[0].toLowerCase();
+
+        switch (sub) {
+            case "test": {
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage("It is impossible to test from the console!");
+                    return false;
+                }
+
+                if (args.length >= 2) {
+                    PaperGui gui = (PaperGui) TEST_GUIS.get(args[1]).get();
+                    if (gui == null) {
+                        sender.sendMessage("Unknown gui");
                         return false;
                     }
 
-                    if (args.length >= 2) {
-                        PaperGui gui = (PaperGui) TEST_GUIS.get(args[1]).get();
-                        if (gui == null) {
-                            sender.sendMessage("Unknown gui");
-                            return false;
-                        }
+                    gui.open(player);
+                }
+                break;
+            }
 
-                        gui.open(player);
-                    }
-                    break;
+            case "list": {
+                Set<Gui> activeInstances = Gui.getActiveInstances();
+
+                if (activeInstances.isEmpty()) {
+                    send(sender, "&cThere are no active gui instances");
+                    return true;
                 }
 
-                case "list": {
-                    Set<Gui> activeInstances = Gui.getActiveInstances();
+                int index = 0;
 
-                    if (activeInstances.isEmpty()) {
-                        send(sender, "&cThere are no active gui instances");
-                        return true;
-                    }
-
-                    int index = 0;
-
-                    for (Gui gui : activeInstances) {
-                        PaperGuiBase<?> abstractGui = (PaperGuiBase<?>) gui;
-                        send(sender, "Index: &6" + index);
-                        send(sender, "Class: &6" + abstractGui.getClass().getName());
-                        send(sender, "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName());
-                        send(sender, "Title: " + PaperGuiApiImpl.get().defaultSerializer().serialize(abstractGui.title()));
-                        send(sender, "Size: &6" + abstractGui.size());
-                        send(sender, "Type: &6" + abstractGui.type());
-                        if (abstractGui instanceof PaperAdvancedGui advancedGui) {
-                            Collection<AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers = advancedGui.getControllers();
-                            if (!controllers.isEmpty()) {
-                                send(sender, "- Controllers:");
-                                int i = 0;
-                                for (AdvancedGuiItemController<PaperAdvancedGui, ?> controller : controllers) {
-                                    i++;
-                                    send(sender, "-- #&a" + i);
-                                    send(sender, "--- Slots: &6" + controller.slots());
-                                    send(sender, "--- Is empty: &6" + controller.isEmpty());
-                                }
-                            }
-
-                            Collection<GuiDataLoader<PaperAdvancedGui>> loaders = advancedGui.getLoaders();
-                            if (!loaders.isEmpty()) {
-                                send(sender, "- Loaders:");
-                                int i = 0;
-                                for (GuiDataLoader<PaperAdvancedGui> loader : loaders) {
-                                    i++;
-                                    send(sender, "-- #&a" + i);
-                                    send(sender, "--- Class: &6" + loader.getClass().getSimpleName());
-                                }
+                for (Gui gui : activeInstances) {
+                    PaperGuiBase<?> abstractGui = (PaperGuiBase<?>) gui;
+                    send(sender, "Index: &6" + index);
+                    send(sender, "Class: &6" + abstractGui.getClass().getName());
+                    send(sender, "Gui type: &6" + abstractGui.getClass().getSuperclass().getSimpleName());
+                    send(sender, "Title: " + PaperGuiApiImpl.get().defaultSerializer().serialize(abstractGui.title()));
+                    send(sender, "Size: &6" + abstractGui.size());
+                    send(sender, "Type: &6" + abstractGui.type());
+                    if (abstractGui instanceof PaperAdvancedGui advancedGui) {
+                        Collection<AdvancedGuiItemController<PaperAdvancedGui, ?>> controllers = advancedGui.getControllers();
+                        if (!controllers.isEmpty()) {
+                            send(sender, "- Controllers:");
+                            int i = 0;
+                            for (AdvancedGuiItemController<PaperAdvancedGui, ?> controller : controllers) {
+                                i++;
+                                send(sender, "-- #&a" + i);
+                                send(sender, "--- Slots: &6" + controller.slots());
+                                send(sender, "--- Is empty: &6" + controller.isEmpty());
                             }
                         }
-                        send(sender, "-----------");
 
-                        index++;
+                        Collection<GuiDataLoader<PaperAdvancedGui>> loaders = advancedGui.getLoaders();
+                        if (!loaders.isEmpty()) {
+                            send(sender, "- Loaders:");
+                            int i = 0;
+                            for (GuiDataLoader<PaperAdvancedGui> loader : loaders) {
+                                i++;
+                                send(sender, "-- #&a" + i);
+                                send(sender, "--- Class: &6" + loader.getClass().getSimpleName());
+                            }
+                        }
                     }
-                    break;
+                    send(sender, "-----------");
+
+                    index++;
                 }
+                break;
             }
         }
-
 
         return true;
     }

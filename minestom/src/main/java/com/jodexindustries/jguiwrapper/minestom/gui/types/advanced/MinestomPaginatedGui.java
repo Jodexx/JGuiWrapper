@@ -70,7 +70,9 @@ public class MinestomPaginatedGui extends MinestomAdvancedGui {
     }
 
     public void openPage(int page) {
-        if (page < 0 || page >= pages.size()) return;
+        if (page < 0 || page >= pages.size()) {
+            return;
+        }
 
         Page currentPage = pages.get(this.currentPage);
         currentPage.unregister();
@@ -90,11 +92,14 @@ public class MinestomPaginatedGui extends MinestomAdvancedGui {
         }
 
         public Page(@NotNull MinestomAdvancedGui gui, @NotNull Stream<Consumer<AdvancedGuiItemController.@NotNull Builder<MinestomAdvancedGui>>> builderStream) {
-            this(builderStream.map(builderConsumer -> {
-                AdvancedGuiItemController.Builder<MinestomAdvancedGui> builder = new AdvancedGuiItemController.Builder<>(gui);
-                builderConsumer.accept(builder);
-                return (AdvancedGuiItemController<MinestomAdvancedGui, ?>) builder.build();
-            }).toList());
+            this(
+                    builderStream.map(builderConsumer -> {
+                        AdvancedGuiItemController.Builder<MinestomAdvancedGui> builder =
+                                new AdvancedGuiItemController.Builder<>(gui);
+                        builderConsumer.accept(builder);
+                        return (AdvancedGuiItemController<MinestomAdvancedGui, ?>) builder.build();
+                    }).toList()
+            );
         }
 
         public void register() {

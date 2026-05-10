@@ -53,8 +53,14 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
 
     private PaperGuiApiImpl(Plugin plugin) {
         super(plugin);
-        guiFactory().register(GuiType.ADVANCED, options -> new PaperAdvancedGui(options.size(), options.title(), options.serializer()));
-        guiFactory().register(GuiType.PAGINATED, options -> new PaginatedAdvancedGui(options.size(), options.title(), options.serializer()));
+        guiFactory().register(
+                GuiType.ADVANCED,
+                options -> new PaperAdvancedGui(options.size(), options.title(), options.serializer())
+        );
+        guiFactory().register(
+                GuiType.PAGINATED,
+                options -> new PaginatedAdvancedGui(options.size(), options.title(), options.serializer())
+        );
     }
 
     public static void init(Plugin plugin) {
@@ -62,7 +68,9 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
     }
 
     public static void init(Plugin plugin, boolean log) {
-        if (instance != null) return;
+        if (instance != null) {
+            return;
+        }
 
         plugin.getServer().getPluginManager().registerEvents(new GuiListener(), plugin);
 
@@ -74,10 +82,14 @@ public final class PaperGuiApiImpl extends PaperGuiApi {
             try {
                 NMS_WRAPPER = NMSMatcher.getWrapper(plugin, log);
             } catch (JGuiWrapperVersionException e) {
-                if (log) plugin.getLogger().log(Level.WARNING, "NMSWrapper loading error: ", e);
+                if (log) {
+                    plugin.getLogger().log(Level.WARNING, "NMSWrapper loading error: ", e);
+                }
             }
         } catch (Throwable e) {
-            if (log) plugin.getLogger().log(Level.INFO, "NMSWrapper is not included in JGuiWrapper");
+            if (log) {
+                plugin.getLogger().log(Level.INFO, "NMSWrapper is not included in JGuiWrapper");
+            }
         }
     }
 

@@ -27,7 +27,9 @@ public class PaperGuiHolder implements GuiHolder, InventoryHolder {
         this.gui = gui;
         int size = gui.size();
         Component title = gui.title();
-        this.inventory = type != null ? Bukkit.createInventory(this, type, title) : Bukkit.createInventory(this, size, title);
+        this.inventory = type != null
+                ? Bukkit.createInventory(this, type, title)
+                : Bukkit.createInventory(this, size, title);
     }
 
     @Override

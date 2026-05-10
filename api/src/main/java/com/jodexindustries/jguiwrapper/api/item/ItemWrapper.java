@@ -47,14 +47,20 @@ public class ItemWrapper implements Cloneable {
     }
 
     public void update(@Nullable User user) {
-        if (!canUpdate) return;
+        if (!canUpdate) {
+            return;
+        }
 
         // temporary components
         Component displayName = this.meta.displayName();
         List<Component> lore = this.meta.lore();
         if (placeholderEngine != null) {
-            if (displayName != null) displayName = placeholderEngine.process(displayName, user);
-            if (lore != null) lore = placeholderEngine.process(lore, user);
+            if (displayName != null) {
+                displayName = placeholderEngine.process(displayName, user);
+            }
+            if (lore != null) {
+                lore = placeholderEngine.process(lore, user);
+            }
         }
 
         updateMeta(displayName, lore);
@@ -243,7 +249,9 @@ public class ItemWrapper implements Cloneable {
             wrapper.placeholderEngine = placeholderEngine;
             wrapper.autoFlushUpdate = autoFlushUpdate;
 
-            if (update) wrapper.update();
+            if (update) {
+                wrapper.update();
+            }
         }
 
         @NotNull

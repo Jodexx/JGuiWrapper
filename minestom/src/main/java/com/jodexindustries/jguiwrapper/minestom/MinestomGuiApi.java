@@ -27,9 +27,25 @@ public class MinestomGuiApi extends GuiApi {
 
     private MinestomGuiApi(Logger logger, ServerProcess server) {
         super(() -> logger);
+
         this.server = server;
-        guiFactory().register(GuiType.ADVANCED, options -> new MinestomAdvancedGui(options.size(), options.title(), options.serializer()));
-        guiFactory().register(GuiType.PAGINATED, options -> new MinestomPaginatedGui(options.size(), options.title(), options.serializer()));
+
+        guiFactory().register(
+                GuiType.ADVANCED,
+                options -> new MinestomAdvancedGui(
+                        options.size(),
+                        options.title(),
+                        options.serializer()
+                )
+        );
+        guiFactory().register(
+                GuiType.PAGINATED,
+                options -> new MinestomPaginatedGui(
+                        options.size(),
+                        options.title(),
+                        options.serializer()
+                )
+        );
     }
 
     /**
@@ -40,7 +56,10 @@ public class MinestomGuiApi extends GuiApi {
      */
     @NotNull
     public static MinestomGuiApi get() {
-        if (!(instance instanceof MinestomGuiApi api)) throw new IllegalStateException("GuiApi instance has not been set yet.");
+        if (!(instance instanceof MinestomGuiApi api)) {
+            throw new IllegalStateException("GuiApi instance has not been set yet.");
+        }
+
         return api;
     }
 
@@ -64,7 +83,10 @@ public class MinestomGuiApi extends GuiApi {
      */
     @NotNull
     public static Optional<MinestomGuiApi> getOptional() {
-        if (!(instance instanceof MinestomGuiApi api)) return Optional.empty();
+        if (!(instance instanceof MinestomGuiApi api)) {
+            return Optional.empty();
+        }
+
         return Optional.of(api);
     }
 
@@ -75,7 +97,9 @@ public class MinestomGuiApi extends GuiApi {
     }
 
     public static void init(ServerProcess server, Logger logger) {
-        if (instance != null) return;
+        if (instance != null) {
+            return;
+        }
 
         setInstance(new MinestomGuiApi(logger, server));
     }

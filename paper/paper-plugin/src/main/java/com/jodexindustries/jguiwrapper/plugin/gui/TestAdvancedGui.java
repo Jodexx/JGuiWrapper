@@ -34,7 +34,9 @@ public class TestAdvancedGui extends PaperAdvancedGui {
                 .defaultItem(PaperItemWrapper.builder(Material.GOLD_BLOCK).build())
                 .defaultClickHandler((e, controller) -> {
                     e.setCancelled(true);
-                    if (e.clickType() == GuiClickEvent.ClickType.DOUBLE_CLICK) return;
+                    if (e.clickType() == GuiClickEvent.ClickType.DOUBLE_CLICK) {
+                        return;
+                    }
 
                     clicks++;
 
@@ -83,7 +85,9 @@ public class TestAdvancedGui extends PaperAdvancedGui {
 
         Material material = values[random.nextInt(values.length)];
 
-        if (!material.isItem() || !material.isBlock() || material.isEmpty()) return randomMaterial();
+        if (!material.isItem() || !material.isBlock() || material.isEmpty()) {
+            return randomMaterial();
+        }
 
         return material;
     }

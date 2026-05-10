@@ -62,7 +62,9 @@ public class NMSMatcher {
 
         String className = "com.jodexindustries.jguiwrapper.paper.nms.Wrapper" + version;
 
-        if (log) plugin.getLogger().info("Using " + version + " NMS");
+        if (log) {
+            plugin.getLogger().info("Using " + version + " NMS");
+        }
 
         try {
             return (NMSWrapper) Class.forName(className).getDeclaredConstructor().newInstance();

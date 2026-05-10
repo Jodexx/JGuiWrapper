@@ -33,9 +33,12 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
     private Pair<ItemHandler<?>, Class<?>> itemHandler;
     private Key itemHandlerKey;
 
-    protected AdvancedGuiItemController(@NotNull G gui, @Nullable I defaultItemWrapper,
-                                        @Nullable AdvancedGuiClickHandler<G> defaultClickHandler,
-                                        @NotNull Collection<Integer> slots) {
+    protected AdvancedGuiItemController(
+            @NotNull G gui,
+            @Nullable I defaultItemWrapper,
+            @Nullable AdvancedGuiClickHandler<G> defaultClickHandler,
+            @NotNull Collection<Integer> slots
+    ) {
         this.gui = gui;
         this.defaultItemWrapper = defaultItemWrapper;
         this.defaultClickHandler = defaultClickHandler;
@@ -214,12 +217,16 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
     public void updateItems(@NotNull Consumer<I> updater, @Nullable User user) {
         if (defaultItemWrapper != null) {
             updater.accept(defaultItemWrapper);
-            if (!defaultItemWrapper.isUpdated()) defaultItemWrapper.update(user);
+            if (!defaultItemWrapper.isUpdated()) {
+                defaultItemWrapper.update(user);
+            }
         }
 
         for (I item : slotSpecificItems.values()) {
             updater.accept(item);
-            if (!item.isUpdated()) item.update(user);
+            if (!item.isUpdated()) {
+                item.update(user);
+            }
         }
 
         redraw();
@@ -233,7 +240,9 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
         I item = getItem(slot);
         if (item != null) {
             updater.accept(item);
-            if (!item.isUpdated()) item.update(user);
+            if (!item.isUpdated()) {
+                item.update(user);
+            }
             redraw(slot);
         }
     }
@@ -251,7 +260,9 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
     }
 
     public void tryInvokeResolvedHandler(@NotNull LoadType loadType, @Nullable User user) {
-        if (itemHandler == null) return;
+        if (itemHandler == null) {
+            return;
+        }
 
         Class<?> expectedLoaderClass = itemHandler.b();
 
@@ -286,7 +297,9 @@ public class AdvancedGuiItemController<G extends SimpleGui<G> & AdvancedGui<G>, 
         }
 
         public Builder<G> slots(int... slots) {
-            for (int slot : slots) this.slots.add(slot);
+            for (int slot : slots) {
+                this.slots.add(slot);
+            }
             return this;
         }
 

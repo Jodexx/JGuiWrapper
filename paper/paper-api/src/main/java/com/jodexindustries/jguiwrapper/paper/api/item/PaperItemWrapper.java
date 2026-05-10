@@ -61,8 +61,12 @@ public class PaperItemWrapper extends ItemWrapper {
     protected void updateMeta(final @Nullable Component displayName, @Nullable final List<Component> lore) {
         ItemMeta meta = this.itemStack.getItemMeta();
         if (meta != null) {
-            if (displayName != null) meta.displayName(displayName);
-            if (lore != null) meta.lore(lore);
+            if (displayName != null) {
+                meta.displayName(displayName);
+            }
+            if (lore != null) {
+                meta.lore(lore);
+            }
             meta.setCustomModelData(this.meta().customModelData());
             if (this.meta().enchanted()) {
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -116,7 +120,9 @@ public class PaperItemWrapper extends ItemWrapper {
         adapted.placeholderEngine(itemWrapper.placeholderEngine());
         adapted.canUpdate(itemWrapper.canUpdate());
         adapted.autoFlushUpdate(itemWrapper.autoFlushUpdate());
-        if(itemWrapper.isUpdated()) adapted.update();
+        if (itemWrapper.isUpdated()) {
+            adapted.update();
+        }
         return adapted;
     }
 

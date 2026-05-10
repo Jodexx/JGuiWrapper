@@ -70,17 +70,26 @@ public class MinestomItemWrapper extends ItemWrapper {
     protected void updateMeta(final @Nullable Component displayName, @Nullable final List<Component> lore) {
         ItemStack.Builder builder = itemStack.builder();
 
-        if (displayName != null) builder.customName(displayName);
-        if (lore != null) builder.lore(lore);
+        if (displayName != null) {
+            builder.customName(displayName);
+        }
+        if (lore != null) {
+            builder.lore(lore);
+        }
 
         // after 1.21.4 is now deprecated
         Integer oldModelData = this.meta().customModelData();
         Float i = oldModelData != null ? oldModelData.floatValue() : null;
-        if (i != null) builder.customModelData(List.of(i), List.of(), List.of(), List.of());
+        if (i != null) {
+            builder.customModelData(List.of(i), List.of(), List.of(), List.of());
+        }
 
         if (this.meta().enchanted()) {
             // to improve?
-            builder.set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(false, Set.of(DataComponents.ENCHANTMENTS)));
+            builder.set(
+                    DataComponents.TOOLTIP_DISPLAY,
+                    new TooltipDisplay(false, Set.of(DataComponents.ENCHANTMENTS))
+            );
             builder.set(DataComponents.ENCHANTMENTS, new EnchantmentList(Enchantment.LURE, 1));
         } else {
             builder.remove(DataComponents.ENCHANTMENTS);
@@ -106,7 +115,9 @@ public class MinestomItemWrapper extends ItemWrapper {
         adapted.placeholderEngine(itemWrapper.placeholderEngine());
         adapted.canUpdate(itemWrapper.canUpdate());
         adapted.autoFlushUpdate(itemWrapper.autoFlushUpdate());
-        if (itemWrapper.isUpdated()) adapted.update();
+        if (itemWrapper.isUpdated()) {
+            adapted.update();
+        }
         return adapted;
     }
 

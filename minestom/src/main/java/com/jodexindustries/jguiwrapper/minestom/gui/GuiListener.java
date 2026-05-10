@@ -30,7 +30,9 @@ public class GuiListener {
         eventNode.addListener(InventoryPreClickEvent.class, e -> {
             AbstractInventory inventory = e.getInventory();
             MinestomGuiHolder holder = GuiUtils.getHolder(inventory);
-            if (holder == null) return;
+            if (holder == null) {
+                return;
+            }
 
             MinestomGuiBase<?> gui = holder.gui();
 
@@ -73,15 +75,21 @@ public class GuiListener {
                 gui.onClick((GuiClickEvent) event);
             }
 
-            if(event.isCancelled()) e.setCancelled(true);
+            if (event.isCancelled()) {
+                e.setCancelled(true);
+            }
         });
 
         eventNode.addListener(InventoryCloseEvent.class, e -> {
-            if (!e.isFromClient()) return;
+            if (!e.isFromClient()) {
+                return;
+            }
 
             AbstractInventory inventory = e.getInventory();
             MinestomGuiHolder holder = GuiUtils.getHolder(inventory);
-            if (holder == null) return;
+            if (holder == null) {
+                return;
+            }
 
             MinestomUser user = MinestomGuiApi.get().user(e.getPlayer());
 
@@ -133,7 +141,9 @@ public class GuiListener {
 
             case Click.Left _ -> {
                 if (!cursorEmpty || slotEmpty) {
-                    if (!cursorEmpty && slotEmpty) yield InventoryAction.PLACE_ALL;
+                    if (!cursorEmpty && slotEmpty) {
+                        yield InventoryAction.PLACE_ALL;
+                    }
 
                     if (!cursorEmpty) {
                         if (canStack(cursor, slot)) {
@@ -154,8 +164,12 @@ public class GuiListener {
             }
 
             case Click.Right _ -> {
-                if (cursorEmpty && !slotEmpty) yield InventoryAction.PICKUP_HALF;
-                if (!cursorEmpty && slotEmpty) yield InventoryAction.PLACE_ONE;
+                if (cursorEmpty && !slotEmpty) {
+                    yield InventoryAction.PICKUP_HALF;
+                }
+                if (!cursorEmpty && slotEmpty) {
+                    yield InventoryAction.PLACE_ONE;
+                }
 
                 if (!cursorEmpty) {
                     if (canStack(cursor, slot)) {

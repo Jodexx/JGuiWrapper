@@ -44,7 +44,6 @@ public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
         for (int j = 0; j < pages; j++) {
             final int page = j;
 
-
             List<Consumer<AdvancedGuiItemController.Builder<PaperAdvancedGui>>> consumers = new ArrayList<>(itemsPerPage);
 
             for (int i = 0; i < itemsPerPage; i++) {

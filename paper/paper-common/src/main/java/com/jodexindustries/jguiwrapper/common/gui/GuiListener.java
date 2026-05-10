@@ -19,7 +19,9 @@ public class GuiListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
-        if (holder == null) return;
+        if (holder == null) {
+            return;
+        }
 
         PaperGuiBase<?> gui = holder.gui();
 
@@ -34,15 +36,21 @@ public class GuiListener implements Listener {
                 GuiClickEvent.ClickType.valueOf(e.getClick().name()) // click
         );
         gui.onClick(event);
-        if (event.isCancelled()) e.setCancelled(true);
+        if (event.isCancelled()) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent e) {
-        if (e.getReason() == InventoryCloseEvent.Reason.PLUGIN) return;
+        if (e.getReason() == InventoryCloseEvent.Reason.PLUGIN) {
+            return;
+        }
 
         PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
-        if (holder == null) return;
+        if (holder == null) {
+            return;
+        }
 
         PaperGuiBase<?> gui = holder.gui();
 
@@ -53,12 +61,16 @@ public class GuiListener implements Listener {
     @EventHandler
     public void onInventory(InventoryDragEvent e) {
         PaperGuiHolder holder = GuiUtils.getHolder(e.getInventory());
-        if (holder == null) return;
+        if (holder == null) {
+            return;
+        }
 
         PaperGuiBase<?> gui = holder.gui();
 
         GuiDragEvent event = new GuiDragEvent(e, gui, PaperGuiApi.get().user(e.getWhoClicked()), e.getRawSlots());
         gui.onDrag(event);
-        if (event.isCancelled()) e.setCancelled(true);
+        if (event.isCancelled()) {
+            e.setCancelled(true);
+        }
     }
 }

@@ -105,7 +105,9 @@ public class ItemMeta implements Cloneable {
     }
 
     private void flushUpdate() {
-        if (item == null) return;
+        if (item == null) {
+            return;
+        }
 
         item.flushUpdate();
     }
