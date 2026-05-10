@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 public class TestPaginatedAdvancedGui extends PaginatedAdvancedGui {
 
     public TestPaginatedAdvancedGui() {
-        super(54, generateTitle(0, 5));
+        super(54, generateTitle(0, 5), null);
 
         registerItem("prev_page", b -> b.slots(45)
                 .defaultItem(PaperItemWrapper.builder(Material.ARROW).build())

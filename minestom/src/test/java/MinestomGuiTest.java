@@ -3,12 +3,13 @@ import com.jodexindustries.jguiwrapper.api.gui.event.GuiCloseEvent;
 import com.jodexindustries.jguiwrapper.api.gui.event.GuiDragEvent;
 import com.jodexindustries.jguiwrapper.api.item.ItemWrapper;
 import com.jodexindustries.jguiwrapper.minestom.gui.types.MinestomGuiBase;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 public class MinestomGuiTest extends MinestomGuiBase<MinestomGuiTest> {
 
     public MinestomGuiTest(@NotNull String title) {
-        super(title);
+        super(9, Component.text(title), null);
 
         ItemWrapper stone = ItemWrapper.builder("stone")
                 .displayName("&bSome name")

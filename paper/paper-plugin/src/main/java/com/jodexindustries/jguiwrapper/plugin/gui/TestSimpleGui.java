@@ -17,7 +17,7 @@ public class TestSimpleGui extends PaperGuiBase<TestSimpleGui> {
     private int clicks;
 
     public TestSimpleGui() {
-        super(3123, "&cExample");
+        super(3123, API.defaultSerializer().deserialize("&cExample"), null);
 
         holder().setItem(0, new ItemStack(Material.EMERALD));
 

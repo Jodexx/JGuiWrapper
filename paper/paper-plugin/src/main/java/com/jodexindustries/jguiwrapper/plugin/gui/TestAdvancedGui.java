@@ -16,7 +16,7 @@ public class TestAdvancedGui extends PaperAdvancedGui {
     private int clicks;
 
     public TestAdvancedGui() {
-        super("&cAdvanced gui");
+        super(54, API.defaultSerializer().deserialize("&cTest advanced gui"), null);
 
         registerLoader(JGuiPlugin.TEST_LOADER_KEY);
 

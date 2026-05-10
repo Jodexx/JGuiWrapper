@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class TestAbstractGui extends PaperGuiBase<TestAbstractGui> {
 
     public TestAbstractGui() {
-        super("&cTest abstract gui");
+        super(9, API.defaultSerializer().deserialize("&cTest abstract gui"), null);
 
         for (int i = 0; i < 5; i++) {
             ItemStack itemStack = new ItemStack(Material.DIAMOND);
