@@ -20,15 +20,17 @@ import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 
-import static com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent.*;
 import static com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent.ClickType;
+import static com.jodexindustries.jguiwrapper.api.gui.event.GuiClickEvent.InventoryAction;
 
 public class GuiListener {
 
     public static void register(GlobalEventHandler handler) {
         EventNode<InventoryEvent> eventNode = EventNode.type("jguiwrapper", EventFilter.INVENTORY);
         eventNode.addListener(InventoryPreClickEvent.class, e -> {
-            AbstractInventory inventory = e.getInventory();
+            Player player = e.getPlayer();
+
+            AbstractInventory inventory = player.getOpenInventory();
             MinestomGuiHolder holder = GuiUtils.getHolder(inventory);
             if (holder == null) {
                 return;
@@ -38,7 +40,6 @@ public class GuiListener {
 
             CancellableGuiEvent event;
 
-            Player player = e.getPlayer();
             MinestomUser user = MinestomGuiApi.get().user(player);
 
             Click click = e.getClick();
@@ -62,11 +63,13 @@ public class GuiListener {
                     clicked = e.getInventory().getItemStack(click.slot());
                 }
 
+                int slot = playerInventory ? click.slot() + holder.getInventory().getSize() : click.slot();
+
                 event = new GuiClickEvent(
                         e,
                         gui,
                         user,
-                        click.slot(),
+                        slot,
                         playerInventory,
                         toWrapped(click, cursor, clicked, cursor.maxStackSize()),
                         toWrapped(click)
